@@ -15,6 +15,8 @@ public class Main {
 		String name = sc.nextLine();
 		
 		System.out.println("Hello " + name);
+		
+		sc.close();
 	}
 
 }
