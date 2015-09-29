@@ -22,23 +22,23 @@ public class DataAccess {
 		return cn;
 	}
 	
-	public static void addStock(String stock, String bidprice, double bidAvg, String askprice, double askAvg, int capture, int movingAvg) throws SQLException {
+	public static void addStock(String stock, String bidprice, double bidAvg, String askprice, double askAvg, double todaysopen, double previousclose) throws SQLException {
 		Connection cn = null;
 		try {
 			cn = getConnection();
-			PreparedStatement st = cn.prepareStatement("INSERT INTO stocks(name, bidprice, bidaverage, askprice, askaverage, captureamount, movingaverage)"
+			PreparedStatement st = cn.prepareStatement("INSERT INTO Stocks(StockSymbol, BidPrice, BidMAvg, AskPrice, AskMAvg, TodaysOpen, PreviousClose)"
 					+ " VALUES(?, ?, ?, ?, ?, ?, ?)");
 			st.setString(1, stock);
 			st.setDouble(2, Double.parseDouble(bidprice));
 			st.setDouble(3, bidAvg);
 			st.setDouble(4, Double.parseDouble(askprice));
 			st.setDouble(5, askAvg);
-			st.setInt(6, capture);
-			st.setInt(7, movingAvg);
+			st.setDouble(6, todaysopen);
+			st.setDouble(7, previousclose);
 			int rows = st.executeUpdate();
 			
 			if(rows == 1) {
-				System.out.println(stock + " added");
+				System.out.println(stock + " added to database");
 			}
 		}
 		catch(SQLException ex) {
