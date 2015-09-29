@@ -24,8 +24,10 @@ public class StockBean implements StockBeanLocal, StockBeanRemote {
 
 	@Override
 	public void saveStock(Stock s) {
-		entityManager.merge(s);
-		entityManager.flush();
+		entityManager.persist(s);
+		
+//		entityManager.merge(s);
+//		entityManager.flush();
 	}
 
 	@Override
@@ -46,5 +48,14 @@ public class StockBean implements StockBeanLocal, StockBeanRemote {
 		Query query = entityManager.createQuery(q);
 		List<Stock> stocks = query.getResultList();
 		return stocks;
+	}
+	
+	public void clearStock() {
+		String q = "DELETE FROM " + Stock.class.getName();
+		int rows = entityManager.createQuery(q).executeUpdate();
+		
+		if(rows > 0) {
+			System.out.println("Database Cleared");
+		}
 	}
 }

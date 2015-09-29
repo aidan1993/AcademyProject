@@ -21,7 +21,7 @@ public class Stock {
 	private double askMAvg;
 	private double todaysOpen;
 	private double previousClose;
-	private Date timeOf;
+	private String time_Of;
 	
 	
 	public int getStockId() {
@@ -72,11 +72,11 @@ public class Stock {
 	public void setPreviousClose(double previousClose) {
 		this.previousClose = previousClose;
 	}
-	public Date getTimeOf() {
-		return timeOf;
+	public String getTimeOf() {
+		return time_Of;
 	}
-	public void setTimeOf(Date timeOf) {
-		this.timeOf = timeOf;
+	public void setTimeOf(String timeOf) {
+		this.time_Of = timeOf;
 	}
 	
 	@Override
