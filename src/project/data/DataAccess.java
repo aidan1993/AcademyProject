@@ -22,19 +22,19 @@ public class DataAccess {
 		return cn;
 	}
 	
-	public static void addStock(String stock, String bidprice, double bidAvg, String askprice, double askAvg, double todaysopen, double previousclose) throws SQLException {
+	public static void addStock(String stock, String bidPrice, double bidAvg, String askPrice, double askAvg, double todaysOpen, double previousClose) throws SQLException {
 		Connection cn = null;
 		try {
 			cn = getConnection();
 			PreparedStatement st = cn.prepareStatement("INSERT INTO Stocks(StockSymbol, BidPrice, BidMAvg, AskPrice, AskMAvg, TodaysOpen, PreviousClose)"
 					+ " VALUES(?, ?, ?, ?, ?, ?, ?)");
 			st.setString(1, stock);
-			st.setDouble(2, Double.parseDouble(bidprice));
+			st.setDouble(2, Double.parseDouble(bidPrice));
 			st.setDouble(3, bidAvg);
-			st.setDouble(4, Double.parseDouble(askprice));
+			st.setDouble(4, Double.parseDouble(askPrice));
 			st.setDouble(5, askAvg);
-			st.setDouble(6, todaysopen);
-			st.setDouble(7, previousclose);
+			st.setDouble(6, todaysOpen);
+			st.setDouble(7, previousClose);
 			int rows = st.executeUpdate();
 			
 			if(rows == 1) {
