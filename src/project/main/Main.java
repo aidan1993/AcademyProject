@@ -2,22 +2,15 @@ package project.main;
 
 import java.util.Scanner;
 
+import project.data.DataAccess;
+import project.data.LiveFeed;
+
 public class Main {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("Hello World");
-		
-		Scanner sc = new Scanner(System.in);
-		
-		System.out.println("Name: ");
-		
-		String name = sc.nextLine();
-		
-		System.out.println("Hello " + name);
-		System.out.println("Goodbye " + name);
-		
-		sc.close();
+		DataAccess.clearDatabase();
+		LiveFeed.getLiveFeed(1);
 	}
 
 }
