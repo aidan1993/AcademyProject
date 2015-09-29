@@ -12,14 +12,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import project.business.ShipperBeanLocal;
-import project.entity.Shipper;
+import project.business.StockBeanLocal;
+import project.entity.Stock;
 
 /**
  * Servlet implementation class DatabaseServlet
  */
 @WebServlet("/DatabaseServlet")
-@EJB(name="ejb/Shipper", beanInterface=ShipperBeanLocal.class)
+@EJB(name="ejb/Stock", beanInterface=StockBeanLocal.class)
 public class DatabaseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -41,23 +41,12 @@ public class DatabaseServlet extends HttpServlet {
 		
 		try {
 			InitialContext context = new InitialContext();
-			ShipperBeanLocal bean = (ShipperBeanLocal)context.lookup("java:comp/env/ejb/Shipper");
-			Shipper s = new Shipper();
-			if(request.getParameter("txtShipper") != null &&
-					request.getParameter("txtPhone") != null) {
-				
-				if(request.getParameter("txtId") != null) {
-					s.setShipperid(Integer.parseInt(request.getParameter("txtId")));
-				}
-				s.setCompanyname(request.getParameter("txtShipper"));
-				s.setPhone(request.getParameter("txtPhone"));
-				bean.saveShipper(s);
-			}
+			StockBeanLocal bean = (StockBeanLocal)context.lookup("java:comp/env/ejb/Stock");
+			Stock s = new Stock();
 			
-			List<Shipper> shippers = bean.retrieveAllShippers();
-			for(Shipper sh : shippers) {
-				out.println("<a href='EditShipper.jsp?id=" + sh.getShipperid() + "'>" +
-							sh.getCompanyname() + "</a><br>");
+			List<Stock> stocks = bean.retrieveAllStock();
+			for(Stock st : stocks) {
+				out.println(st.toString());
 			}
 			
 		} catch(Exception ex) {
