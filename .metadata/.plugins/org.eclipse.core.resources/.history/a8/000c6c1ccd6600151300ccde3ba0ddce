@@ -1,0 +1,15 @@
+package project.business;
+
+import javax.ejb.Local;
+import javax.ejb.Remote;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+@Stateless
+@Remote(StockBeanRemote.class)
+@Local(StockBeanLocal.class)
+public class StockBean implements StockBeanLocal, StockBeanRemote {
+	@PersistenceContext(unitName = "JPADB")
+	private EntityManager entityManager;
+}

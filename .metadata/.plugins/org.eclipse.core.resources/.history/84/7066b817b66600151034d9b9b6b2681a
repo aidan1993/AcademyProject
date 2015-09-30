@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="DemoSessionBeans">
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="DemoSessionBeansClient.jar" deploy-path="/" handle="module:/resource/DemoSessionBeansClient/DemoSessionBeansClient">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="DemoSessionBeansWeb.war" deploy-path="/" handle="module:/resource/DemoSessionBeansWeb/DemoSessionBeansWeb">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="DemoEntityBean.jar" deploy-path="/" handle="module:/resource/DemoEntityBean/DemoEntityBean">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ContactJPA.jar" deploy-path="/" handle="module:/resource/ContactJPA/ContactJPA">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ContactsJPAWebSite.war" deploy-path="/" handle="module:/resource/ContactsJPAWebSite/ContactsJPAWebSite">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>

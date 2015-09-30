@@ -80,21 +80,17 @@ public class DatabaseServlet extends HttpServlet {
 		        	
 		        	s.setStockSymbol(fields[0]);
 		        	s.setBidPrice(Double.parseDouble(fields[1]));
-		        	s.setBidMAvg(24);
 		        	s.setAskPrice(Double.parseDouble(fields[2]));
-		        	s.setAskMAvg(24);
+		        	s.setMovingAvg(24);
 		        	s.setTodaysOpen(24);
 		        	s.setPreviousClose(24);
 			        bean.saveStock(s);
-		        
-		        	System.out.println(s.getBidPrice() + ", " + s.getAskPrice());
-		        	
 		        }
 			}
 			
 			List<Stock> stocks = bean.retrieveAllStock();
 			for(Stock st : stocks) {
-				out.println(st.toString());
+				out.println(st.toString() + "<br>");
 			}
 			
 		} catch(Exception ex) {
