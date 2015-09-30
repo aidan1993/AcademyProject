@@ -56,13 +56,13 @@ public class DatabaseServlet extends HttpServlet {
 			
 			long startTime = System.currentTimeMillis();
 			while((System.currentTimeMillis()-startTime) < 1*60*1000) {
-				String[] stocks = {"MSFT"};
+				String[] stocks = {"AAPL"};
 				StringBuilder url = 
 			            new StringBuilder("http://finance.yahoo.com/d/quotes.csv?s=");
 				for(String stock : stocks) {
 					url.append(stock + ",");
 				}
-		        url.append("&f=sba&e=.csv");
+		        url.append("&f=sbahgop&e=.csv");
 		        
 		        String theUrl = url.toString();
 		        URL obj = new URL(theUrl);
@@ -77,13 +77,28 @@ public class DatabaseServlet extends HttpServlet {
 		        while((inputLine = in.readLine()) != null)
 		        {	
 		        	String[] fields = inputLine.split(",");
+		        	fields[0] = fields[0].replace("\"", "");
 		        	
-		        	s.setStockSymbol(fields[0]);
-		        	s.setBidPrice(Double.parseDouble(fields[1]));
-		        	s.setAskPrice(Double.parseDouble(fields[2]));
-		        	s.setMovingAvg(24);
-		        	s.setTodaysOpen(24);
-		        	s.setPreviousClose(24);
+		        	String symbol = fields[0];
+		        	double bidPrice = Double.parseDouble(fields[1]);
+		        	double askPrice = Double.parseDouble(fields[2]);
+		        	
+		        	//Round data to two decimal places
+		        	double high = Math.round(Double.parseDouble(fields[3]) * 100.0)/100.0;
+		        	double low = Math.round(Double.parseDouble(fields[4]) * 100.0)/100.0;
+		        	double open = Math.round(Double.parseDouble(fields[5]) * 100.0)/100.0;
+		        	double close = Math.round(Double.parseDouble(fields[6]) * 100.0)/100.0;
+		        	double avg = (bidPrice + askPrice)/2;
+		        	avg = Math.round(avg * 100.0)/100.0;
+		        	
+		        	s.setStockSymbol(symbol);
+		        	s.setBidPrice(bidPrice);
+		        	s.setAskPrice(askPrice);
+		        	s.setMovingAvg(avg);
+		        	s.setDayHigh(high);
+		        	s.setDayLow(low);
+		        	s.setTodaysOpen(open);
+		        	s.setPreviousClose(close);
 			        bean.saveStock(s);
 		        }
 			}

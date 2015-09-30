@@ -1,0 +1,68 @@
+package project.strategies;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import project.entity.Stock;
+
+public class Strategy {
+	private Stock stock;
+	private int length;
+	private List<Double> movingAvg = new ArrayList<>();
+	private List<Double> avgOfPrices = new ArrayList<>();
+
+	public Strategy(Stock stock, int length) {
+		this.stock = stock;
+		this.length = length;
+	}
+
+	public Stock getStock() {
+		return stock;
+	}
+
+	public void setStock(Stock stock) {
+		this.stock = stock;
+	}
+
+	public int getLength() {
+		return length;
+	}
+
+	public void setLength(int length) {
+		this.length = length;
+	}
+
+	public List<Double> getMovingAvg() {
+		return movingAvg;
+	}
+
+	public void setMovingAvg(List<Double> movingAvg) {
+		this.movingAvg = movingAvg;
+	}
+	
+	public List<Double> getAvgOfPrices() {
+		return avgOfPrices;
+	}
+
+	public void setAvgOfPrices(List<Double> avgOfPrices) {
+		this.avgOfPrices = avgOfPrices;
+	}
+	
+	public void calculateMovingAvg(Stock stock, long startTime, int length) {
+		
+		double bid = stock.getBidPrice();
+		double ask = stock.getAskPrice();
+		double avg = (bid + ask)/2;
+    	avg = Math.round(avg * 100.0)/100.0;
+   
+		if((System.currentTimeMillis()-startTime) < length*60*1000) {
+        	avgOfPrices.add(avg);
+		} else {
+			double movingAvgPrice = 0;
+			for(Double avg : avgOfPrices) {
+				movingAvgPrice += avg;
+			}
+			movingAvg.add(Math.round(movingAvgPrice * 100.0)/100.0);
+		}
+	}
+}

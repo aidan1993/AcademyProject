@@ -8,6 +8,8 @@ Create table Stocks (
     BidPrice DECIMAL(6,2) NOT NULL,
 	AskPrice DECIMAL(6,2) NOT NULL, 
 	MovingAvg DECIMAL(6,2),
+    DayHigh DECIMAL(6,2),
+    DayLow DECIMAL(6,2),
 	TodaysOpen DECIMAL(6,2) NOT NULL, 
 	PreviousClose DECIMAL(6,2) NOT NULL, 
 	Time_Of timestamp NOT NULL

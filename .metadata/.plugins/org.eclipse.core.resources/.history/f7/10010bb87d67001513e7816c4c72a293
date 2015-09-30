@@ -1,0 +1,11 @@
+package project.strategies;
+
+public class TwoMovingAverage {
+	
+	private int shortLength;
+	private int longLength;
+	
+	public TwoMovingAverage() {
+		
+	}
+}

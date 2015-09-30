@@ -1,0 +1,12 @@
+package project.strategies;
+
+public class TwoMovingAverage {
+	
+	private int shortLength;
+	private int longLength;
+	
+	public TwoMovingAverage(int shortTime, int longTime) {
+		this.shortLength = shortTime;
+		this.longLength = longTime;
+	}
+}

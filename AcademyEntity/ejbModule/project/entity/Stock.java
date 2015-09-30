@@ -18,6 +18,8 @@ public class Stock {
 	private double bidPrice;
 	private double askPrice;
 	private double movingAvg;
+	private double dayHigh;
+	private double dayLow;
 	private double todaysOpen;
 	private double previousClose;
 	private String time_Of;
@@ -52,6 +54,18 @@ public class Stock {
 	}
 	public void setMovingAvg(double mAvg) {
 		this.movingAvg = mAvg;
+	}
+	public double getDayHigh() {
+		return dayHigh;
+	}
+	public void setDayHigh(double dayHigh) {
+		this.dayHigh = dayHigh;
+	}
+	public double getDayLow() {
+		return dayLow;
+	}
+	public void setDayLow(double dayLow) {
+		this.dayLow = dayLow;
 	}
 	public double getTodaysOpen() {
 		return todaysOpen;

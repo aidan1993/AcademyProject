@@ -1,0 +1,11 @@
+package project.strategies;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import project.entity.Stock;
+
+public class Strategy {
+	private Stock stock;
+	private List<Double> movingAvg = new ArrayList<>();
+}

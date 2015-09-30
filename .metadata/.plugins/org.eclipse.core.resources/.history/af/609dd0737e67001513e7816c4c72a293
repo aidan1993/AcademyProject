@@ -1,0 +1,35 @@
+package project.strategies;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class TwoMovingAverage {
+	
+	private int shortLength;
+	private int longLength;
+	private List<Double> shortPrices = new ArrayList<>();
+	private List<Double> longPrices = new ArrayList<>();
+	
+	public TwoMovingAverage(int shortTime, int longTime) {
+		this.shortLength = shortTime;
+		this.longLength = longTime;
+	}
+
+	public int getShortLength() {
+		return shortLength;
+	}
+
+	public void setShortLength(int shortLength) {
+		this.shortLength = shortLength;
+	}
+
+	public int getLongLength() {
+		return longLength;
+	}
+
+	public void setLongLength(int longLength) {
+		this.longLength = longLength;
+	}
+	
+	
+}
