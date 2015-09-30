@@ -1,0 +1,15 @@
+package project.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity(name="Stocks")
+public class Stock {
+	
+	public Stock() {
+		super();
+	}
+	
+	@Id
+	private int stockid;
+}

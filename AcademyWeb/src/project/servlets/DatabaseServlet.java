@@ -1,7 +1,14 @@
 package project.servlets;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -12,14 +19,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import project.business.ShipperBeanLocal;
-import project.entity.Shipper;
+import project.business.StockBeanLocal;
+import project.entity.Stock;
 
 /**
  * Servlet implementation class DatabaseServlet
  */
 @WebServlet("/DatabaseServlet")
-@EJB(name="ejb/Shipper", beanInterface=ShipperBeanLocal.class)
+@EJB(name="ejb/Stock", beanInterface=StockBeanLocal.class)
 public class DatabaseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -40,24 +47,50 @@ public class DatabaseServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		try {
+			
 			InitialContext context = new InitialContext();
-			ShipperBeanLocal bean = (ShipperBeanLocal)context.lookup("java:comp/env/ejb/Shipper");
-			Shipper s = new Shipper();
-			if(request.getParameter("txtShipper") != null &&
-					request.getParameter("txtPhone") != null) {
-				
-				if(request.getParameter("txtId") != null) {
-					s.setShipperid(Integer.parseInt(request.getParameter("txtId")));
+			StockBeanLocal bean = (StockBeanLocal)context.lookup("java:comp/env/ejb/Stock");
+			Stock s = new Stock();
+			
+			bean.clearStock();
+			
+			long startTime = System.currentTimeMillis();
+			while((System.currentTimeMillis()-startTime) < 1*60*1000) {
+				String[] stocks = {"MSFT"};
+				StringBuilder url = 
+			            new StringBuilder("http://finance.yahoo.com/d/quotes.csv?s=");
+				for(String stock : stocks) {
+					url.append(stock + ",");
 				}
-				s.setCompanyname(request.getParameter("txtShipper"));
-				s.setPhone(request.getParameter("txtPhone"));
-				bean.saveShipper(s);
+		        url.append("&f=sba&e=.csv");
+		        
+		        String theUrl = url.toString();
+		        URL obj = new URL(theUrl);
+		        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		        // This is a GET request
+		        con.setRequestMethod("GET");
+		        con.setRequestProperty("User-Agent", "Mozilla/5.0");
+		        int responseCode = con.getResponseCode();
+		        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		        String inputLine;
+		        
+		        while((inputLine = in.readLine()) != null)
+		        {	
+		        	String[] fields = inputLine.split(",");
+		        	
+		        	s.setStockSymbol(fields[0]);
+		        	s.setBidPrice(Double.parseDouble(fields[1]));
+		        	s.setAskPrice(Double.parseDouble(fields[2]));
+		        	s.setMovingAvg(24);
+		        	s.setTodaysOpen(24);
+		        	s.setPreviousClose(24);
+			        bean.saveStock(s);
+		        }
 			}
 			
-			List<Shipper> shippers = bean.retrieveAllShippers();
-			for(Shipper sh : shippers) {
-				out.println("<a href='EditShipper.jsp?id=" + sh.getShipperid() + "'>" +
-							sh.getCompanyname() + "</a><br>");
+			List<Stock> stocks = bean.retrieveAllStock();
+			for(Stock st : stocks) {
+				out.println(st.toString() + "<br>");
 			}
 			
 		} catch(Exception ex) {

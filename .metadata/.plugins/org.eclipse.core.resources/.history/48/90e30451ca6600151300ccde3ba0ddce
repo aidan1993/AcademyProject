@@ -1,0 +1,8 @@
+package project.entity;
+
+import javax.persistence.Entity;
+
+@Entity(name="Stocks")
+public class Stock {
+
+}

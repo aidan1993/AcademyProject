@@ -1,0 +1,5 @@
+package project.business;
+
+public class StockBean {
+
+}

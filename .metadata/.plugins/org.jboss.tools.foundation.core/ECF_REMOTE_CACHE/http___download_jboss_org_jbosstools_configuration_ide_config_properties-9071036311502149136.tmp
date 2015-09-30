@@ -1,0 +1,23 @@
+# Properties must use the following format : key|context|version=value
+# key = regular java property key
+# context = either jbosstools or devstudio
+# version = Major.Minor.Micro.Qualifier (without the timestamp)
+# or
+# version = Major.Minor.Micro
+# or
+# version = Major.Minor
+# or
+# version = Major
+#
+# version can be optional for a given context.
+# context can be optional (but version can't be set)
+#
+# JBOSS TOOLS
+# ===========
+
+##Discovery
+# =========
+
+### master is currently 4.3.0.Final. Note new path conventions for latest snapshots
+#jboss.discovery.directory.url|jbosstools|4.3.0.Final=http://download.jboss.org/jbosstools/mars/snapshots/builds/jbosstools-discovery.central_master/latest/all/repo/jbosstools-directory.xml
+#jboss.discovery.site.url|jbosstools|4.3.0.Final=http://download.jboss.org/jbosstools/mars/snapshots/builds/jbosstools-discovery.central_master/
