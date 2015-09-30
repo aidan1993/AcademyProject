@@ -139,3 +139,18 @@
 
 !ENTRY org.jboss.ide.eclipse.as.core 2 0 2015-09-30 09:58:28.259
 !MESSAGE Module AcademyWeb on WildFly 8.x still not ready to be shown in browser. Aborting delay.
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-09-30 11:41:25.127
+!MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-09-30 11:41:40.671
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-09-30 11:42:07.726
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842776 2015-09-30 11:43:18.686
+!MESSAGE Server shutting down
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-09-30 11:43:19.312
+!MESSAGE Server processes have been terminated.
