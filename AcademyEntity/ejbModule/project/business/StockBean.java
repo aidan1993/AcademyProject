@@ -58,4 +58,14 @@ public class StockBean implements StockBeanLocal, StockBeanRemote {
 			System.out.println("Database Cleared");
 		}
 	}
+	
+/*	@Override
+	public List<Stock> retrieveTop5Stock() {
+		String q = "SELECT TOP 5 FROM " + Stock.class.getName();
+		Query query = entityManager.createQuery(q);
+		List<Stock> stocks = query.getResultList();
+		return stocks;
+	}*/
+	
+	
 }
