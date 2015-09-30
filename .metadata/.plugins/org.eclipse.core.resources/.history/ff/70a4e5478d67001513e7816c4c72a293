@@ -2,11 +2,9 @@
     <wb-module deploy-name="AcademyProjectApp">
         <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
         <dependent-module archiveName="AcademyEntity.jar" deploy-path="/" handle="module:/resource/AcademyEntity/AcademyEntity">
-            <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="AcademyWeb.war" deploy-path="/" handle="module:/resource/AcademyWeb/AcademyWeb">
-            <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>
