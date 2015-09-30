@@ -1,0 +1,10 @@
+@CHARSET "ISO-8859-1";
+
+.first-stock {
+	clear: left;
+	width: 30% !important;
+}
+
+.other-stock {
+	width: 30% !important;
+}
