@@ -1,21 +1,21 @@
 package project.strategies;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
-import project.entity.Stock;
+import project.business.StockBeanLocal;
+
 
 public class TwoMovingAverage extends Strategy {
 	
 	private String stock;
 	private int shortLength;
 	private int longLength;
-	private List<Double> shortPrices = new ArrayList<>();
-	private List<Double> longPrices = new ArrayList<>();
+	private double[] shortPrices;
+	private double[] longPrices;
 	
 	
 	public TwoMovingAverage(String stock, int shortTime, int longTime) {
-		super(stock, longTime);
 		this.shortLength = shortTime;
 		this.longLength = longTime;
 	}
@@ -45,20 +45,21 @@ public class TwoMovingAverage extends Strategy {
 		this.longLength = longLength;
 	}
 	
-	public List<Double> getShortPrices() {
+	public double[] getShortPrices() {
 		return shortPrices;
 	}
 
-	public void setShortPrices(List<Double> shortPrices) {
+	public void setShortPrices(double[] shortPrices) {
 		this.shortPrices = shortPrices;
 	}
 
-	public List<Double> getLongPrices() {
+	public double[] getLongPrices() {
 		return longPrices;
 	}
 
-	public void setLongPrices(List<Double> longPrices) {
+	public void setLongPrices(double[] longPrices) {
 		this.longPrices = longPrices;
 	}
+	
 	
 }

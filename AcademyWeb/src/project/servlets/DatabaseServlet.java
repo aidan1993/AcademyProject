@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import project.business.StockBeanLocal;
 import project.entity.Stock;
+import project.strategies.Strategy;
 
 /**
  * Servlet implementation class DatabaseServlet
@@ -54,8 +56,12 @@ public class DatabaseServlet extends HttpServlet {
 			
 			bean.clearStock();
 			
+			//Set start time of the application
 			long startTime = System.currentTimeMillis();
-			while((System.currentTimeMillis()-startTime) < 1*60*1000) {
+			long lastCall = 0;
+			int shortTime = 1;
+			int arraySize = 0;
+			while(true) {
 				String[] stocks = {"AAPL"};
 				StringBuilder url = 
 			            new StringBuilder("http://finance.yahoo.com/d/quotes.csv?s=");
@@ -74,9 +80,10 @@ public class DatabaseServlet extends HttpServlet {
 		        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		        String inputLine;
 		        
-		        while((inputLine = in.readLine()) != null)
-		        {	
-		        	String[] fields = inputLine.split(",");
+				//Read from yahoo every second
+				if(System.currentTimeMillis() - lastCall > 1000 && (inputLine = in.readLine()) != null) {
+					lastCall = System.currentTimeMillis();
+					String[] fields = inputLine.split(",");
 		        	fields[0] = fields[0].replace("\"", "");
 		        	
 		        	String symbol = fields[0];
@@ -88,24 +95,27 @@ public class DatabaseServlet extends HttpServlet {
 		        	double low = Math.round(Double.parseDouble(fields[4]) * 100.0)/100.0;
 		        	double open = Math.round(Double.parseDouble(fields[5]) * 100.0)/100.0;
 		        	double close = Math.round(Double.parseDouble(fields[6]) * 100.0)/100.0;
-		        	double avg = (bidPrice + askPrice)/2;
-		        	avg = Math.round(avg * 100.0)/100.0;
 		        	
 		        	s.setStockSymbol(symbol);
 		        	s.setBidPrice(bidPrice);
 		        	s.setAskPrice(askPrice);
-		        	s.setMovingAvg(avg);
 		        	s.setDayHigh(high);
 		        	s.setDayLow(low);
 		        	s.setTodaysOpen(open);
 		        	s.setPreviousClose(close);
+			        
+			        System.out.println(s.toString() + "<br>");
+			        
+			        if((System.currentTimeMillis()-startTime) >= shortTime*60*1000) {
+			        	List<Stock> shortAvgStocks = new ArrayList<Stock>();
+			        	shortAvgStocks = bean.retrieveMovingAvgStock(shortTime, "AAPL");
+			        	
+			        	double shortAvg = Strategy.calcMovingAverage(shortAvgStocks);
+			        	s.setMovingAvg(shortAvg);
+			        }
+			        
 			        bean.saveStock(s);
-		        }
-			}
-			
-			List<Stock> stocks = bean.retrieveAllStock();
-			for(Stock st : stocks) {
-				out.println(st.toString() + "<br>");
+				}
 			}
 			
 		} catch(Exception ex) {

@@ -31,3 +31,5 @@ select * from Stocks;
 select * from Transactions;
 
 DROP DATABASE AcademyProject;
+
+SELECT * FROM Stocks WHERE Time_Of >= '2015-09-30 14:46:44' AND StockSymbol = '"MSFT"';

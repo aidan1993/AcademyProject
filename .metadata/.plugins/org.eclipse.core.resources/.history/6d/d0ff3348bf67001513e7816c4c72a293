@@ -1,0 +1,30 @@
+package project.strategies;
+
+import java.util.List;
+
+public class Strategy {
+
+	public Strategy() {
+
+	}
+	
+	//Calculates moving average for the specified array of data
+	public static double calcMovingAverage(List<Double> thearray){
+		double av = 0, total = 0;
+		for(int i = 0;i < thearray.size();i++)
+		{
+			total += thearray.get(i);
+		}
+		av = total/thearray.size();
+		System.out.println("Array Length: " + thearray.length);
+		return Math.round(av * 100.0)/100.0;
+	}
+	
+	//Slides down array to help when calculating moving average
+	public static void slideArray(double[] thearray){
+		for(int i = 0;i < thearray.length - 1;i++)
+		{
+			thearray[i] = thearray[i + 1];
+		}
+	}
+}

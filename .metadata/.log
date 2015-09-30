@@ -5775,3 +5775,6 @@ java.lang.NullPointerException
 	at org.jboss.tools.seam.internal.core.validation.SeamEarProjectValidator.validateInJob(SeamEarProjectValidator.java:77)
 	at org.eclipse.wst.validation.internal.operations.ValidatorJob.run(ValidatorJob.java:78)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+
+!ENTRY org.jboss.ide.eclipse.as.ui 2 0 2015-09-30 22:39:41.323
+!MESSAGE Server stopped before before browser could be opened.
