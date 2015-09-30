@@ -388,3 +388,12 @@
 
 !ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-09-30 14:52:44.077
 !MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-09-30 17:07:15.794
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-09-30 17:07:52.162
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 0 2015-09-30 17:07:52.331
+!MESSAGE Module AcademyProjectApp on WildFly 8.x not yet fully deployed. Waiting...
