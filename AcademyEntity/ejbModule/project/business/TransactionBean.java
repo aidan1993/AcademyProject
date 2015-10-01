@@ -9,61 +9,57 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import project.entity.Transactions;
+import project.entity.Transaction;
 
 @Stateless
 @Remote(TransactionBeanRemote.class)
 @Local(TransactionBeanLocal.class)
-public class TransactionBean implements TransactionBeanLocal, TransactionBeanRemote{
+public class TransactionBean implements TransactionBeanLocal,
+		TransactionBeanRemote {
 	@PersistenceContext(unitName = "JPADB")
 	private EntityManager entityManager;
-	
-public TransactionBean() {	
-	
-}
-	
 
-@Override
-public void saveTransaction(Transactions t) {
-	entityManager.persist(t);
-	
-//	entityManager.merge(s);
-//	entityManager.flush();
-	
-}
+	public TransactionBean() {
 
-@Override
-public void deleteTransaction(Transactions t) {
-	//Need to find shipper before deleting
-			entityManager.remove(t);
-	
-}
+	}
 
-@Override
-public Transactions findTransaction(Transactions t) {
-	Transactions tr = entityManager.find(Transactions.class, t.getTransactionid());
-	return tr;
-	
-}
+	@Override
+	public void saveTransaction(Transaction t) {
+		entityManager.persist(t);
 
-@Override
-public List<Transactions> retrieveAllTransaction() {
-	String q = "SELECT t FROM " + Transactions.class.getName() + " s";
-	Query query = entityManager.createQuery(q);
-	List<Transactions> Transactions = query.getResultList();
-	return Transactions;
-	
-}
+	}
 
-@Override
-public void clearTransaction() {
-	String q = "DELETE FROM " + Transactions.class.getName();
-	int rows = entityManager.createQuery(q).executeUpdate();
-	
-	if(rows > 0) {
-		System.out.println("Database Cleared");
-	
-}
-}
-}
+	@Override
+	public void deleteTransaction(Transaction t) {
+		entityManager.remove(t);
 
+	}
+
+	@Override
+	public Transaction findTransaction(Transaction t) {
+		Transaction tr = entityManager.find(Transaction.class,
+				t.getTransactionid());
+		return tr;
+
+	}
+
+	@Override
+	public List<Transaction> retrieveAllTransaction() {
+		String q = "SELECT t FROM " + Transaction.class.getName() + " s";
+		Query query = entityManager.createQuery(q);
+		List<Transaction> Transaction = query.getResultList();
+		return Transaction;
+
+	}
+
+	@Override
+	public void clearTransaction() {
+		String q = "DELETE FROM " + Transaction.class.getName();
+		int rows = entityManager.createQuery(q).executeUpdate();
+
+		if (rows > 0) {
+			System.out.println("Database Cleared");
+
+		}
+	}
+}

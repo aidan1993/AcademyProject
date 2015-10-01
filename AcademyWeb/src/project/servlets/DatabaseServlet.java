@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.naming.InitialContext;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -98,6 +99,7 @@ public class DatabaseServlet extends HttpServlet {
 		        	}
 			        
 			        bean.saveStock(s);
+
 				}
 		        
 				if(twoMAvg.getShortPrices().size() > 0 && twoMAvg.getLongPrices().size() > 0) {

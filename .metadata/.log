@@ -5282,6 +5282,10 @@ java.io.FileNotFoundException: C:\Users\Citi Tech 2014\Documents\AcademyProject\
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:51)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
 
+<<<<<<< HEAD
+!ENTRY org.eclipse.jst.j2ee 4 2 2015-09-30 17:09:03.618
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.jst.j2ee".
+=======
 !ENTRY org.eclipse.ui.navigator 4 2 2015-09-30 17:05:33.622
 !MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.ui.navigator".
 !STACK 0
@@ -5466,6 +5470,7 @@ java.lang.NullPointerException
 
 !ENTRY org.eclipse.ui.navigator 4 2 2015-09-30 17:05:33.656
 !MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.ui.navigator".
+>>>>>>> twomovingaverage
 !STACK 0
 org.eclipse.emf.common.util.WrappedException: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; The content of elements must consist of well-formed character data or markup.
 	at org.eclipse.wst.common.internal.emf.resource.EMF2DOMRenderer.loadDocument(EMF2DOMRenderer.java:81)
@@ -5476,18 +5481,40 @@ org.eclipse.emf.common.util.WrappedException: org.xml.sax.SAXParseException; lin
 	at org.eclipse.emf.ecore.resource.impl.ResourceImpl.load(ResourceImpl.java:1297)
 	at org.eclipse.wst.common.internal.emf.resource.CompatibilityXMIResourceImpl.load(CompatibilityXMIResourceImpl.java:272)
 	at org.eclipse.wst.common.internal.emf.resource.TranslatorResourceImpl.load(TranslatorResourceImpl.java:423)
+<<<<<<< HEAD
+	at org.eclipse.wst.common.componentcore.internal.ModuleStructuralModel.getAndLoadLocalResource(ModuleStructuralModel.java:377)
+	at org.eclipse.wst.common.internal.emfworkbench.integration.EditModel.getResource(EditModel.java:683)
+=======
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoad(ResourceSetImpl.java:259)
 	at org.eclipse.jem.internal.util.emf.workbench.ProjectResourceSetImpl.demandLoad(ProjectResourceSetImpl.java:811)
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoadHelper(ResourceSetImpl.java:274)
 	at org.eclipse.jem.internal.util.emf.workbench.ProjectResourceSetImpl.getResource(ProjectResourceSetImpl.java:1064)
 	at org.eclipse.wst.common.internal.emfworkbench.WorkbenchResourceHelper.getOrCreateResource(WorkbenchResourceHelper.java:380)
 	at org.eclipse.wst.common.internal.emfworkbench.integration.EditModel.getResource(EditModel.java:685)
+>>>>>>> twomovingaverage
 	at org.eclipse.wst.common.componentcore.internal.ModuleStructuralModel.getPrimaryResource(ModuleStructuralModel.java:332)
 	at org.eclipse.wst.common.componentcore.internal.ModuleStructuralModel.prepareProjectModulesIfNecessary(ModuleStructuralModel.java:240)
 	at org.eclipse.wst.common.componentcore.internal.ModuleStructuralModel.getPrimaryRootObject(ModuleStructuralModel.java:119)
 	at org.eclipse.wst.common.componentcore.internal.StructureEdit.getComponentModelRoot(StructureEdit.java:471)
 	at org.eclipse.wst.common.componentcore.internal.StructureEdit.getWorkbenchModules(StructureEdit.java:506)
 	at org.eclipse.wst.common.componentcore.internal.StructureEdit.getComponent(StructureEdit.java:949)
+<<<<<<< HEAD
+	at org.eclipse.wst.common.componentcore.internal.resources.VirtualComponent.getReferences(VirtualComponent.java:431)
+	at org.eclipse.jst.j2ee.componentcore.util.EARVirtualComponent.getHardReferences(EARVirtualComponent.java:89)
+	at org.eclipse.jst.j2ee.componentcore.util.EARVirtualComponent.getReferences(EARVirtualComponent.java:192)
+	at org.eclipse.jst.j2ee.componentcore.util.EARVirtualComponent.getReferences(EARVirtualComponent.java:216)
+	at org.eclipse.jst.j2ee.project.EarUtilities.getComponentReferencesAsList(EarUtilities.java:195)
+	at org.eclipse.jst.j2ee.project.EarUtilities.getComponentReferencesAsList(EarUtilities.java:178)
+	at org.eclipse.jst.j2ee.project.EarUtilities.getComponentReferences(EarUtilities.java:171)
+	at org.eclipse.jst.j2ee.project.EarUtilities.getComponentReferences(EarUtilities.java:138)
+	at org.eclipse.jst.j2ee.internal.project.J2EEProjectUtilities.getComponentReferences(J2EEProjectUtilities.java:1009)
+	at org.eclipse.jst.j2ee.internal.common.classpath.J2EEComponentClasspathUpdater$ModuleUpdateJob.processEars(J2EEComponentClasspathUpdater.java:354)
+	at org.eclipse.jst.j2ee.internal.common.classpath.J2EEComponentClasspathUpdater$ModuleUpdateJob.access$2(J2EEComponentClasspathUpdater.java:344)
+	at org.eclipse.jst.j2ee.internal.common.classpath.J2EEComponentClasspathUpdater$ModuleUpdateJob$1.run(J2EEComponentClasspathUpdater.java:404)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.jst.j2ee.internal.common.classpath.J2EEComponentClasspathUpdater$ModuleUpdateJob.run(J2EEComponentClasspathUpdater.java:395)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+=======
 	at org.eclipse.wst.common.componentcore.internal.resources.VirtualResource.getReadOnlyComponent(VirtualResource.java:341)
 	at org.eclipse.wst.common.componentcore.internal.resources.VirtualResource.getProjectRelativePaths(VirtualResource.java:118)
 	at org.eclipse.wst.common.componentcore.internal.resources.VirtualResource.getProjectRelativePath(VirtualResource.java:154)
@@ -5596,6 +5623,7 @@ org.eclipse.emf.common.util.WrappedException: org.xml.sax.SAXParseException; lin
 	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:648)
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:603)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1465)
+>>>>>>> twomovingaverage
 Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; The content of elements must consist of well-formed character data or markup.
 	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(Unknown Source)
 	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.fatalError(Unknown Source)
@@ -5614,10 +5642,17 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; The co
 	at javax.xml.parsers.DocumentBuilder.parse(Unknown Source)
 	at org.eclipse.wst.common.internal.emf.utilities.DOMUtilities.loadDocument(DOMUtilities.java:554)
 	at org.eclipse.wst.common.internal.emf.resource.EMF2DOMRenderer.loadDocument(EMF2DOMRenderer.java:74)
+<<<<<<< HEAD
+	... 30 more
+
+!ENTRY org.eclipse.jst.j2ee 4 0 2015-09-30 17:09:03.650
+!MESSAGE org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; The content of elements must consist of well-formed character data or markup.
+=======
 	... 127 more
 
 !ENTRY org.eclipse.ui.navigator 4 0 2015-09-30 17:05:33.658
 !MESSAGE An exception occurred invoking extension: org.eclipse.jst.jee.ui.ear for object P/AcademyProjectApp
+>>>>>>> twomovingaverage
 !STACK 0
 org.eclipse.emf.common.util.WrappedException: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; The content of elements must consist of well-formed character data or markup.
 	at org.eclipse.wst.common.internal.emf.resource.EMF2DOMRenderer.loadDocument(EMF2DOMRenderer.java:81)
@@ -5628,18 +5663,40 @@ org.eclipse.emf.common.util.WrappedException: org.xml.sax.SAXParseException; lin
 	at org.eclipse.emf.ecore.resource.impl.ResourceImpl.load(ResourceImpl.java:1297)
 	at org.eclipse.wst.common.internal.emf.resource.CompatibilityXMIResourceImpl.load(CompatibilityXMIResourceImpl.java:272)
 	at org.eclipse.wst.common.internal.emf.resource.TranslatorResourceImpl.load(TranslatorResourceImpl.java:423)
+<<<<<<< HEAD
+	at org.eclipse.wst.common.componentcore.internal.ModuleStructuralModel.getAndLoadLocalResource(ModuleStructuralModel.java:377)
+	at org.eclipse.wst.common.internal.emfworkbench.integration.EditModel.getResource(EditModel.java:683)
+=======
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoad(ResourceSetImpl.java:259)
 	at org.eclipse.jem.internal.util.emf.workbench.ProjectResourceSetImpl.demandLoad(ProjectResourceSetImpl.java:811)
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoadHelper(ResourceSetImpl.java:274)
 	at org.eclipse.jem.internal.util.emf.workbench.ProjectResourceSetImpl.getResource(ProjectResourceSetImpl.java:1064)
 	at org.eclipse.wst.common.internal.emfworkbench.WorkbenchResourceHelper.getOrCreateResource(WorkbenchResourceHelper.java:380)
 	at org.eclipse.wst.common.internal.emfworkbench.integration.EditModel.getResource(EditModel.java:685)
+>>>>>>> twomovingaverage
 	at org.eclipse.wst.common.componentcore.internal.ModuleStructuralModel.getPrimaryResource(ModuleStructuralModel.java:332)
 	at org.eclipse.wst.common.componentcore.internal.ModuleStructuralModel.prepareProjectModulesIfNecessary(ModuleStructuralModel.java:240)
 	at org.eclipse.wst.common.componentcore.internal.ModuleStructuralModel.getPrimaryRootObject(ModuleStructuralModel.java:119)
 	at org.eclipse.wst.common.componentcore.internal.StructureEdit.getComponentModelRoot(StructureEdit.java:471)
 	at org.eclipse.wst.common.componentcore.internal.StructureEdit.getWorkbenchModules(StructureEdit.java:506)
 	at org.eclipse.wst.common.componentcore.internal.StructureEdit.getComponent(StructureEdit.java:949)
+<<<<<<< HEAD
+	at org.eclipse.wst.common.componentcore.internal.resources.VirtualComponent.getReferences(VirtualComponent.java:431)
+	at org.eclipse.jst.j2ee.componentcore.util.EARVirtualComponent.getHardReferences(EARVirtualComponent.java:89)
+	at org.eclipse.jst.j2ee.componentcore.util.EARVirtualComponent.getReferences(EARVirtualComponent.java:192)
+	at org.eclipse.jst.j2ee.componentcore.util.EARVirtualComponent.getReferences(EARVirtualComponent.java:216)
+	at org.eclipse.jst.j2ee.project.EarUtilities.getComponentReferencesAsList(EarUtilities.java:195)
+	at org.eclipse.jst.j2ee.project.EarUtilities.getComponentReferencesAsList(EarUtilities.java:178)
+	at org.eclipse.jst.j2ee.project.EarUtilities.getComponentReferences(EarUtilities.java:171)
+	at org.eclipse.jst.j2ee.project.EarUtilities.getComponentReferences(EarUtilities.java:138)
+	at org.eclipse.jst.j2ee.internal.project.J2EEProjectUtilities.getComponentReferences(J2EEProjectUtilities.java:1009)
+	at org.eclipse.jst.j2ee.internal.common.classpath.J2EEComponentClasspathUpdater$ModuleUpdateJob.processEars(J2EEComponentClasspathUpdater.java:354)
+	at org.eclipse.jst.j2ee.internal.common.classpath.J2EEComponentClasspathUpdater$ModuleUpdateJob.access$2(J2EEComponentClasspathUpdater.java:344)
+	at org.eclipse.jst.j2ee.internal.common.classpath.J2EEComponentClasspathUpdater$ModuleUpdateJob$1.run(J2EEComponentClasspathUpdater.java:404)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.jst.j2ee.internal.common.classpath.J2EEComponentClasspathUpdater$ModuleUpdateJob.run(J2EEComponentClasspathUpdater.java:395)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+=======
 	at org.eclipse.wst.common.componentcore.internal.resources.VirtualResource.getReadOnlyComponent(VirtualResource.java:341)
 	at org.eclipse.wst.common.componentcore.internal.resources.VirtualResource.getProjectRelativePaths(VirtualResource.java:118)
 	at org.eclipse.wst.common.componentcore.internal.resources.VirtualResource.getProjectRelativePath(VirtualResource.java:154)
@@ -5748,6 +5805,7 @@ org.eclipse.emf.common.util.WrappedException: org.xml.sax.SAXParseException; lin
 	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:648)
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:603)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1465)
+>>>>>>> twomovingaverage
 Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; The content of elements must consist of well-formed character data or markup.
 	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(Unknown Source)
 	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.fatalError(Unknown Source)
@@ -5766,6 +5824,9 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; The co
 	at javax.xml.parsers.DocumentBuilder.parse(Unknown Source)
 	at org.eclipse.wst.common.internal.emf.utilities.DOMUtilities.loadDocument(DOMUtilities.java:554)
 	at org.eclipse.wst.common.internal.emf.resource.EMF2DOMRenderer.loadDocument(EMF2DOMRenderer.java:74)
+<<<<<<< HEAD
+	... 30 more
+=======
 	... 127 more
 
 !ENTRY org.eclipse.wst.validation 4 0 2015-09-30 17:06:14.581
@@ -5775,6 +5836,9 @@ java.lang.NullPointerException
 	at org.jboss.tools.seam.internal.core.validation.SeamEarProjectValidator.validateInJob(SeamEarProjectValidator.java:77)
 	at org.eclipse.wst.validation.internal.operations.ValidatorJob.run(ValidatorJob.java:78)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+<<<<<<< HEAD
+>>>>>>> twomovingaverage
+=======
 
 !ENTRY org.jboss.ide.eclipse.as.ui 2 0 2015-09-30 22:39:41.323
 !MESSAGE Server stopped before before browser could be opened.
@@ -7826,3 +7890,4 @@ java.lang.NumberFormatException: For input string: ""
 
 !ENTRY org.jboss.ide.eclipse.as.ui 2 0 2015-10-01 13:56:18.541
 !MESSAGE Server stopped before before browser could be opened.
+>>>>>>> twomovingaverage

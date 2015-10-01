@@ -53,6 +53,14 @@ public class StockBean implements StockBeanLocal, StockBeanRemote {
 	}
 	
 	@Override
+	public List<Stock> retrieveMostRecent() {
+		String q = "SELECT s FROM " + Stock.class.getName() + " s ORDER BY s.time_Of DESC";
+		Query query = entityManager.createQuery(q);
+		query.setMaxResults(1);
+		List<Stock> stocks = query.getResultList();
+		return stocks;
+	}
+
 	public void clearStock() {
 		String q = "DELETE FROM " + Stock.class.getName();
 		int rows = entityManager.createQuery(q).executeUpdate();

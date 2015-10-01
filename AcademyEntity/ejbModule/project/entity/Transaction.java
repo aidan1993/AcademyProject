@@ -4,10 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity(name="Transactions")
-public class Transactions 
+public class Transaction 
 {
 
-	public Transactions() 
+	public Transaction() 
 	{
 		super();
 	}
