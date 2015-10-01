@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.naming.InitialContext;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -55,8 +56,8 @@ public class DatabaseServlet extends HttpServlet {
 			bean.clearStock();
 			
 			long startTime = System.currentTimeMillis();
-			while((System.currentTimeMillis()-startTime) < 1*60*1000) {
-				String[] stocks = {"AAPL"};
+			while((System.currentTimeMillis()-startTime) < 1*60*1000*100) {
+				String[] stocks = {"AAPL", "MSFT"};
 				StringBuilder url = 
 			            new StringBuilder("http://finance.yahoo.com/d/quotes.csv?s=");
 				for(String stock : stocks) {
@@ -100,6 +101,8 @@ public class DatabaseServlet extends HttpServlet {
 		        	s.setTodaysOpen(open);
 		        	s.setPreviousClose(close);
 			        bean.saveStock(s);
+		            			        
+			        
 		        }
 			}
 			

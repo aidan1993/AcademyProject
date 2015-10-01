@@ -12,5 +12,6 @@ public interface StockBeanRemote {
 	void deleteStock(Stock s);
 	Stock findStock(Stock s);
 	List<Stock> retrieveAllStock();
+	List<Stock> retrieveMostRecent();
 	void clearStock();
 }
