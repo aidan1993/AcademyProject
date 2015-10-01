@@ -52,7 +52,6 @@ public class DatabaseServlet extends HttpServlet {
 			
 			//Set start time of the application
 			long startTime = System.currentTimeMillis();
-			long lastCall = 0;
 			int shortTime = 1;
 			int longTime = 2;
 			boolean missing = false;

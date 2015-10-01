@@ -1,24 +1,81 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	import="project.entity.Stock, java.util.List, project.business.StockBeanLocal, javax.naming.InitialContext"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <title>Stocks Homepage</title>
 
 <!-- Bootstrap -->
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="bootstrap/css/Project.css" rel="stylesheet">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	var auto_refresh = setInterval(
+	function ()
+	{
+	   $('#left-div').load('HomePage.jsp');
+	}, 10000); // refresh every 10000 milliseconds
+</script>
+  <script type="text/javascript">
+	window.onload = function () {
+
+		var dps = []; // dataPoints
+
+		var chart = new CanvasJS.Chart("chartContainer",{
+			title :{
+				text: "Moving Average"
+			},			
+			data: [{
+				type: "line",
+				dataPoints: dps 
+			}]
+		});
+
+		var xVal = 0;
+		var yVal = 100;	
+		var updateInterval = 100;
+		var dataLength = 500; // number of dataPoints visible at any point
+
+		var updateChart = function (count) {
+			count = count || 1;
+			// count is number of times loop runs to generate random dataPoints.
+			
+			for (var j = 0; j < count; j++) {	
+ 				yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
+ 				dps.push({
+ 					x: xVal,
+ 					y: yVal
+ 				});
+ 				xVal++;
+ 			};
+ 			if (dps.length > dataLength)
+			{
+				dps.shift();				
+			}
+			
+			chart.render();		
+
+		};
+
+		// generates first set of dataPoints
+		updateChart(dataLength); 
+
+		// update chart after specified time. 
+		setInterval(function(){updateChart()}, updateInterval); 
+
+	}
+</script>
+<script type="text/javascript" src="bootstrap/js/canvasjs.min.js"></script>
 </head>
 <body>
-
-	<!DOCTYPE html>
-<html lang="en">
-<head>
 
 <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197">
   <ul class="nav navbar-nav">
@@ -28,27 +85,8 @@
   </ul>
 </nav>
 
-<title>Bootstrap Example</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-</head>
-<body>
 <!-- <form action="PurchaseStockServlet" method="post"></form> -->
-
 <div class="container-fluid" style="width: 1200px; border: 3px solid white;">
-<script type="text/javascript">
-var auto_refresh = setInterval(
-function ()
-{
-   $('#left-div').load('HomePage.jsp');
-}, 2000); // refresh every 10000 milliseconds
-</script>
 
 <div id="left-div" class="container-fluid" style="float: left; width: 50%; border: 2px solid orange;">
 
@@ -59,14 +97,16 @@ function ()
 			<div class="col-sm-2 first-stock"
 				style="background-color: black; border: 3px solid cyan;">
 				<h3 align="center">
-					<span class="label label-info" style="border-radius: 20px;"><% 
-																InitialContext context = new InitialContext();
-																StockBeanLocal bean = (StockBeanLocal)context.lookup
-																("java:comp/env/ejb/Stock");
-																List<Stock> stocks = bean.retrieveMostRecent();
-																for(Stock s: stocks) {
-																out.print(s.getStockSymbol());
-																}%></span>
+					<span class="label label-info" style="border-radius: 20px;">
+						<% 
+							InitialContext context = new InitialContext();
+							StockBeanLocal bean = (StockBeanLocal)context.lookup("java:comp/env/ejb/Stock");
+							List<Stock> stocks = bean.retrieveMostRecent();
+							for(Stock s: stocks) {
+								out.print(s.getStockSymbol());
+							}
+						%>
+					</span>
 				</h3>
 
 				<div class="row row-format">
@@ -104,7 +144,7 @@ function ()
 
 					<button class="btn btn-primary btn-sm drop-" type="button" data-toggle="dropdown">Quantity
 					<span class="caret"></span></button>
-  				<ul class="dropdown-menu">
+  				<ul class="dropdown-menu"></ul>
 				</div>
 
 				<div class="row">
@@ -144,7 +184,7 @@ function ()
 				<div class="dropdown">
 					<button class="btn btn-primary btn-sm drop- " type="button" data-toggle="dropdown">Quantity
 					<span class="caret"></span></button>
-  				<ul class="dropdown-menu">
+  				<ul class="dropdown-menu"></ul>
 				</div>
 
 				<div class="row">
@@ -185,7 +225,7 @@ function ()
 				<div class="dropdown">
 					<button class="btn btn-primary btn-sm drop-" type="button" data-toggle="dropdown">Quantity
 					<span class="caret"></span></button>
-  				<ul class="dropdown-menu">
+  				<ul class="dropdown-menu"></ul>
 				</div>
 
 				<div class="row">
@@ -228,7 +268,7 @@ function ()
 				<div class="dropdown">
 					<button class="btn btn-primary btn-sm drop-" type="button" data-toggle="dropdown">Quantity
 					<span class="caret"></span></button>
-  				<ul class="dropdown-menu">
+  				<ul class="dropdown-menu"></ul>
 				</div>
 
 				<div class="row">
@@ -268,7 +308,7 @@ function ()
 				<div class="dropdown">
 					<button class="btn btn-primary btn-sm drop-" type="button" data-toggle="dropdown">Quantity
 					<span class="caret"></span></button>
-  				<ul class="dropdown-menu">
+  				<ul class="dropdown-menu"></ul>
 				</div>
 
 				<div class="row">
@@ -309,7 +349,7 @@ function ()
 
 					<button class="btn btn-primary btn-sm drop-" type="button" data-toggle="dropdown">Quantity
 					<span class="caret"></span></button>
-  				<ul class="dropdown-menu">
+  				<ul class="dropdown-menu"></ul>
 				</div>
 
 				<div class="row">
@@ -352,7 +392,7 @@ function ()
 				<div class="dropdown">
 					<button class="btn btn-primary btn-sm drop-" type="button" data-toggle="dropdown">Quantity
 					<span class="caret"></span></button>
-  				<ul class="dropdown-menu">
+  				<ul class="dropdown-menu"></ul>
 				</div>
 
 				<div class="row">
@@ -391,7 +431,7 @@ function ()
 				<div class="dropdown">
 					<button class="btn btn-primary btn-sm drop-" type="button" data-toggle="dropdown">Quantity
 					<span class="caret"></span></button>
-  				<ul class="dropdown-menu">
+  				<ul class="dropdown-menu"></ul>
 				</div>
 
 				<div class="row">
@@ -430,7 +470,7 @@ function ()
 				<div class="dropdown">
 					<button class="btn btn-primary btn-sm drop-" type="button" data-toggle="dropdown">Quantity
 					<span class="caret"></span></button>
-  				<ul class="dropdown-menu">
+  				<ul class="dropdown-menu"></ul>
 				</div>
 
 				<div class="row">
@@ -509,66 +549,12 @@ function ()
   </div>
   
   <div class="container-fluid" style="float: right; width: 50%; border: 2px solid orange; padding-bottom: 15px; padding-top: 15px;">
-  
-  <script type="text/javascript">
-	window.onload = function () {
 
-		var dps = []; // dataPoints
-
-		var chart = new CanvasJS.Chart("chartContainer",{
-			title :{
-				text: "Moving Average"
-			},			
-			data: [{
-				type: "line",
-				dataPoints: dps 
-			}]
-		});
-
-		var xVal = 0;
-		var yVal = 100;	
-		var updateInterval = 100;
-		var dataLength = 500; // number of dataPoints visible at any point
-
-		var updateChart = function (count) {
-			count = count || 1;
-			// count is number of times loop runs to generate random dataPoints.
-			
-			for (var j = 0; j < count; j++) {	
- 				yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
- 				dps.push({
- 					x: xVal,
- 					y: yVal
- 				});
- 				xVal++;
- 			};
- 			if (dps.length > dataLength)
-			{
-				dps.shift();				
-			}
-			
-			chart.render();		
-
-		};
-
-		// generates first set of dataPoints
-		updateChart(dataLength); 
-
-		// update chart after specified time. 
-		setInterval(function(){updateChart()}, updateInterval); 
-
-	}
-	</script>
-	<script type="text/javascript" src="bootstrap/js/canvasjs.min.js"></script>
-
-<body>
 	<div id="chartContainer" style="height: 300px; width:100%; background-color: black;">
 	</div>
 
 </div>
 
-
-</body>
   
   <h2 style="color: white; text-align: center;">Trading Strategy Manager</h2>
   <p style="color: white; text-align: center;">Select what trading strategy you would like to implement</p>
@@ -582,7 +568,7 @@ settings</button>
 <div class="dropdown">
 					<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Company
 					<span class="caret"></span></button>
-  				<ul class="dropdown-menu">
+  				<ul class="dropdown-menu"></ul>
 				</div>
 				
 <!-- Modal -->
@@ -610,15 +596,10 @@ settings</button>
     
   </form>
   </div>
-</div>
 </body>
-</html>
-
-
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="bootstrap/js/bootstrap.min.js"></script>
-</body>
 </html>
