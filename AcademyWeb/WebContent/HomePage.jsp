@@ -20,11 +20,7 @@
 <html lang="en">
 <head>
 
-<<<<<<< HEAD
-<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197" style="z-index: 9999; width: 100%;">
-=======
 <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197">
->>>>>>> master
   <ul class="nav navbar-nav">
     <li class="active" style="background-color: cyan;"><a href="#">Trading Home</a></li>
     <li><a href="TransactionsPage.html">Transactions</a></li>
