@@ -2,9 +2,14 @@
 
 .first-stock {
 	clear: left;
-	width: 30% !important;
+	width: 32% !important;
 }
 
 .other-stock {
-	width: 30% !important;
+	width: 32% !important;
+}
+
+.table-trans {
+	tr:nth-child(even) 
+    background-color: #00ffff;
 }

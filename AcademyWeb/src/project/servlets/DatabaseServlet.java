@@ -56,7 +56,7 @@ public class DatabaseServlet extends HttpServlet {
 			
 			long startTime = System.currentTimeMillis();
 			while((System.currentTimeMillis()-startTime) < 1*60*1000) {
-				String[] stocks = {"MSFT"};
+				String[] stocks = {"MSFT", "AAPL", "IBM", "CSCO"};
 				StringBuilder url = 
 			            new StringBuilder("http://finance.yahoo.com/d/quotes.csv?s=");
 				for(String stock : stocks) {
@@ -91,6 +91,7 @@ public class DatabaseServlet extends HttpServlet {
 			List<Stock> stocks = bean.retrieveAllStock();
 			for(Stock st : stocks) {
 				out.println(st.toString() + "<br>");
+				
 			}
 			
 		} catch(Exception ex) {

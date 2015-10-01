@@ -4,19 +4,18 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import project.entity.Transactions;
-
+import project.entity.Transaction;
 
 @Local
 public interface TransactionBeanLocal {
 
-	Transactions findTransaction(Transactions t);
+	Transaction findTransaction(Transaction t);
 
-	void deleteTransaction(Transactions t);
+	void deleteTransaction(Transaction t);
 
-	void saveTransaction(Transactions t);
+	void saveTransaction(Transaction t);
 
-	List<Transactions> retrieveAllTransaction();
+	List<Transaction> retrieveAllTransaction();
 
 	void clearTransaction();
 

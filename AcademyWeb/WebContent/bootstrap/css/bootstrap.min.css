@@ -2650,7 +2650,11 @@ th {
 }
 
 .table-striped>tbody>tr:nth-of-type(odd) {
-	background-color: #f9f9f9
+	background-color: #ff80ff
+}
+
+.table-striped>tbody>tr:nth-of-type(even) {
+	background-color: #ffff80
 }
 
 .table-hover>tbody>tr:hover {
