@@ -2,7 +2,6 @@
 
 .first-stock {
 	clear: left;
-<<<<<<< HEAD
 	width: 32% !important;
 }
 
@@ -13,7 +12,6 @@
 .table-trans {
 	tr:nth-child(even) 
     background-color: #00ffff;
-=======
 	width: 32.3% !important;
 }
 
@@ -24,6 +22,4 @@
 .row-format {
 	padding-left: 5px;
 	padding-right: 5px;
-	
->>>>>>> master
 }
