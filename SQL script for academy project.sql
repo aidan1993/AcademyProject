@@ -7,10 +7,9 @@ Create table Stocks (
 	StockSymbol nvarchar(10) NOT NULL, 
     BidPrice DECIMAL(6,2) NOT NULL,
 	AskPrice DECIMAL(6,2) NOT NULL, 
-	MovingAvg DECIMAL(6,2),
     DayHigh DECIMAL(6,2),
     DayLow DECIMAL(6,2),
-	TodaysOpen DECIMAL(6,2) NOT NULL, 
+	TodaysOpen DECIMAL(6,2), 
 	PreviousClose DECIMAL(6,2) NOT NULL, 
 	Time_Of timestamp NOT NULL
 );
@@ -32,4 +31,4 @@ select * from Transactions;
 
 DROP DATABASE AcademyProject;
 
-SELECT * FROM Stocks WHERE Time_Of >= '2015-09-30 14:46:44' AND StockSymbol = '"MSFT"';
+SELECT * FROM Stocks WHERE Time_Of >= '2015-09-30 21:52:54' AND StockSymbol = 'AAPL';
