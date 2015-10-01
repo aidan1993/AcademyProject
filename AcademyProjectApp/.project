@@ -3,8 +3,8 @@
 	<name>AcademyProjectApp</name>
 	<comment></comment>
 	<projects>
-		<project>AcademyWeb</project>
 		<project>AcademyEntity</project>
+		<project>AcademyWeb</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-import="project.business.*, project.entity.*, project.servlets.*"
+	import="project.entity.Stock, java.util.List, project.business.StockBeanLocal, javax.naming.InitialContext"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
@@ -20,7 +20,11 @@ import="project.business.*, project.entity.*, project.servlets.*"
 <html lang="en">
 <head>
 
+<<<<<<< HEAD
 <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197" style="z-index: 9999; width: 100%;">
+=======
+<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197">
+>>>>>>> master
   <ul class="nav navbar-nav">
     <li class="active" style="background-color: cyan;"><a href="#">Trading Home</a></li>
     <li><a href="TransactionsPage.html">Transactions</a></li>
@@ -29,7 +33,6 @@ import="project.business.*, project.entity.*, project.servlets.*"
 </nav>
 
 <title>Bootstrap Example</title>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -43,42 +46,67 @@ import="project.business.*, project.entity.*, project.servlets.*"
 <!-- <form action="PurchaseStockServlet" method="post"></form> -->
 
 <div class="container-fluid" style="width: 1200px; border: 3px solid white;">
+<script type="text/javascript">
+var auto_refresh = setInterval(
+function ()
+{
+   $('#left-div').load('HomePage.jsp');
+}, 2000); // refresh every 10000 milliseconds
+</script>
 
+<div id="left-div" class="container-fluid" style="float: left; width: 50%; border: 2px solid orange;">
 
-<div class="container-fluid" style="float: left; width: 50%; border: 2px solid gray;">
-
-		<h1 align="center">Stocks</h1>
+		<h1 align="center">Stock information</h1>
 
 <!-- 		<div class="row" style="width: 720px; border: 3px solid white; height: 200px;"> -->
 			
-			<form action="DatabaseServlet" method="get">
 			<div class="col-sm-2 first-stock"
 				style="background-color: black; border: 3px solid cyan;">
 				<h3 align="center">
-					<span class="label label-info" style="border-radius: 20px;">AAPL</span>
+					<span class="label label-info" style="border-radius: 20px;"><% 
+																InitialContext context = new InitialContext();
+																StockBeanLocal bean = (StockBeanLocal)context.lookup
+																("java:comp/env/ejb/Stock");
+																List<Stock> stocks = bean.retrieveMostRecent();
+																for(Stock s: stocks) {
+																out.print(s.getStockSymbol());
+																}%></span>
 				</h3>
 
-				<div class="row">
+				<div class="row row-format">
 
 					<h5 style="float: left">
-						<span class="label label-success">Low: </span>
+						<span class="label label-success">Low: <% 
+																for(Stock s: stocks) {
+																out.print(s.getDayLow());
+																}%></span>
 					</h5>
 					<h5 style="float: right">
-						<span class="label label-warning">High: </span>
+						<span class="label label-warning">High: <% 
+																for(Stock s: stocks) {
+																out.print(s.getDayHigh());
+																}%></span>
 					</h5>
 				</div>
 				
-				<div class="row">
+				<div class="row row-format">
 					<h5 style="float: left">
-						<span class="label label-default">Bid</span>
+						<span class="label label-default">Bid <% 
+																for(Stock s: stocks) {
+																out.print(s.getBidPrice());
+																}%></span>
 					</h5>
 					<h5 style="float: right">
-						<span class="label label-default">Ask</span>
+						<span class="label label-default">Ask <% 
+																for(Stock s: stocks) {
+																out.print(s.getAskPrice());
+																}%></span>
 					</h5>
 				</div>
 
 				<div class="dropdown">
-					<button class="btn btn-primary btn-sm" type="button" data-toggle="dropdown">Amount Of Stock
+
+					<button class="btn btn-primary btn-sm drop-" type="button" data-toggle="dropdown">Quantity
 					<span class="caret"></span></button>
   				<ul class="dropdown-menu">
 				</div>
@@ -92,7 +120,6 @@ import="project.business.*, project.entity.*, project.servlets.*"
 					</div>
 				</div>
 			</div>
-			</form>
 
 			<div class="col-sm-2 other-stock"
 				style="background-color: black; border: 3px solid cyan;">
@@ -100,8 +127,7 @@ import="project.business.*, project.entity.*, project.servlets.*"
 					<span class="label label-info" style="border-radius: 20px;">AAPL</span>
 				</h3>
 
-				<div class="row">
-
+				<div class="row row-format">
 					<h5 style="float: left">
 						<span class="label label-success">Low: </span>
 					</h5>
@@ -110,7 +136,7 @@ import="project.business.*, project.entity.*, project.servlets.*"
 					</h5>
 				</div>
 				
-				<div class="row">
+				<div class="row row-format">
 					<h5 style="float: left">
 						<span class="label label-default">Bid</span>
 					</h5>
@@ -120,7 +146,7 @@ import="project.business.*, project.entity.*, project.servlets.*"
 				</div>
 
 				<div class="dropdown">
-					<button class="btn btn-primary btn-sm" type="button" data-toggle="dropdown">Amount Of Stock
+					<button class="btn btn-primary btn-sm drop- " type="button" data-toggle="dropdown">Quantity
 					<span class="caret"></span></button>
   				<ul class="dropdown-menu">
 				</div>
@@ -142,8 +168,7 @@ import="project.business.*, project.entity.*, project.servlets.*"
 					<span class="label label-info" style="border-radius: 20px;">AAPL</span>
 				</h3>
 
-				<div class="row">
-
+				<div class="row row-format">
 					<h5 style="float: left">
 						<span class="label label-success">Low: </span>
 					</h5>
@@ -151,8 +176,8 @@ import="project.business.*, project.entity.*, project.servlets.*"
 						<span class="label label-warning">High: </span>
 					</h5>
 				</div>
-				
-				<div class="row">
+
+				<div class="row row-format">
 					<h5 style="float: left">
 						<span class="label label-default">Bid</span>
 					</h5>
@@ -162,7 +187,7 @@ import="project.business.*, project.entity.*, project.servlets.*"
 				</div>
 
 				<div class="dropdown">
-					<button class="btn btn-primary btn-sm" type="button" data-toggle="dropdown">Amount Of Stock
+					<button class="btn btn-primary btn-sm drop-" type="button" data-toggle="dropdown">Quantity
 					<span class="caret"></span></button>
   				<ul class="dropdown-menu">
 				</div>
@@ -186,9 +211,7 @@ import="project.business.*, project.entity.*, project.servlets.*"
 				<h3 align="center">
 					<span class="label label-info" style="border-radius: 20px;">AAPL</span>
 				</h3>
-
-				<div class="row">
-
+				<div class="row row-format">
 					<h5 style="float: left">
 						<span class="label label-success">Low: </span>
 					</h5>
@@ -197,7 +220,7 @@ import="project.business.*, project.entity.*, project.servlets.*"
 					</h5>
 				</div>
 				
-				<div class="row">
+				<div class="row row-format">
 					<h5 style="float: left">
 						<span class="label label-default">Bid</span>
 					</h5>
@@ -207,7 +230,47 @@ import="project.business.*, project.entity.*, project.servlets.*"
 				</div>
 
 				<div class="dropdown">
-					<button class="btn btn-primary btn-sm" type="button" data-toggle="dropdown">Amount Of Stock
+					<button class="btn btn-primary btn-sm drop-" type="button" data-toggle="dropdown">Quantity
+					<span class="caret"></span></button>
+  				<ul class="dropdown-menu">
+				</div>
+
+				<div class="row">
+					<div class='wrapper text-center'>
+						<div class="btn-group">
+							<button type="button" class="btn btn-primary">Buy</button>
+							<button type="button" class="btn btn-primary">Sell</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-sm-2 other-stock"
+				style="background-color: black; border: 3px solid cyan;">
+				<h3 align="center">
+					<span class="label label-info" style="border-radius: 20px;">AAPL</span>
+				</h3>
+				
+				<div class="row row-format">
+					<h5 style="float: left">
+						<span class="label label-success">Low: </span>
+					</h5>
+					<h5 style="float: right">
+						<span class="label label-warning">High: </span>
+					</h5>
+				</div>
+				
+				<div class="row row-format">
+					<h5 style="float: left">
+						<span class="label label-default">Bid</span>
+					</h5>
+					<h5 style="float: right">
+						<span class="label label-default">Ask</span>
+					</h5>
+				</div>
+
+				<div class="dropdown">
+					<button class="btn btn-primary btn-sm drop-" type="button" data-toggle="dropdown">Quantity
 					<span class="caret"></span></button>
   				<ul class="dropdown-menu">
 				</div>
@@ -228,8 +291,7 @@ import="project.business.*, project.entity.*, project.servlets.*"
 					<span class="label label-info" style="border-radius: 20px;">AAPL</span>
 				</h3>
 
-				<div class="row">
-
+				<div class="row row-format">
 					<h5 style="float: left">
 						<span class="label label-success">Low: </span>
 					</h5>
@@ -238,7 +300,7 @@ import="project.business.*, project.entity.*, project.servlets.*"
 					</h5>
 				</div>
 				
-				<div class="row">
+				<div class="row row-format">
 					<h5 style="float: left">
 						<span class="label label-default">Bid</span>
 					</h5>
@@ -248,48 +310,8 @@ import="project.business.*, project.entity.*, project.servlets.*"
 				</div>
 
 				<div class="dropdown">
-					<button class="btn btn-primary btn-sm" type="button" data-toggle="dropdown">Amount Of Stock
-					<span class="caret"></span></button>
-  				<ul class="dropdown-menu">
-				</div>
 
-				<div class="row">
-					<div class='wrapper text-center'>
-						<div class="btn-group">
-							<button type="button" class="btn btn-primary">Buy</button>
-							<button type="button" class="btn btn-primary">Sell</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col-sm-2 other-stock"
-				style="background-color: black; border: 3px solid cyan;">
-				<h3 align="center">
-					<span class="label label-info" style="border-radius: 20px;">AAPL</span>
-				</h3>
-
-				<div class="row">
-
-					<h5 style="float: left">
-						<span class="label label-success">Low: </span>
-					</h5>
-					<h5 style="float: right">
-						<span class="label label-warning">High: </span>
-					</h5>
-				</div>
-				
-				<div class="row">
-					<h5 style="float: left">
-						<span class="label label-default">Bid</span>
-					</h5>
-					<h5 style="float: right">
-						<span class="label label-default">Ask</span>
-					</h5>
-				</div>
-
-				<div class="dropdown">
-					<button class="btn btn-primary btn-sm" type="button" data-toggle="dropdown">Amount Of Stock
+					<button class="btn btn-primary btn-sm drop-" type="button" data-toggle="dropdown">Quantity
 					<span class="caret"></span></button>
   				<ul class="dropdown-menu">
 				</div>
@@ -313,8 +335,7 @@ import="project.business.*, project.entity.*, project.servlets.*"
 					<span class="label label-info" style="border-radius: 20px;">AAPL</span>
 				</h3>
 
-				<div class="row">
-
+				<div class="row row-format">
 					<h5 style="float: left">
 						<span class="label label-success">Low: </span>
 					</h5>
@@ -323,7 +344,7 @@ import="project.business.*, project.entity.*, project.servlets.*"
 					</h5>
 				</div>
 				
-				<div class="row">
+				<div class="row row-format">
 					<h5 style="float: left">
 						<span class="label label-default">Bid</span>
 					</h5>
@@ -333,7 +354,7 @@ import="project.business.*, project.entity.*, project.servlets.*"
 				</div>
 
 				<div class="dropdown">
-					<button class="btn btn-primary btn-sm" type="button" data-toggle="dropdown">Amount Of Stock
+					<button class="btn btn-primary btn-sm drop-" type="button" data-toggle="dropdown">Quantity
 					<span class="caret"></span></button>
   				<ul class="dropdown-menu">
 				</div>
@@ -353,8 +374,7 @@ import="project.business.*, project.entity.*, project.servlets.*"
 					<span class="label label-info" style="border-radius: 20px;">AAPL</span>
 				</h3>
 
-				<div class="row">
-
+				<div class="row row-format">
 					<h5 style="float: left">
 						<span class="label label-success">Low: </span>
 					</h5>
@@ -363,7 +383,7 @@ import="project.business.*, project.entity.*, project.servlets.*"
 					</h5>
 				</div>
 				
-				<div class="row">
+				<div class="row row-format">
 					<h5 style="float: left">
 						<span class="label label-default">Bid</span>
 					</h5>
@@ -373,7 +393,7 @@ import="project.business.*, project.entity.*, project.servlets.*"
 				</div>
 
 				<div class="dropdown">
-					<button class="btn btn-primary btn-sm" type="button" data-toggle="dropdown">Amount Of Stock
+					<button class="btn btn-primary btn-sm drop-" type="button" data-toggle="dropdown">Quantity
 					<span class="caret"></span></button>
   				<ul class="dropdown-menu">
 				</div>
@@ -393,8 +413,7 @@ import="project.business.*, project.entity.*, project.servlets.*"
 					<span class="label label-info" style="border-radius: 20px;">AAPL</span>
 				</h3>
 
-				<div class="row">
-
+				<div class="row row-format">
 					<h5 style="float: left">
 						<span class="label label-success">Low: </span>
 					</h5>
@@ -403,7 +422,7 @@ import="project.business.*, project.entity.*, project.servlets.*"
 					</h5>
 				</div>
 				
-				<div class="row">
+				<div class="row row-format">
 					<h5 style="float: left">
 						<span class="label label-default">Bid</span>
 					</h5>
@@ -413,7 +432,7 @@ import="project.business.*, project.entity.*, project.servlets.*"
 				</div>
 
 				<div class="dropdown">
-					<button class="btn btn-primary btn-sm" type="button" data-toggle="dropdown">Amount Of Stock
+					<button class="btn btn-primary btn-sm drop-" type="button" data-toggle="dropdown">Quantity
 					<span class="caret"></span></button>
   				<ul class="dropdown-menu">
 				</div>
@@ -493,7 +512,7 @@ import="project.business.*, project.entity.*, project.servlets.*"
   </table>
   </div>
   
-  <div class="container-fluid" style="float: right; width: 50%; border: 2px solid gray;">
+  <div class="container-fluid" style="float: right; width: 50%; border: 2px solid orange; padding-bottom: 15px; padding-top: 15px;">
   
   <script type="text/javascript">
 	window.onload = function () {
@@ -564,6 +583,12 @@ import="project.business.*, project.entity.*, project.servlets.*"
 <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-cog"></span>
 settings</button>
 
+<div class="dropdown">
+					<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Company
+					<span class="caret"></span></button>
+  				<ul class="dropdown-menu">
+				</div>
+				
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">

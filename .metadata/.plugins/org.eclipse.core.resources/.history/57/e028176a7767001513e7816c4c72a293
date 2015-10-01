@@ -1,0 +1,95 @@
+package project.entity;
+
+import java.sql.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity(name="Stocks")
+public class Stock {
+	
+	public Stock() {
+		super();
+	}
+	
+	@Id
+	private int stockId;
+	private String stockSymbol;
+	private double bidPrice;
+	private double askPrice;
+	private double movingAvg;
+	private double avgHigh;
+	private double avgLow;
+	private double todaysOpen;
+	private double previousClose;
+	private String time_Of;
+	
+	
+	public int getStockId() {
+		return stockId;
+	}
+	public void setStockId(int stockId) {
+		this.stockId = stockId;
+	}
+	public String getStockSymbol() {
+		return stockSymbol;
+	}
+	public void setStockSymbol(String stockSymbol) {
+		this.stockSymbol = stockSymbol;
+	}
+	public double getBidPrice() {
+		return bidPrice;
+	}
+	public void setBidPrice(double bidPrice) {
+		this.bidPrice = bidPrice;
+	}
+	public double getAskPrice() {
+		return askPrice;
+	}
+	public void setAskPrice(double askPrice) {
+		this.askPrice = askPrice;
+	}
+	public double getMovingAvg() {
+		return movingAvg;
+	}
+	public void setMovingAvg(double mAvg) {
+		this.movingAvg = mAvg;
+	}
+	public double getAvgHigh() {
+		return avgHigh;
+	}
+	public void setAvgHigh(double avgHigh) {
+		this.avgHigh = avgHigh;
+	}
+	public double getAvgLow() {
+		return avgLow;
+	}
+	public void setAvgLow(double avgLow) {
+		this.avgLow = avgLow;
+	}
+	public double getTodaysOpen() {
+		return todaysOpen;
+	}
+	public void setTodaysOpen(double todaysOpen) {
+		this.todaysOpen = todaysOpen;
+	}
+	public double getPreviousClose() {
+		return previousClose;
+	}
+	public void setPreviousClose(double previousClose) {
+		this.previousClose = previousClose;
+	}
+	public String getTimeOf() {
+		return time_Of;
+	}
+	public void setTimeOf(String timeOf) {
+		this.time_Of = timeOf;
+	}
+	
+	@Override
+	public String toString() {
+		return "Stock: " + this.getStockSymbol() + ", \n Bid Price: " + this.getBidPrice() + ", Ask Price: " 
+				+ this.getAskPrice() + ", Moving Average: " + this.getMovingAvg() + ", Today's Open Price: " 
+				+ this.getTodaysOpen() + ", Previous Close: " + this.getPreviousClose() + ", Time: " + this.getTimeOf();
+	}
+}
