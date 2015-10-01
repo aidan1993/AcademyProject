@@ -100,8 +100,8 @@
 						<% 
 							InitialContext context = new InitialContext();
 							StockBeanLocal bean = (StockBeanLocal)context.lookup("java:comp/env/ejb/Stock");
-							List<Stock> stocks = bean.retrieveMostRecent();
-							for(Stock s: stocks) {
+							List<Stock> ibm = bean.retrieveMostRecent("IBM");
+							for(Stock s: ibm) {
 								out.print(s.getStockSymbol());
 							}
 						%>
@@ -111,31 +111,43 @@
 				<div class="row row-format">
 
 					<h5 style="float: left">
-						<span class="label label-success">Low: <% 
-																for(Stock s: stocks) {
-																out.print(s.getDayLow());
-																}%></span>
+						<span class="label label-success">Low: 
+						<% 
+							for(Stock s: ibm) {
+							out.print(s.getDayLow());
+							}
+						%>
+						</span>
 					</h5>
 					<h5 style="float: right">
-						<span class="label label-warning">High: <% 
-																for(Stock s: stocks) {
-																out.print(s.getDayHigh());
-																}%></span>
+						<span class="label label-warning">High: 
+						<% 
+							for(Stock s: ibm) {
+							out.print(s.getDayHigh());
+							}
+						%>
+						</span>
 					</h5>
 				</div>
 				
 				<div class="row row-format">
 					<h5 style="float: left">
-						<span class="label label-default">Bid <% 
-																for(Stock s: stocks) {
-																out.print(s.getBidPrice());
-																}%></span>
+						<span class="label label-default">Bid: 
+						<% 
+							for(Stock s: ibm) {
+							out.print(s.getBidPrice());
+							}
+						%>
+						</span>
 					</h5>
 					<h5 style="float: right">
-						<span class="label label-default">Ask <% 
-																for(Stock s: stocks) {
-																out.print(s.getAskPrice());
-																}%></span>
+						<span class="label label-default">Ask 
+						<% 
+							for(Stock s: ibm) {
+								out.print(s.getAskPrice());
+							}
+						%>
+						</span>
 					</h5>
 				</div>
 
@@ -159,24 +171,56 @@
 			<div class="col-sm-2 other-stock"
 				style="background-color: black; border: 3px solid cyan;">
 				<h3 align="center">
-					<span class="label label-info" style="border-radius: 20px;">AAPL</span>
+					<span class="label label-info" style="border-radius: 20px;">
+					<%
+						List<Stock> msft = bean.retrieveMostRecent("MSFT");
+						for(Stock s: msft) {
+							out.print(s.getStockSymbol());
+						}
+					%>
+					</span>
 				</h3>
 
 				<div class="row row-format">
+
 					<h5 style="float: left">
-						<span class="label label-success">Low: </span>
+						<span class="label label-success">Low: 
+						<% 
+							for(Stock s: msft) {
+							out.print(s.getDayLow());
+							}
+						%>
+						</span>
 					</h5>
 					<h5 style="float: right">
-						<span class="label label-warning">High: </span>
+						<span class="label label-warning">High: 
+						<% 
+							for(Stock s: msft) {
+							out.print(s.getDayHigh());
+							}
+						%>
+						</span>
 					</h5>
 				</div>
 				
 				<div class="row row-format">
 					<h5 style="float: left">
-						<span class="label label-default">Bid</span>
+						<span class="label label-default">Bid: 
+						<% 
+							for(Stock s: msft) {
+							out.print(s.getBidPrice());
+							}
+						%>
+						</span>
 					</h5>
 					<h5 style="float: right">
-						<span class="label label-default">Ask</span>
+						<span class="label label-default">Ask 
+						<% 
+							for(Stock s: msft) {
+								out.print(s.getAskPrice());
+							}
+						%>
+						</span>
 					</h5>
 				</div>
 

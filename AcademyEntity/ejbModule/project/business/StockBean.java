@@ -53,9 +53,12 @@ public class StockBean implements StockBeanLocal, StockBeanRemote {
 	}
 	
 	@Override
-	public List<Stock> retrieveMostRecent() {
-		String q = "SELECT s FROM " + Stock.class.getName() + " s ORDER BY s.time_Of DESC";
+	public List<Stock> retrieveMostRecent(String stock) {
+		String q = "SELECT s FROM " + Stock.class.getName() + " s " + 
+					"WHERE s.stockSymbol = :symbol " +
+					"ORDER BY s.time_Of DESC";
 		Query query = entityManager.createQuery(q);
+		query.setParameter("symbol", stock);
 		query.setMaxResults(1);
 		List<Stock> stocks = query.getResultList();
 		return stocks;

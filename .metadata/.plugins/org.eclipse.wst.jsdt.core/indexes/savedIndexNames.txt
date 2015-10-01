@@ -1,14 +1,8 @@
-INDEX VERSION 1.3+C:\Users\Citi-2013-30\Documents\GitHub\AcademyProject\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-3631358463.index
+INDEX VERSION 1.3+C:\Users\Citi Tech 2014\Documents\AcademyProject\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+3561278742.index
+2489792103.index
+3333832512.index
 2472837763.index
-<<<<<<< HEAD
 659433965.index
 1832976461.index
 3919922843.index
-=======
-1467517329.index
-3333832512.index
-3440289423.index
-1113301514.index
-2819722907.index
->>>>>>> master
