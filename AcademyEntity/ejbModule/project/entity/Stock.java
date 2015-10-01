@@ -1,7 +1,5 @@
 package project.entity;
 
-import java.sql.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -9,7 +7,26 @@ import javax.persistence.Id;
 public class Stock {
 	
 	public Stock() {
+		
+	}
+	
+	public Stock(String symbol, double bid, double ask, double close) {
 		super();
+		this.stockSymbol = symbol;
+		this.bidPrice = bid;
+		this.askPrice = ask;
+		this.previousClose = close;
+	}
+	
+	public Stock(String symbol, double bid, double ask, double high, double low, double open, double close) {
+		super();
+		this.stockSymbol = symbol;
+		this.bidPrice = bid;
+		this.askPrice = ask;
+		this.dayHigh = high;
+		this.dayLow = low;
+		this.todaysOpen = open;
+		this.previousClose = close;
 	}
 	
 	@Id
@@ -17,7 +34,6 @@ public class Stock {
 	private String stockSymbol;
 	private double bidPrice;
 	private double askPrice;
-	private double movingAvg;
 	private double dayHigh;
 	private double dayLow;
 	private double todaysOpen;
@@ -48,12 +64,6 @@ public class Stock {
 	}
 	public void setAskPrice(double askPrice) {
 		this.askPrice = askPrice;
-	}
-	public double getMovingAvg() {
-		return movingAvg;
-	}
-	public void setMovingAvg(double mAvg) {
-		this.movingAvg = mAvg;
 	}
 	public double getDayHigh() {
 		return dayHigh;
@@ -89,7 +99,7 @@ public class Stock {
 	@Override
 	public String toString() {
 		return "Stock: " + this.getStockSymbol() + ", \n Bid Price: " + this.getBidPrice() + ", Ask Price: " 
-				+ this.getAskPrice() + ", Moving Average: " + this.getMovingAvg() + ", Today's Open Price: " 
-				+ this.getTodaysOpen() + ", Previous Close: " + this.getPreviousClose() + ", Time: " + this.getTimeOf();
+				+ this.getAskPrice() + ", Today's Open Price: " + this.getTodaysOpen() + ", Previous Close: " 
+				+ this.getPreviousClose() + ", Time: " + this.getTimeOf();
 	}
 }

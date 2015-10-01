@@ -1,14 +1,8 @@
 package project.servlets;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -22,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import project.business.StockBeanLocal;
 import project.entity.Stock;
+import project.feed.LiveFeed;
+import project.strategies.TwoMovingAverage;
 
 /**
  * Servlet implementation class DatabaseServlet
@@ -48,67 +44,78 @@ public class DatabaseServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		try {
-			
 			InitialContext context = new InitialContext();
 			StockBeanLocal bean = (StockBeanLocal)context.lookup("java:comp/env/ejb/Stock");
-			Stock s = new Stock();
+			Stock s;
 			
 			bean.clearStock();
 			
+			//Set start time of the application
 			long startTime = System.currentTimeMillis();
-			while((System.currentTimeMillis()-startTime) < 1*60*1000*100) {
-				String[] stocks = {"AAPL", "MSFT"};
-				StringBuilder url = 
-			            new StringBuilder("http://finance.yahoo.com/d/quotes.csv?s=");
-				for(String stock : stocks) {
-					url.append(stock + ",");
-				}
-		        url.append("&f=sbahgop&e=.csv");
-		        
-		        String theUrl = url.toString();
-		        URL obj = new URL(theUrl);
-		        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-		        // This is a GET request
-		        con.setRequestMethod("GET");
-		        con.setRequestProperty("User-Agent", "Mozilla/5.0");
-		        int responseCode = con.getResponseCode();
-		        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		        String inputLine;
-		        
-		        while((inputLine = in.readLine()) != null)
-		        {	
-		        	String[] fields = inputLine.split(",");
-		        	fields[0] = fields[0].replace("\"", "");
+			long lastCall = 0;
+			int shortTime = 1;
+			int longTime = 2;
+			boolean missing = false;
+			String[] stocks = {"MSFT", "AAPL", "CSCO", "IBM"};
+			TwoMovingAverage twoMAvg = new TwoMovingAverage("AAPL", shortTime, longTime);
+			while(true) {
+				for(int i=0;i<stocks.length;i++) {
+					String[] fields = LiveFeed.runLiveFeed(stocks[i]);
+					fields[0] = fields[0].replace("\"", "");
 		        	
+					for(int loop=0;loop<fields.length;loop++) {
+						if(fields[loop].equals("N/A")) {
+							missing = true;
+						}
+					}
+
 		        	String symbol = fields[0];
 		        	double bidPrice = Double.parseDouble(fields[1]);
 		        	double askPrice = Double.parseDouble(fields[2]);
 		        	
-		        	//Round data to two decimal places
-		        	double high = Math.round(Double.parseDouble(fields[3]) * 100.0)/100.0;
-		        	double low = Math.round(Double.parseDouble(fields[4]) * 100.0)/100.0;
-		        	double open = Math.round(Double.parseDouble(fields[5]) * 100.0)/100.0;
-		        	double close = Math.round(Double.parseDouble(fields[6]) * 100.0)/100.0;
-		        	double avg = (bidPrice + askPrice)/2;
-		        	avg = Math.round(avg * 100.0)/100.0;
+		        	double high = 0;
+		        	if(!fields[3].equals("N/A")) {
+		        		high = Math.round(Double.parseDouble(fields[3]) * 100.0)/100.0;
+		        	}
+		        	double low = 0;
+		        	if(!fields[4].equals("N/A")) {
+		        		low = Math.round(Double.parseDouble(fields[4]) * 100.0)/100.0;
+		        	}
+		        	double open = 0;
+		        	if(!fields[5].equals("N/A")) {
+		        		open = Math.round(Double.parseDouble(fields[5]) * 100.0)/100.0;
+		        	}
 		        	
-		        	s.setStockSymbol(symbol);
-		        	s.setBidPrice(bidPrice);
-		        	s.setAskPrice(askPrice);
-		        	s.setMovingAvg(avg);
-		        	s.setDayHigh(high);
-		        	s.setDayLow(low);
-		        	s.setTodaysOpen(open);
-		        	s.setPreviousClose(close);
-			        bean.saveStock(s);
-		            			        
+		        	double close = Math.round(Double.parseDouble(fields[6]) * 100.0)/100.0;
+		        	
+		        	if(missing == false) {
+		        		s = new Stock(symbol, bidPrice, askPrice, high, low, open, close);
+		        	} else {
+		        		s = new Stock(symbol, bidPrice, askPrice, close);
+		        	}
+		        	
+		        	if(symbol.equals(twoMAvg.getStock())) {
+		        		twoMAvg.calcMovingAverage(startTime);
+		        	}
 			        
-		        }
-			}
-			
-			List<Stock> stocks = bean.retrieveAllStock();
-			for(Stock st : stocks) {
-				out.println(st.toString() + "<br>");
+			        bean.saveStock(s);
+
+				}
+		        
+				if(twoMAvg.getShortPrices().size() > 0 && twoMAvg.getLongPrices().size() > 0) {
+					List<Double> shortP = twoMAvg.getShortPrices();
+					List<Double> longP = twoMAvg.getLongPrices();
+					double recentShort = shortP.get(shortP.size()-1);
+					double recentLong = longP.get(longP.size()-1);
+					
+					if(recentShort > recentLong) {
+			        	System.out.println("BUY: " + recentShort + " GREATER THAN " + recentLong);
+			        } else if(recentShort < recentLong) {
+			        	System.out.println("SELL: " + recentShort + " LESS THAN " + recentLong);
+			        } else {
+			        	System.out.println("EQUAL: " + recentShort + " AND " + recentLong);
+			        }
+				}
 			}
 			
 		} catch(Exception ex) {

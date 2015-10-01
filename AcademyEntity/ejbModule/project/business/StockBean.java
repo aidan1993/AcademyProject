@@ -1,5 +1,7 @@
 package project.business;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -58,7 +60,7 @@ public class StockBean implements StockBeanLocal, StockBeanRemote {
 		List<Stock> stocks = query.getResultList();
 		return stocks;
 	}
-	
+
 	public void clearStock() {
 		String q = "DELETE FROM " + Stock.class.getName();
 		int rows = entityManager.createQuery(q).executeUpdate();
@@ -66,6 +68,23 @@ public class StockBean implements StockBeanLocal, StockBeanRemote {
 		if(rows > 0) {
 			System.out.println("Database Cleared");
 		}
+	}
+
+	@Override
+	public List<Stock> retrieveMovingAvgStock(int avgTime, String stock) {
+		//Format date to an acceptable SQL format
+		Date start = new Date(System.currentTimeMillis()-avgTime*60*1000);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String startStr = formatter.format(start);
+		
+		String q = "SELECT s FROM " + Stock.class.getName() + " s" + 
+					" WHERE s.time_Of >= :time " + 
+					" AND s.stockSymbol = :symbol ";
+		Query query = entityManager.createQuery(q);
+		query.setParameter("time", startStr);
+		query.setParameter("symbol", stock);
+		List<Stock> stocks = query.getResultList();
+		return stocks;
 	}
 	
 /*	@Override
@@ -75,6 +94,8 @@ public class StockBean implements StockBeanLocal, StockBeanRemote {
 		List<Stock> stocks = query.getResultList();
 		return stocks;
 	}*/
+	
+	
 	
 	
 }
