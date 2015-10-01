@@ -1701,3 +1701,18 @@
 
 !ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-10-01 15:23:59.981
 !MESSAGE Server processes have been terminated.
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842760 2015-10-01 16:41:40.056
+!MESSAGE Server Starting
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 16842769 2015-10-01 16:42:15.110
+!MESSAGE Server Startup Succeeded
+
+!ENTRY org.jboss.ide.eclipse.as.core 1 0 2015-10-01 16:42:15.112
+!MESSAGE Module AcademyWeb on WildFly 8.x not yet fully deployed. Waiting...
+
+!ENTRY org.jboss.ide.eclipse.as.core 2 0 2015-10-01 16:42:35.114
+!MESSAGE Module AcademyWeb on WildFly 8.x still not ready to be shown in browser. Aborting delay.
+
+!ENTRY org.jboss.ide.eclipse.as.wtp.core 1 16973825 2015-10-01 16:44:47.181
+!MESSAGE Server processes have been terminated.
