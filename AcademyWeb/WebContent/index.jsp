@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	import="project.entity.Stock, java.util.List, project.business.MasterBeanLocal, javax.naming.InitialContext"
+	import="project.entity.Stock, java.util.List, project.business.MasterBeanLocal, javax.naming.InitialContext, project.servlets.RunData"
     pageEncoding="ISO-8859-1"%>
+<%
+	(new Thread(new RunData())).start();
+%>
 <!DOCTYPE html>
 <html>
 <head>
