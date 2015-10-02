@@ -4,16 +4,15 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
-import project.entity.Stock;
-import project.strategies.Strategy;
+import org.jboss.logging.Logger;
 
 public class LiveFeed {
+	 
 	
-	public static String[] runLiveFeed(String stock) {
+	public String[] runLiveFeed(String stock) {
 		String[] fields = new String[7];
+		Logger log =  Logger.getLogger(this.getClass());
 		try {
 			StringBuilder url = 
 		            new StringBuilder("http://finance.yahoo.com/d/quotes.csv?s=");
@@ -35,7 +34,7 @@ public class LiveFeed {
 			}
 		}
 		catch(Exception ex) {
-			System.out.println("Problem with Yahoo feed connection");
+			log.error("ERROR " + ex.getMessage());
 		}
 		
 		return fields;
