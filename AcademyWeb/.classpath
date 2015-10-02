@@ -15,5 +15,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/AcademyEntity"/>
 	<classpathentry kind="lib" path="C:/Users/Citi Tech 2014/Documents/AcademyProject/OrderManager/quickfixj/quickfixj-all-1.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Wildfly/wildfly-9.0.1.Final/modules/system/layers/base/javax/ejb/api/main/jboss-ejb-api_3.2_spec-1.0.0.Final.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

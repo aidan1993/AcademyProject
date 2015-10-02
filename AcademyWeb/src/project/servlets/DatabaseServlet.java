@@ -2,12 +2,10 @@ package project.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.naming.InitialContext;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -55,8 +53,8 @@ public class DatabaseServlet extends HttpServlet {
 			int shortTime = 1;
 			int longTime = 2;
 			boolean missing = false;
-			String[] stocks = {"MSFT", "AAPL", "CSCO", "IBM"};
-			TwoMovingAverage twoMAvg = new TwoMovingAverage("AAPL", shortTime, longTime);
+			String[] stocks = {"AV", "ADM", "BP", "BLT", "AAPL"};
+			TwoMovingAverage twoMAvg = new TwoMovingAverage("AV", shortTime, longTime);
 			while(true) {
 				for(int i=0;i<stocks.length;i++) {
 					String[] fields = LiveFeed.runLiveFeed(stocks[i]);
