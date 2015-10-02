@@ -2650,11 +2650,11 @@ th {
 }
 
 .table-striped>tbody>tr:nth-of-type(odd) {
-	background-color: #ff80ff
+	background-color: #808080 !important;
 }
 
 .table-striped>tbody>tr:nth-of-type(even) {
-	background-color: #ffff80
+	background-color: #c0c0c0 !important;
 }
 
 .table-hover>tbody>tr:hover {
