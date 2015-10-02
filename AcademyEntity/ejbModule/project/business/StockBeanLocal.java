@@ -12,7 +12,7 @@ public interface StockBeanLocal {
 	void deleteStock(Stock s);
 	Stock findStock(Stock s);
 	List<Stock> retrieveAllStock();
-	List<Stock> retrieveMostRecent();
+	List<Stock> retrieveMostRecent(String stock);
 	List<Stock> retrieveMovingAvgStock(int avgTime, String stock);
 	void clearStock();
 }
