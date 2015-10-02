@@ -33,7 +33,7 @@
 
 		var chart = new CanvasJS.Chart("chartContainer",{
 			title :{
-				text: "Moving Average"
+				text: "Moving Average" 
 			},			
 			data: [{
 				type: "line",
@@ -81,7 +81,7 @@
 
 <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197" style="z-index: 9999; width: 100%;">
   <ul class="nav navbar-nav">
-    <li class="active" style="background-color: cyan;"><a href="#">Trading Home</a></li>
+    <li class="active";"><a href="#">Trading Home</a></li>
     <li><a href="TransactionsPage.html">Transactions</a></li>
 
   </ul>
@@ -528,21 +528,21 @@
 
 <!-- 		</div> -->
 <!--  <h7>Last 5 Transactions</h7>           -->
-  <table class="table table-striped" style="border: solid 3px cyan;">
+  <table class="table table-striped">
     <thead>
       <tr>
-        <th style="color: cyan;">Transaction ID</th>
-        <th style="color: cyan;">Stock Symbol</th>
-        <th style="color: cyan;">Action</th>
-        <th style="color: cyan;">Volume</th>
-        <th style="color: cyan;">Price</th>
-        <th style="color: cyan;">Time</th>
-        <th style="color: cyan;">Current Position</th>
+        <th>Transaction ID</th>
+        <th>Stock Symbol</th>
+        <th>Action</th>
+        <th>Volume</th>
+        <th>Price</th>
+        <th>Time</th>
+        <th>Current Position</th>
         
       </tr>
     </thead>
     <tbody>
-      <tr style="background-color: #04B45F;">
+      <tr>
         <td>1</td>
         <td>AAPL</td>
         <td>Buy</td>
@@ -551,7 +551,7 @@
         <td>12:00am</td>
         <td>Closed</td>
       </tr>
-      <tr style="background-color: #5882FA;">
+      <tr>
         <td>2</td>
         <td>AAPL</td>
         <td>Buy</td>
@@ -560,7 +560,7 @@
         <td>12:00am</td>
         <td>Closed</td>
       </tr>
-      <tr style="background-color: #04B45F;">
+      <tr>
         <td>3</td>
         <td>AAPL</td>
         <td>Buy</td>
@@ -569,7 +569,7 @@
         <td>12:00am</td>
         <td>Closed</td>
       </tr>
-      <tr style="background-color: #5882FA;">
+      <tr>
         <td>4</td>
         <td>AAPL</td>
         <td>Buy</td>
@@ -578,7 +578,7 @@
         <td>12:00am</td>
         <td>Closed</td>
       </tr>
-      <tr style="background-color: #04B45F;">
+      <tr>
         <td>5</td>
         <td>AAPL</td>
         <td>Buy</td>
@@ -593,7 +593,7 @@
   
   <div class="container-fluid" style="float: right; width: 50%; border: 2px solid orange; padding-bottom: 15px; padding-top: 15px;">
 
-	<div id="chartContainer" style="height: 300px; width:100%; background-color: black;">
+	<div id="chartContainer" style="height: 300px; width:100%; background-color: black;  ">
 	</div>
 
 </div>
