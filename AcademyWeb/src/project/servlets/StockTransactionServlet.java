@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import project.business.StockBeanLocal;
-import project.business.TransactionBeanLocal;
+import project.business.MasterBeanLocal;
 import project.entity.Stock;
 import project.entity.Transaction;
 
@@ -35,7 +34,7 @@ public class StockTransactionServlet extends HttpServlet {
 		try {
 			
 			InitialContext context = new InitialContext();
-			TransactionBeanLocal bean = (TransactionBeanLocal)context.lookup("java:comp/env/ejb/Transaction");
+			MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
 			Transaction t = new Transaction();
 			//t.setStockSymbol(request.);
 			

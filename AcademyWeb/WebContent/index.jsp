@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	import="project.entity.Stock, java.util.List, project.business.StockBeanLocal, javax.naming.InitialContext"
+	import="project.entity.Stock, java.util.List, project.business.MasterBeanLocal, javax.naming.InitialContext"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
@@ -99,9 +99,9 @@
 					<span class="label label-info" style="border-radius: 20px;">
 						<% 
 							InitialContext context = new InitialContext();
-							StockBeanLocal bean = (StockBeanLocal)context.lookup("java:comp/env/ejb/Stock");
-							List<Stock> ibm = bean.retrieveMostRecent("IBM");
-							for(Stock s: ibm) {
+							MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
+							List<Stock> av = bean.retrieveMostRecent("AV");
+							for(Stock s: av) {
 								out.print(s.getStockSymbol());
 							}
 						%>
@@ -113,7 +113,7 @@
 					<h5 style="float: left">
 						<span class="label label-success">Low: 
 						<% 
-							for(Stock s: ibm) {
+							for(Stock s: av) {
 							out.print(s.getDayLow());
 							}
 						%>
@@ -122,7 +122,7 @@
 					<h5 style="float: right">
 						<span class="label label-warning">High: 
 						<% 
-							for(Stock s: ibm) {
+							for(Stock s: av) {
 							out.print(s.getDayHigh());
 							}
 						%>
@@ -134,7 +134,7 @@
 					<h5 style="float: left">
 						<span class="label label-default">Bid: 
 						<% 
-							for(Stock s: ibm) {
+							for(Stock s: av) {
 							out.print(s.getBidPrice());
 							}
 						%>
@@ -143,7 +143,7 @@
 					<h5 style="float: right">
 						<span class="label label-default">Ask 
 						<% 
-							for(Stock s: ibm) {
+							for(Stock s: av) {
 								out.print(s.getAskPrice());
 							}
 						%>
@@ -173,8 +173,8 @@
 				<h3 align="center">
 					<span class="label label-info" style="border-radius: 20px;">
 					<%
-						List<Stock> msft = bean.retrieveMostRecent("MSFT");
-						for(Stock s: msft) {
+						List<Stock> bp = bean.retrieveMostRecent("BP");
+						for(Stock s: bp) {
 							out.print(s.getStockSymbol());
 						}
 					%>
@@ -186,7 +186,7 @@
 					<h5 style="float: left">
 						<span class="label label-success">Low: 
 						<% 
-							for(Stock s: msft) {
+							for(Stock s: bp) {
 							out.print(s.getDayLow());
 							}
 						%>
@@ -195,7 +195,7 @@
 					<h5 style="float: right">
 						<span class="label label-warning">High: 
 						<% 
-							for(Stock s: msft) {
+							for(Stock s: bp) {
 							out.print(s.getDayHigh());
 							}
 						%>
@@ -207,7 +207,7 @@
 					<h5 style="float: left">
 						<span class="label label-default">Bid: 
 						<% 
-							for(Stock s: msft) {
+							for(Stock s: bp) {
 							out.print(s.getBidPrice());
 							}
 						%>
@@ -216,7 +216,7 @@
 					<h5 style="float: right">
 						<span class="label label-default">Ask 
 						<% 
-							for(Stock s: msft) {
+							for(Stock s: bp) {
 								out.print(s.getAskPrice());
 							}
 						%>

@@ -7,10 +7,10 @@ import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import project.business.StockBeanLocal;
+import project.business.MasterBeanLocal;
 import project.entity.Stock;
 
-@EJB(name="ejb/Stock", beanInterface=StockBeanLocal.class)
+@EJB(name="ejb/Master", beanInterface=MasterBeanLocal.class)
 public class TwoMovingAverage extends Strategy {
 	
 	private String stock;
@@ -71,11 +71,11 @@ public class TwoMovingAverage extends Strategy {
 	//Duration is set to minutes
 	public void calcMovingAverage(long startTime) {
 		InitialContext context;
-		StockBeanLocal bean;
+		MasterBeanLocal bean;
 		
 		try {
 			context = new InitialContext();
-			bean = (StockBeanLocal)context.lookup("java:comp/env/ejb/Stock");
+			bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
 			
 			//Calculate short average
 			if((System.currentTimeMillis()-startTime) >= shortDuration*60*1000) {
