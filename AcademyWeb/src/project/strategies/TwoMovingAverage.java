@@ -7,6 +7,8 @@ import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.jboss.logging.Logger;
+
 import project.business.StockBeanLocal;
 import project.entity.Stock;
 
@@ -72,7 +74,7 @@ public class TwoMovingAverage extends Strategy {
 	public void calcMovingAverage(long startTime) {
 		InitialContext context;
 		StockBeanLocal bean;
-		
+		Logger log =  Logger.getLogger(this.getClass());
 		try {
 			context = new InitialContext();
 			bean = (StockBeanLocal)context.lookup("java:comp/env/ejb/Stock");
@@ -94,8 +96,8 @@ public class TwoMovingAverage extends Strategy {
 	        	double longAvg = super.calcMovingAverage(longAvgStocks);
 	        	longPrices.add(longAvg);
 	        }
-		} catch (NamingException e) {
-			System.out.println("Error occurred when calculating short moving average");
+		} catch (NamingException ex) {
+			log.error("ERROR " + ex.getMessage());
 		}
 	}
 }
