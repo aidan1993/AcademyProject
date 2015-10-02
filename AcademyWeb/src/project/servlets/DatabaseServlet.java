@@ -53,8 +53,8 @@ public class DatabaseServlet extends HttpServlet {
 			int shortTime = 1;
 			int longTime = 2;
 			boolean missing = false;
-			String[] stocks = {"IBM", "MSFT", "GOOG", "GE", "YHOO", "CSCO", "AAPL", "BAB", "AV"};
-			TwoMovingAverage twoMAvg = new TwoMovingAverage("AV", shortTime, longTime);
+			String[] stocks = {"IBM", "MSFT", "GOOG", "GE", "YHOO", "CSCO", "AAPL"};
+			TwoMovingAverage twoMAvg = new TwoMovingAverage("IBM", shortTime, longTime);
 			while(true) {
 				for(int i=0;i<stocks.length;i++) {
 					String[] fields = LiveFeed.runLiveFeed(stocks[i]);
