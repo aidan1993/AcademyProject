@@ -58,7 +58,6 @@ public class DatabaseServlet extends HttpServlet {
 			int shortTime = 1;
 			int longTime = 2;
 			boolean missing = false;
-			
 			String[] stocks = {"IBM", "MSFT", "GOOG", "GE", "YHOO", "CSCO", "AAPL"};
 			Strategy strategy = new Strategy();
 			TwoMovingAverage bpMAvg = new TwoMovingAverage("IBM", shortTime, longTime);
