@@ -14,8 +14,9 @@ public class Transaction
 		super();
 	}
 	
-	public Transaction(int stockid, String stockSymbol, int volume, double price, String transtype, String strategy) {
-		this.stockId = stockid;
+	public Transaction(Stock stock, String stockSymbol, int volume, double price, String transtype, String strategy) {
+
+		this.stock = stock;
 		this.stockSymbol = stockSymbol;
 		this.volume = volume;
 		this.price = price;
@@ -23,12 +24,20 @@ public class Transaction
 		this.strategy = strategy;
 	}
 	
+	public Stock getStock() {
+		return stock;
+	}
+
+	public void setStock(Stock stock) {
+		this.stock = stock;
+	}
+
 	@Id
 	private int transactionid;
 	
 	@OneToOne(optional=false)
 	@JoinColumn(name="stockId", referencedColumnName="stockId")
-	private int stockId;
+	private Stock stock;
 	
 	private String stockSymbol;
 	private int volume;
@@ -43,12 +52,7 @@ public class Transaction
 	public void setTransactionid(int transactionid) {
 		this.transactionid = transactionid;
 	}
-	public int getStockId() {
-		return stockId;
-	}
-	public void setStockId(int stockid) {
-		this.stockId = stockid;
-	}
+	
 	public String getStockSymbol() {
 		return stockSymbol;
 	}
@@ -88,7 +92,7 @@ public class Transaction
 
 	@Override
 	public String toString() {
-		return "Transactions: " + this.getTransactionid() + ", Stock ID: " + this.getStockId() + " , Stock: " + this.getStockSymbol()
+		return "Transactions: " + this.getTransactionid() + ", Stock ID: " + this.getStock().getStockId() + " , Stock: " + this.getStockSymbol()
 				+", Volume: " + this.getVolume() + ", Price: " + this.getPrice() + ", Transaction Time: " + this.getTranstime() 
 				+ ", Transaction Type: " + this.getTranstype() + ", Strategy Used: " + this.getStrategy();
 	}

@@ -95,40 +95,40 @@ public class DatabaseServlet extends HttpServlet {
 		        		s = new Stock(symbol, bidPrice, askPrice, close);
 		        	}
 		        	
-		        	for(TwoMovingAverage movingAvg : strategy.getTwoMAvg()) {
-			        	if(symbol.equals(movingAvg.getStock())) {
-			        		movingAvg.calcMovingAverage(startTime);
-			        	}
-			        	
-			        	if(movingAvg.getShortPrices().size() > 0 && movingAvg.getLongPrices().size() > 0) {
-							List<Double> shortP = movingAvg.getShortPrices();
-							List<Double> longP = movingAvg.getLongPrices();
-							double recentShort = shortP.get(shortP.size()-1);
-							double recentLong = longP.get(longP.size()-1);
-							
-							int stockid = s.getStockId();
-							int volume = 100;
-							double price = (s.getAskPrice()+s.getBidPrice())/2;
-							String transtype = "";
-							String strategyStr = "TwoMAvg";
-							
-							Transaction t;
-							if(recentShort > recentLong) {
-								transtype = "Buy";
-					        	t = new Transaction(stockid, symbol, volume, price, transtype, strategyStr);
-					        	bean.saveTransaction(t);
-					        } else if(recentShort < recentLong) {
-					        	transtype = "Sell";
-					        	t = new Transaction(stockid, symbol, volume, price, transtype, strategyStr);
-					        	bean.saveTransaction(t);
-					        } else {
-					        	System.out.println("EQUAL: " + recentShort + " AND " + recentLong);
-					        }
-						}
-		        	}
-			        
 		        	bean.saveStock(s);
-
+		        	
+//		        	for(TwoMovingAverage movingAvg : strategy.getTwoMAvg()) {
+//			        	if(symbol.equals(movingAvg.getStock())) {
+//			        		movingAvg.calcMovingAverage(startTime);
+//			        	}
+//			        	
+//			        	if(movingAvg.getShortPrices().size() > 0 && movingAvg.getLongPrices().size() > 0) {
+//							List<Double> shortP = movingAvg.getShortPrices();
+//							List<Double> longP = movingAvg.getLongPrices();
+//							double recentShort = shortP.get(shortP.size()-1);
+//							double recentLong = longP.get(longP.size()-1);
+//							
+//							int volume = 100;
+//							double price = (s.getAskPrice()+s.getBidPrice())/2;
+//							String transtype = "";
+//							String strategyStr = "TwoMAvg";
+//							
+//							Transaction t;
+//							if(recentShort > recentLong) {
+//								transtype = "Buy";
+//								Stock st = bean.findStock(s);
+//					        	t = new Transaction(st, symbol, volume, price, transtype, strategyStr);
+//					        	bean.saveTransaction(t);
+//					        } else if(recentShort < recentLong) {
+//					        	transtype = "Sell";
+//					        	Stock st = bean.findStock(s);
+//					        	t = new Transaction(st, symbol, volume, price, transtype, strategyStr);
+//					        	bean.saveTransaction(t);
+//					        } else {
+//					        	System.out.println("EQUAL: " + recentShort + " AND " + recentLong);
+//					        }
+//						}
+//		        	}
 				}
 			}
 			

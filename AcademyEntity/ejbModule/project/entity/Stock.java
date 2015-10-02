@@ -1,5 +1,6 @@
 package project.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -33,8 +34,9 @@ public class Stock {
 	
 	@Id
 	private int stockId;
-	@OneToOne(mappedBy="stockId", fetch=FetchType.EAGER)
+	@OneToOne(mappedBy="stock", fetch=FetchType.EAGER)
 	private Transaction transaction;
+	
 	private String stockSymbol;
 	private double bidPrice;
 	private double askPrice;
