@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import project.business.MasterBeanLocal;
+import org.jboss.logging.Logger;
 import project.entity.Stock;
 import project.entity.Transaction;
 
@@ -30,7 +31,7 @@ public class StockTransactionServlet extends HttpServlet {
 	
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		
+		Logger log =  Logger.getLogger(this.getClass());
 		try {
 			
 			InitialContext context = new InitialContext();
@@ -47,7 +48,7 @@ public class StockTransactionServlet extends HttpServlet {
 	        
 	        
 	} catch(Exception ex) {
-		out.println("Exception occurred: " + ex.getMessage());
+		log.error("ERROR " + ex.getMessage());
 	}
 	}
 	

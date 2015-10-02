@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import project.business.MasterBeanLocal;
+import org.jboss.logging.Logger;
 import project.entity.Stock;
 import project.entity.Transaction;
 import project.feed.LiveFeed;
@@ -42,6 +43,8 @@ public class DatabaseServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
+		Logger log =  Logger.getLogger(this.getClass());
+		
 		
 		try {
 			InitialContext context = new InitialContext();
@@ -55,13 +58,15 @@ public class DatabaseServlet extends HttpServlet {
 			int shortTime = 1;
 			int longTime = 2;
 			boolean missing = false;
-			String[] stocks = {"AV", "ADM", "BP", "BLT"};
+			
+			String[] stocks = {"IBM", "MSFT", "GOOG", "GE", "YHOO", "CSCO", "AAPL"};
 			Strategy strategy = new Strategy();
-			TwoMovingAverage bpMAvg = new TwoMovingAverage("BP", shortTime, longTime);
+			TwoMovingAverage bpMAvg = new TwoMovingAverage("IBM", shortTime, longTime);
 			strategy.addTwoMAvg(bpMAvg);
+			LiveFeed liveFeed = new LiveFeed();
 			while(true) {
 				for(int i=0;i<stocks.length;i++) {
-					String[] fields = LiveFeed.runLiveFeed(stocks[i]);
+					String[] fields = liveFeed.runLiveFeed(stocks[i]);
 					fields[0] = fields[0].replace("\"", "");
 		        	
 					for(int loop=0;loop<fields.length;loop++) {
@@ -133,7 +138,7 @@ public class DatabaseServlet extends HttpServlet {
 			}
 			
 		} catch(Exception ex) {
-			out.println("Exception occurred: " + ex.getMessage());
+			log.error("ERROR " + ex.getMessage());
 		}
 	}
 
