@@ -1,9 +1,14 @@
 package project.business;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.ejb.Asynchronous;
 import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
@@ -11,8 +16,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.jboss.logging.Logger;
+
 import project.entity.Stock;
 import project.entity.Transaction;
+import project.strategies.Strategy;
+import project.strategies.TwoMovingAverage;
 
 @Stateless
 @Remote(MasterBeanRemote.class)
@@ -30,6 +39,7 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 	 */
 
 	@Override
+	@Asynchronous
 	public void saveStock(Stock s) {
 		entityManager.persist(s);
 	}
@@ -65,7 +75,9 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 		List<Stock> stocks = query.getResultList();
 		return stocks;
 	}
-
+	
+	@Override
+	@Asynchronous
 	public void clearStock() {
 		String q = "DELETE FROM " + Stock.class.getName();
 		int rows = entityManager.createQuery(q).executeUpdate();
@@ -143,5 +155,4 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 
 		}
 	}
-	
 }

@@ -45,7 +45,6 @@ public class DatabaseServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		Logger log =  Logger.getLogger(this.getClass());
 		
-		
 		try {
 			InitialContext context = new InitialContext();
 			MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");

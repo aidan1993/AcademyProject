@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	import="project.entity.Stock, java.util.List, project.business.MasterBeanLocal, javax.naming.InitialContext, project.servlets.RunData"
+	import="project.entity.Stock, java.util.List, javax.naming.InitialContext, project.entity.Stock, 
+	project.business.LiveFeedBeanLocal, project.business.MasterBeanLocal"
     pageEncoding="ISO-8859-1"%>
-<%
-	(new Thread(new RunData())).start();
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,8 +26,7 @@
 	   $('#left-div').load('HomePage.jsp');
 	}, 10000); // refresh every 10000 milliseconds
 </script> -->
-
-  <script type="text/javascript">
+<script type="text/javascript">
 	window.onload = function () {
 
 		var dps = []; // dataPoints
@@ -84,7 +81,7 @@
 
 <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197" style="z-index: 9999; width: 100%;">
   <ul class="nav navbar-nav">
-    <li class="active";"><a href="#">Trading Home</a></li>
+    <li class="active"><a href="#">Trading Home</a></li>
     <li><a href="TransactionsPage.html">Transactions</a></li>
 
   </ul>
@@ -100,7 +97,7 @@
 				style="background-color: black; border: 3px solid cyan;">
 				<h3 align="center">
 					<span class="label label-info" style="border-radius: 20px;">
-						<% 
+						<% 	
 							InitialContext context = new InitialContext();
 							MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
 							List<Stock> av = bean.retrieveMostRecent("AV");
