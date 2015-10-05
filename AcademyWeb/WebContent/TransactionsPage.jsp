@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-import="project.entity.Transaction, java.util.List, javax.naming.InitialContext, project.entity.Stock, 
-	project.business.LiveFeedBeanLocal, project.business.MasterBeanLocal"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -8,8 +6,8 @@ import="project.entity.Transaction, java.util.List, javax.naming.InitialContext,
 
 <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197" style="z-index: 9999; width: 100%;">
   <ul class="nav navbar-nav">
-    <li class="active"><a href="index.jsp">Trading Home</a></li>
-    <li><a href="TransactionsPage.jsp">Transactions</a></li>
+    <li class="active"><a href="HomePage.jsp">Trading Home</a></li>
+    <li><a href="TransactionsPage.html">Transactions</a></li>
 
   </ul>
 </nav>
@@ -97,18 +95,7 @@ $(document).ready(function() {
   </table>
 </div>
 
-<div>
-					<span class="label label-info" style="border-radius: 20px;">
-						<% 	
-							InitialContext context = new InitialContext();
-							MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
-							List<Transaction > tr = bean.retrieveAllTransaction();
-							for(Transaction t: tr) {
-								out.print(t.getStockSymbol());
-							}
-						%>
-					</span>
-				</div>
+
 
 
 </body>
