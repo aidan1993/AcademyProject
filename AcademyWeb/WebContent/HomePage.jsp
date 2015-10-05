@@ -28,7 +28,7 @@
 </script> -->
 
 <script type="text/javascript">
-	window.onload = function() {
+	window.onload(function() {
 
 		var dps = []; // dataPoints
 
@@ -76,18 +76,17 @@
 			updateChart()
 		}, updateInterval);
 
-	}
+	});
 </script>
 
 <script type="text/javascript" src="bootstrap/js/canvasjs.min.js"></script>
 </head>
 <body>
 
-	<nav class="navbar navbar-inverse" data-spy="affix"
-		data-offset-top="197" style="z-index: 9999; width: 100%;">
-		<ul class="nav navbar-nav">
-			<li class="active"><a href="#">Trading Home</a></li>
-			<li><a href="TransactionsPage.html">Transactions</a></li>
+<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197" style="z-index: 9999; width: 100%;">
+  <ul class="nav navbar-nav">
+    <li class="active"><a href="#">Trading Home</a></li>
+    <li><a href="TransactionsPage.jsp">Transactions</a></li>
 
 		</ul>
 	</nav>
