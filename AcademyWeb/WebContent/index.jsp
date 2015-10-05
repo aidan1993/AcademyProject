@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	import="project.entity.Stock, java.util.List, javax.naming.InitialContext, project.entity.Stock, 
-	project.business.LiveFeedBeanLocal, project.business.MasterBeanLocal"
+	import="project.entity.Stock, java.util.List, javax.naming.InitialContext, 
+	project.entity.Stock, project.business.MasterBeanLocal"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
@@ -82,7 +82,7 @@
 <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197" style="z-index: 9999; width: 100%;">
   <ul class="nav navbar-nav">
     <li class="active"><a href="#">Trading Home</a></li>
-    <li><a href="TransactionsPage.html">Transactions</a></li>
+    <li><a href="TransactionsPage.jsp">Transactions</a></li>
 
   </ul>
 </nav>
