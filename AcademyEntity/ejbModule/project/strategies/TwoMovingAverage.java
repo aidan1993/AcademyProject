@@ -7,9 +7,11 @@ import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import project.business.MasterBeanLocal;
 import org.jboss.logging.Logger;
+
+import project.business.MasterBeanLocal;
 import project.entity.Stock;
+import project.entity.Transaction;
 
 @EJB(name="ejb/Master", beanInterface=MasterBeanLocal.class)
 public class TwoMovingAverage extends Strategy {
@@ -71,12 +73,11 @@ public class TwoMovingAverage extends Strategy {
 	
 	//Duration is set to minutes
 	public void calcMovingAverage(long startTime) {
-		InitialContext context;
-		MasterBeanLocal bean;
+
 		Logger log =  Logger.getLogger(this.getClass());
 		try {
-			context = new InitialContext();
-			bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
+			InitialContext context = new InitialContext();
+			MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
 			
 			//Calculate short average
 			if((System.currentTimeMillis()-startTime) >= shortDuration*60*1000) {
@@ -96,6 +97,45 @@ public class TwoMovingAverage extends Strategy {
 	        	longPrices.add(longAvg);
 	        }
 		} catch (NamingException ex) {
+			log.error("ERROR " + ex.getMessage());
+		}
+	}
+	
+	public void carryOutTransaction(Stock s, TwoMovingAverage movingAvg) {
+		Logger log =  Logger.getLogger(this.getClass());
+		
+		try {
+			InitialContext context = new InitialContext();
+			MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
+			
+			if(movingAvg.getShortPrices().size() > 0 && movingAvg.getLongPrices().size() > 0) {
+				List<Double> shortP = movingAvg.getShortPrices();
+				List<Double> longP = movingAvg.getLongPrices();
+				double recentShort = shortP.get(shortP.size()-1);
+				double recentLong = longP.get(longP.size()-1);
+				
+				String symbol = s.getStockSymbol();
+				int volume = 100;
+				double price = (s.getAskPrice()+s.getBidPrice())/2;
+				String transtype = "";
+				String strategyStr = "TwoMAvg";
+				
+				Transaction t;
+				if(recentShort > recentLong) {
+					transtype = "Buy";
+					Stock st = bean.findStock(s);
+		        	t = new Transaction(st, symbol, volume, price, transtype, strategyStr);
+		        	bean.saveTransaction(t);
+		        } else if(recentShort < recentLong) {
+		        	transtype = "Sell";
+		        	Stock st = bean.findStock(s);
+		        	t = new Transaction(st, symbol, volume, price, transtype, strategyStr);
+		        	bean.saveTransaction(t);
+		        } else {
+		        	System.out.println("EQUAL: " + recentShort + " AND " + recentLong);
+		        }
+			}
+		} catch (Exception ex) {
 			log.error("ERROR " + ex.getMessage());
 		}
 	}
