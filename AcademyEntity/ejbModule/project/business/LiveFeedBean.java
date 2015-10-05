@@ -32,7 +32,7 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 			InitialContext context = new InitialContext();
 			MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
 			
-			bean.clearStock();
+			//bean.clearStock();
 
 			String[] stocks = {"AV", "BP", "BLT"};			
 //			Strategy strategy = new Strategy();
