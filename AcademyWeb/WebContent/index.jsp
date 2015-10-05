@@ -127,7 +127,7 @@
 					</h5>
 					<h5 style="float: right">
 						<span class="label label-warning">High: <%
-							for (Stock s : ibm) {
+							for (Stock s : av) {
 								out.print(s.getDayHigh());
 							}
 						%>
@@ -138,7 +138,7 @@
 				<div class="row row-format">
 					<h5 style="float: left">
 						<span class="label label-default">Bid: <%
-							for (Stock s : ibm) {
+							for (Stock s : av) {
 								out.print(s.getBidPrice());
 							}
 						%>
@@ -146,7 +146,7 @@
 					</h5>
 					<h5 style="float: right">
 						<span class="label label-default">Ask <%
-							for (Stock s : ibm) {
+							for (Stock s : av) {
 								out.print(s.getAskPrice());
 							}
 						%>
@@ -177,16 +177,7 @@
 					<div class='wrapper text-center'>
 						<div class="btn-group">
 
-							<button type="submit" class="btn btn-primary" onclick="<%
-									
-							for(Stock s: ibm) {
-	 							Transaction t = new Transaction();
-	 							t.setStockid(s.getStockId());
-	 							t.setStockSymbol(s.getStockSymbol());
-	 							t.setPrice(s.getBidPrice());
-								t.setTranstype("BUY");								 
-								bean.saveTransaction(t);
-							} %>">Buy</button>
+							<button type="submit" class="btn btn-primary">Buy</button>
 
 							<button type="submit" class="btn btn-primary">Sell</button>
 						</div>
