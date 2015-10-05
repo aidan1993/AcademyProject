@@ -1,9 +1,14 @@
 package project.business;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.ejb.Asynchronous;
 import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
@@ -11,25 +16,32 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.jboss.logging.Logger;
+
 import project.entity.Stock;
+import project.entity.Transaction;
+import project.strategies.Strategy;
+import project.strategies.TwoMovingAverage;
 
 @Stateless
-@Remote(StockBeanRemote.class)
-@Local(StockBeanLocal.class)
-public class StockBean implements StockBeanLocal, StockBeanRemote {
+@Remote(MasterBeanRemote.class)
+@Local(MasterBeanLocal.class)
+public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 	@PersistenceContext(unitName = "JPADB")
 	private EntityManager entityManager;
 	
-	public StockBean() {
+	public MasterBean() {
 		
 	}
+	
+	/**
+	 * Stock Table Methods	
+	 */
 
 	@Override
+	@Asynchronous
 	public void saveStock(Stock s) {
 		entityManager.persist(s);
-		
-//		entityManager.merge(s);
-//		entityManager.flush();
 	}
 
 	@Override
@@ -63,7 +75,9 @@ public class StockBean implements StockBeanLocal, StockBeanRemote {
 		List<Stock> stocks = query.getResultList();
 		return stocks;
 	}
-
+	
+	@Override
+	@Asynchronous
 	public void clearStock() {
 		String q = "DELETE FROM " + Stock.class.getName();
 		int rows = entityManager.createQuery(q).executeUpdate();
@@ -98,7 +112,47 @@ public class StockBean implements StockBeanLocal, StockBeanRemote {
 		return stocks;
 	}*/
 	
+	/**
+	 * Transaction Table Methods	
+	 */
 	
-	
-	
+	@Override
+	public void saveTransaction(Transaction t) {
+		entityManager.persist(t);
+
+	}
+
+	@Override
+	public void deleteTransaction(Transaction t) {
+		entityManager.remove(t);
+
+	}
+
+	@Override
+	public Transaction findTransaction(Transaction t) {
+		Transaction tr = entityManager.find(Transaction.class,
+				t.getTransactionid());
+		return tr;
+
+	}
+
+	@Override
+	public List<Transaction> retrieveAllTransaction() {
+		String q = "SELECT t FROM " + Transaction.class.getName() + " s";
+		Query query = entityManager.createQuery(q);
+		List<Transaction> Transaction = query.getResultList();
+		return Transaction;
+
+	}
+
+	@Override
+	public void clearTransaction() {
+		String q = "DELETE FROM " + Transaction.class.getName();
+		int rows = entityManager.createQuery(q).executeUpdate();
+
+		if (rows > 0) {
+			System.out.println("Database Cleared");
+
+		}
+	}
 }

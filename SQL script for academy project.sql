@@ -22,6 +22,7 @@ Create table Transactions (
 	Price DECIMAL(6,2) NOT NULL,
     TransTime Timestamp NULL,
 	TransType ENUM('Buy', 'Sell') DEFAULT 'Buy' NOT NULL,
+    Strategy ENUM('Manual', 'TwoMAvg') DEFAULT 'Manual' NOT NULL,
     FOREIGN KEY(Stockid) REFERENCES Stocks(Stockid) ON DELETE CASCADE
 );
 

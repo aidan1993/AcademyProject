@@ -12,18 +12,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import project.business.MasterBeanLocal;
 import org.jboss.logging.Logger;
-
-import project.business.StockBeanLocal;
 import project.entity.Stock;
+import project.entity.Transaction;
 import project.feed.LiveFeed;
+import project.strategies.Strategy;
 import project.strategies.TwoMovingAverage;
 
 /**
  * Servlet implementation class DatabaseServlet
  */
 @WebServlet("/DatabaseServlet")
-@EJB(name="ejb/Stock", beanInterface=StockBeanLocal.class)
+@EJB(name="ejb/Master", beanInterface=MasterBeanLocal.class)
 public class DatabaseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -44,10 +45,9 @@ public class DatabaseServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		Logger log =  Logger.getLogger(this.getClass());
 		
-		
 		try {
 			InitialContext context = new InitialContext();
-			StockBeanLocal bean = (StockBeanLocal)context.lookup("java:comp/env/ejb/Stock");
+			MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
 			Stock s;
 			
 			bean.clearStock();
@@ -57,9 +57,10 @@ public class DatabaseServlet extends HttpServlet {
 			int shortTime = 1;
 			int longTime = 2;
 			boolean missing = false;
-			
 			String[] stocks = {"IBM", "MSFT", "GOOG", "GE", "YHOO", "CSCO", "AAPL"};
-			TwoMovingAverage twoMAvg = new TwoMovingAverage("IBM", shortTime, longTime);
+			Strategy strategy = new Strategy();
+			TwoMovingAverage bpMAvg = new TwoMovingAverage("IBM", shortTime, longTime);
+			strategy.addTwoMAvg(bpMAvg);
 			LiveFeed liveFeed = new LiveFeed();
 			while(true) {
 				for(int i=0;i<stocks.length;i++) {
@@ -97,27 +98,40 @@ public class DatabaseServlet extends HttpServlet {
 		        		s = new Stock(symbol, bidPrice, askPrice, close);
 		        	}
 		        	
-		        	if(symbol.equals(twoMAvg.getStock())) {
-		        		twoMAvg.calcMovingAverage(startTime);
-		        	}
-			        
-			        bean.saveStock(s);
-
-				}
-		        
-				if(twoMAvg.getShortPrices().size() > 0 && twoMAvg.getLongPrices().size() > 0) {
-					List<Double> shortP = twoMAvg.getShortPrices();
-					List<Double> longP = twoMAvg.getLongPrices();
-					double recentShort = shortP.get(shortP.size()-1);
-					double recentLong = longP.get(longP.size()-1);
-					
-					if(recentShort > recentLong) {
-			        	System.out.println("BUY: " + recentShort + " GREATER THAN " + recentLong);
-			        } else if(recentShort < recentLong) {
-			        	System.out.println("SELL: " + recentShort + " LESS THAN " + recentLong);
-			        } else {
-			        	System.out.println("EQUAL: " + recentShort + " AND " + recentLong);
-			        }
+		        	bean.saveStock(s);
+		        	
+//		        	for(TwoMovingAverage movingAvg : strategy.getTwoMAvg()) {
+//			        	if(symbol.equals(movingAvg.getStock())) {
+//			        		movingAvg.calcMovingAverage(startTime);
+//			        	}
+//			        	
+//			        	if(movingAvg.getShortPrices().size() > 0 && movingAvg.getLongPrices().size() > 0) {
+//							List<Double> shortP = movingAvg.getShortPrices();
+//							List<Double> longP = movingAvg.getLongPrices();
+//							double recentShort = shortP.get(shortP.size()-1);
+//							double recentLong = longP.get(longP.size()-1);
+//							
+//							int volume = 100;
+//							double price = (s.getAskPrice()+s.getBidPrice())/2;
+//							String transtype = "";
+//							String strategyStr = "TwoMAvg";
+//							
+//							Transaction t;
+//							if(recentShort > recentLong) {
+//								transtype = "Buy";
+//								Stock st = bean.findStock(s);
+//					        	t = new Transaction(st, symbol, volume, price, transtype, strategyStr);
+//					        	bean.saveTransaction(t);
+//					        } else if(recentShort < recentLong) {
+//					        	transtype = "Sell";
+//					        	Stock st = bean.findStock(s);
+//					        	t = new Transaction(st, symbol, volume, price, transtype, strategyStr);
+//					        	bean.saveTransaction(t);
+//					        } else {
+//					        	System.out.println("EQUAL: " + recentShort + " AND " + recentLong);
+//					        }
+//						}
+//		        	}
 				}
 			}
 			

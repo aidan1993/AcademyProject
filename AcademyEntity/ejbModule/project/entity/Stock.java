@@ -1,7 +1,11 @@
 package project.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity(name="Stocks")
 public class Stock {
@@ -30,7 +34,11 @@ public class Stock {
 	}
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int stockId;
+	@OneToOne(mappedBy="stock", fetch=FetchType.EAGER)
+	private Transaction transaction;
+	
 	private String stockSymbol;
 	private double bidPrice;
 	private double askPrice;
