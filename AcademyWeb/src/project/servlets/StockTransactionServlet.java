@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,8 +16,10 @@ import project.business.MasterBeanLocal;
 import org.jboss.logging.Logger;
 import project.entity.Stock;
 import project.entity.Transaction;
+import project.entity.Stock;
 
 @WebServlet("/StockTransactionServlet")
+@EJB(name="ejb/Master", beanInterface=MasterBeanLocal.class)
 public class StockTransactionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -37,19 +40,12 @@ public class StockTransactionServlet extends HttpServlet {
 			InitialContext context = new InitialContext();
 			MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
 			Transaction t = new Transaction();
-			//t.setStockSymbol(request.);
+			bean.saveTransaction(t);
 			
-			/*	An if statement calling method from trade strategies placed here will
-			 * 	enable the trades to be added to the transaction table if the proper
-			 * 	conditions are met.
-			 * 	
-			 * 
-			 */
 	        
-	        
-	} catch(Exception ex) {
-		log.error("ERROR " + ex.getMessage());
-	}
+		} catch(Exception ex) {
+			log.error("ERROR " + ex.getMessage());
+		}
 	}
 	
 
