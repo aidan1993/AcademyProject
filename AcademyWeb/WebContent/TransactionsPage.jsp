@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+import="project.entity.Transaction, project.entity.Transaction, java.util.List, 
+	project.business.MasterBeanLocal, javax.naming.InitialContext, javax.ejb.EJB, javax.naming.Context"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -20,9 +22,12 @@
 
 </head>
 <body>
-
+<% 
+InitialContext context = new InitialContext();
+MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
+List<Transaction> tr = bean.retrieveAllTransaction() ;
+%>
 <script type="text/javascript">
-
 $(document).ready(function() { 
     $("table").tablesorter({ 
         sortList: [[0,0],[2,0]] }); 
@@ -41,21 +46,24 @@ $(document).ready(function() {
         <th>Volume<a><span class="glyphicon glyphicon-sort "></span></a></th>
         <th>Price<a><span class="glyphicon glyphicon-sort "></span></a></th>
         <th>Time<a><span class="glyphicon glyphicon-sort "></span></a></th>
-        <th>Current Position<a><span class="glyphicon glyphicon-sort "></span></a></th>
-        
+        <th>Strategy Used<a><span class="glyphicon glyphicon-sort "></span></a></th>
       </tr>
     </thead>
     <tbody>
+    <%
+    for(Transaction t: tr)
+    	{%>
       <tr>
-        <td>1</td>
-        <td>A</td>
-        <td>Buy</td>
-        <td>100</td>
-        <td>8.99</td>
-        <td>12:00am</td>
-        <td>Closed</td>
+        <td><%out.print(t.getTransactionid());%></td>
+        <td><%out.print(t.getStockSymbol());%></td>
+        <td><%out.print(t.getTranstype());%></td>
+        <td><%out.print(t.getVolume());%></td>
+        <td><%out.print(t.getPrice());%></td>
+        <td><%out.print(t.getTranstime());%></td>
+        <td><%out.print(t.getStrategy());%></td>
       </tr>
-      <tr>
+      <%} %>
+    <!--   <tr>
         <td>2</td>
         <td>B</td>
         <td>Buy</td>
@@ -90,10 +98,9 @@ $(document).ready(function() {
         <td>8.99</td>
         <td>12:00am</td>
         <td>Closed</td>
-      </tr>
+      </tr> -->
     </tbody>
   </table>
 </div>
-
 </body>
 </html>

@@ -22,4 +22,5 @@ public interface MasterBeanRemote {
 	void saveTransaction(Transaction t);
 	List<Transaction> retrieveAllTransaction();
 	void clearTransaction();
+	List<Transaction> retrieveMostRecent1();
 }
