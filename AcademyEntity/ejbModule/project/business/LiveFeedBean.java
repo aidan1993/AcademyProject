@@ -35,7 +35,7 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 			bean.clearStock();
 			
 			Stock s;
-			String[] stocks = {"AV", "BP", "BLT"};			
+			String[] stocks = {"TSCO", "BP", "BLT", "IBM", "MSFT", "CSCO", "YHOO", "GOOG", "AAPL"};			
 			Strategy strategy = new Strategy();
 			
 			//Set start time of the application
