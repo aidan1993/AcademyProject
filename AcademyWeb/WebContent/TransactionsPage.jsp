@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-import="project.entity.Transaction, project.entity.Transaction, java.util.List, 
-	project.business.MasterBeanLocal, javax.naming.InitialContext, javax.ejb.EJB, javax.naming.Context"
-    pageEncoding="ISO-8859-1"%>
+	import="project.entity.Stock, project.entity.Transaction, java.util.List, 
+	project.business.MasterBeanLocal, project.business.LiveFeedBean, javax.naming.InitialContext, javax.ejb.EJB, javax.naming.Context"
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
