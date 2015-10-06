@@ -9,12 +9,6 @@
 	width: 32% !important;
 }
 
-.table-trans {
-	tr:nth-child(even) 
-    background-color: #00ffff;
-	width: 32.3% !important;
-}
-
 .other-stock {
 	width: 32.3% !important;
 }
@@ -22,4 +16,9 @@
 .row-format {
 	padding-left: 5px;
 	padding-right: 5px;
+}
+
+.modal-div {	
+	background-color: black !important;
+	
 }

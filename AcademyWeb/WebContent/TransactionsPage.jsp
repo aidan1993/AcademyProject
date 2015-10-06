@@ -36,7 +36,10 @@ $(document).ready(function() {
 
 <div class="container">
   <h2>Transactions</h2>          
+
   <table id="myTable" class="table table-striped" class="tablesorter">
+
+  
 
     <thead>
       <tr>
