@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 import="project.entity.Transaction, project.entity.Transaction, java.util.List, 
-	project.business.MasterBeanLocal, javax.naming.InitialContext, javax.ejb.EJB, javax.naming.Context"
+	project.business.MasterBeanLocal, javax.naming..InitialContext, javax.ejb.EJB, javax.ejb.Context"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -36,7 +36,10 @@ $(document).ready(function() {
 
 <div class="container">
   <h2>Transactions</h2>          
+
   <table id="myTable" class="table table-striped" class="tablesorter">
+
+  
 
     <thead>
       <tr>
