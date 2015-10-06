@@ -110,10 +110,12 @@
 					<span class="label label-info" style="border-radius: 20px;">
 						<%
 							InitialContext context = new InitialContext();
+
 							MasterBeanLocal bean = (MasterBeanLocal) context
 									.lookup("java:comp/env/ejb/Master");
 							List<Stock> div1 = bean.retrieveMostRecent(LiveFeedBean.getDiv1());
 							for (Stock s : div1) {
+
 								out.print(s.getStockSymbol());
 							}
 						%>
@@ -132,7 +134,9 @@
 					</h5>
 					<h5 style="float: right">
 						<span class="label label-warning">High: <%
+
 							for (Stock s : div1) {
+
 								out.print(s.getDayHigh());
 							}
 						%>
@@ -143,7 +147,9 @@
 				<div class="row row-format">
 					<h5 style="float: left">
 						<span class="label label-default">Bid: <%
+
 							for (Stock s : div1) {
+
 								out.print(s.getBidPrice());
 							}
 						%>
@@ -151,7 +157,9 @@
 					</h5>
 					<h5 style="float: right">
 						<span class="label label-default">Ask <%
+
 							for (Stock s : div1) {
+
 								out.print(s.getAskPrice());
 							}
 						%>
@@ -179,6 +187,20 @@
 				<div class="row">
 					<div class='wrapper text-center'>
 						<div class="btn-group">
+						
+						<%
+						for (Stock s: av){
+							Transaction t = new Transaction();
+							t.setStockSymbol(s.getStockSymbol());
+							t.setStock(s);
+							t.setPrice(s.getBidPrice());
+							t.setTranstype("BUY");
+							t.setStrategy("Manual");
+							t.setVolume(10);
+							bean.saveTransaction(t);}
+											
+						%>
+
 
 							<%
 								
@@ -189,6 +211,7 @@
 
 							<button type="submit" class="btn btn-primary" data-toggle="modal"
 								data-target="#SellModalDiv1">Sell</button>
+
 
 						</div>
 					</div>
@@ -274,8 +297,10 @@
 				<h3 align="center">
 					<span class="label label-info" style="border-radius: 20px;">
 						<%
+
 							List<Stock> div3 = bean.retrieveMostRecent(LiveFeedBean.getDiv3());
 							for (Stock s : div3) {
+
 								out.print(s.getStockSymbol());
 							}
 						%>
@@ -346,6 +371,7 @@
 				<h3 align="center">
 					<span class="label label-info" style="border-radius: 20px;">
 						<%
+
 							List<Stock> div4 = bean.retrieveMostRecent(LiveFeedBean.getDiv4());
 							for (Stock s : div4) {
 								out.print(s.getStockSymbol());
@@ -753,67 +779,37 @@
 
 			<!-- 		</div> -->
 			<!--  <h7>Last 5 Transactions</h7>           -->
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>Transaction ID</th>
-						<th>Stock Symbol</th>
-						<th>Action</th>
-						<th>Volume</th>
-						<th>Price</th>
-						<th>Time</th>
-						<th>Current Position</th>
-
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>1</td>
-						<td>AAPL</td>
-						<td>Buy</td>
-						<td>100</td>
-						<td>8.99</td>
-						<td>12:00am</td>
-						<td>Closed</td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td>AAPL</td>
-						<td>Buy</td>
-						<td>100</td>
-						<td>8.99</td>
-						<td>12:00am</td>
-						<td>Closed</td>
-					</tr>
-					<tr>
-						<td>3</td>
-						<td>AAPL</td>
-						<td>Buy</td>
-						<td>100</td>
-						<td>8.99</td>
-						<td>12:00am</td>
-						<td>Closed</td>
-					</tr>
-					<tr>
-						<td>4</td>
-						<td>AAPL</td>
-						<td>Buy</td>
-						<td>100</td>
-						<td>8.99</td>
-						<td>12:00am</td>
-						<td>Closed</td>
-					</tr>
-					<tr>
-						<td>5</td>
-						<td>AAPL</td>
-						<td>Buy</td>
-						<td>100</td>
-						<td>8.99</td>
-						<td>12:00am</td>
-						<td>Closed</td>
-					</tr>
-				</tbody>
-			</table>
+			<table id="myTable" class="table table-striped">
+			<% 
+			List<Transaction> tr = bean.retrieveMostRecent1();
+			%>
+			<thead>
+      <tr>
+        <th>Transaction ID<a><span class="glyphicon glyphicon-sort "></span></a></th>
+        <th>Stock Symbol<a><span class="glyphicon glyphicon-sort "></span></a></th>
+        <th>Action<a><span class="glyphicon glyphicon-sort "></span></a></th>
+        <th>Volume<a><span class="glyphicon glyphicon-sort "></span></a></th>
+        <th>Price<a><span class="glyphicon glyphicon-sort "></span></a></th>
+        <th>Time<a><span class="glyphicon glyphicon-sort "></span></a></th>
+        <th>Strategy Used<a><span class="glyphicon glyphicon-sort "></span></a></th>
+      </tr>
+    </thead>
+    <tbody>
+    <%
+    for(Transaction t: tr)
+    	{%>
+      <tr>
+        <td><%out.print(t.getTransactionid());%></td>
+        <td><%out.print(t.getStockSymbol());%></td>
+        <td><%out.print(t.getTranstype());%></td>
+        <td><%out.print(t.getVolume());%></td>
+        <td><%out.print(t.getPrice());%></td>
+        <td><%out.print(t.getTranstime());%></td>
+        <td><%out.print(t.getStrategy());%></td>
+      </tr>
+      <%} %>
+		</tbody>
+		</table>
 		</div>
 
 		<div class="container-fluid"

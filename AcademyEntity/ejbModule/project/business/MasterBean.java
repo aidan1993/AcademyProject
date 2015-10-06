@@ -138,11 +138,22 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 
 	@Override
 	public List<Transaction> retrieveAllTransaction() {
-		String q = "SELECT t FROM " + Transaction.class.getName() + " s";
+		String q = "SELECT t FROM " + Transaction.class.getName() + " t";
 		Query query = entityManager.createQuery(q);
 		List<Transaction> Transaction = query.getResultList();
 		return Transaction;
 
+	}
+	
+	@Override
+	public List<Transaction> retrieveMostRecent1() {
+	String qt = "SELECT t FROM " + Transaction.class.getName() + " t " + 
+						"ORDER BY TransTime DESC";
+	Query query = entityManager.createQuery(qt);
+	query.setMaxResults(5);
+	List<Transaction> transactions = query.getResultList();
+	return transactions;
+		
 	}
 
 	@Override
@@ -154,5 +165,9 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 			System.out.println("Database Cleared");
 
 		}
+		
+		
+		
+		
 	}
 }
