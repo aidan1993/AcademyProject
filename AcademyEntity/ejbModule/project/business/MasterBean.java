@@ -1,27 +1,26 @@
 package project.business;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.ejb.Asynchronous;
 import javax.ejb.Local;
 import javax.ejb.Remote;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.jboss.logging.Logger;
-
 import project.entity.Stock;
 import project.entity.Transaction;
-import project.strategies.Strategy;
-import project.strategies.TwoMovingAverage;
 
 @Stateless
 @Remote(MasterBeanRemote.class)
@@ -29,6 +28,9 @@ import project.strategies.TwoMovingAverage;
 public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 	@PersistenceContext(unitName = "JPADB")
 	private EntityManager entityManager;
+	
+	@Resource
+	private SessionContext context;
 	
 	public MasterBean() {
 		
@@ -42,6 +44,7 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 	@Asynchronous
 	public void saveStock(Stock s) {
 		entityManager.persist(s);
+		entityManager.flush();
 	}
 
 	@Override
@@ -62,6 +65,18 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 		Query query = entityManager.createQuery(q);
 		List<Stock> stocks = query.getResultList();
 		return stocks;
+	}
+	
+	public List<Integer> retrieveMaxId(Stock s) {
+		String q = "SELECT s FROM " + Stock.class.getName() + " s " + 
+				"WHERE s.stockSymbol = :symbol AND s.stockid = (" +
+				"SELECT MAX(ss.stockid) FROM " + Stock.class.getName() + " ss)";
+
+		Query query = entityManager.createQuery(q);
+		query.setParameter("symbol", s.getStockSymbol());
+		query.setMaxResults(1);
+		List<Integer> stockid = query.getResultList();
+		return stockid;
 	}
 	
 	@Override
@@ -119,7 +134,7 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 	@Override
 	public void saveTransaction(Transaction t) {
 		entityManager.persist(t);
-
+		entityManager.flush();
 	}
 
 	@Override
@@ -138,7 +153,7 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 
 	@Override
 	public List<Transaction> retrieveAllTransaction() {
-		String q = "SELECT t FROM " + Transaction.class.getName() + " s";
+		String q = "SELECT t FROM " + Transaction.class.getName() + " t";
 		Query query = entityManager.createQuery(q);
 		List<Transaction> Transaction = query.getResultList();
 		return Transaction;

@@ -4,16 +4,16 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 import javax.ejb.Asynchronous;
-import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
-import javax.naming.InitialContext;
 
 import org.jboss.logging.Logger;
 
+import project.dataaccess.DataAccess;
 import project.entity.Stock;
 import project.strategies.Strategy;
 import project.strategies.TwoMovingAverage;
@@ -21,7 +21,6 @@ import project.strategies.TwoMovingAverage;
 @Stateless
 @Remote(LiveFeedBeanRemote.class)
 @Local(LiveFeedBeanLocal.class)
-@EJB(name="ejb/Master", beanInterface=MasterBeanLocal.class)
 public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 	
 	@Asynchronous
@@ -29,13 +28,12 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 		Logger log =  Logger.getLogger(this.getClass());
 		
 		try {
-			InitialContext context = new InitialContext();
-			MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
 			
-			bean.clearStock();
+			
+			DataAccess.clearStock();
 			
 			Stock s;
-			String[] stocks = {"AV", "BP", "BLT"};			
+			String[] stocks = {"TSCO", "AAPL", "BP"};			
 			Strategy strategy = new Strategy();
 			
 			//Set start time of the application
@@ -43,7 +41,7 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 			int shortTime = 1;
 			int longTime = 2;
 			boolean missing = false;
-			TwoMovingAverage bpMAvg = new TwoMovingAverage("IBM", shortTime, longTime);
+			TwoMovingAverage bpMAvg = new TwoMovingAverage("TSCO", shortTime, longTime);
 			strategy.addTwoMAvg(bpMAvg);
 			while(true) {
 				
@@ -95,26 +93,37 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 		        	
 		        	if(missing == false) {
 		        		s = new Stock(symbol, bidPrice, askPrice, high, low, open, close);
+		        		DataAccess.saveStock(s);
 		        	} else {
 		        		s = new Stock(symbol, bidPrice, askPrice, close);
+		        		DataAccess.saveStock(s);
 		        	}
 		        	
-		        	bean.saveStock(s);
+		        	List<Stock> sts = DataAccess.getAllStocks();
+		        	for(Stock st : sts) {
+		        		System.out.println(st.toString());
+		        	}
+		        	
+//		        	if(((System.currentTimeMillis()-startTime) >= shortTime*60*1000) &&
+//			        		((System.currentTimeMillis()-startTime) >= longTime*60*1000)){
+//		        		for(int i=0;i<strategy.getTwoMAvg().size();i++) {
+//			        		TwoMovingAverage movingAvg = strategy.getTwoMAvg().get(i);
+//			        		
+//							if(s.getStockSymbol().equals(movingAvg.getStock())) {
+//				        		movingAvg.calcMovingAverage(startTime);
+//								movingAvg.carryOutTransaction(stock.get(0), movingAvg);
+//				        	}
+//				        }
+//		        	}
 		        	
 		        	try {
 						Thread.sleep(1000);
 					} catch (InterruptedException ex) {
 						log.error("ERROR " + ex.getMessage());
 					}
-		        	
-		        	for(TwoMovingAverage movingAvg : strategy.getTwoMAvg()) {
-			        	if(symbol.equals(movingAvg.getStock())) {
-			        		movingAvg.calcMovingAverage(startTime);
-			        	}
-			        	
-						movingAvg.carryOutTransaction(s, movingAvg);
-			        }
 				}
+				
+				
 			}
 		} catch(Exception ex) {
 			log.error("ERROR " + ex.getMessage());
