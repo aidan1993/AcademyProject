@@ -6,8 +6,8 @@
 
 <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197" style="z-index: 9999; width: 100%;">
   <ul class="nav navbar-nav">
-    <li class="active"><a href="HomePage.jsp">Trading Home</a></li>
-    <li><a href="TransactionsPage.html">Transactions</a></li>
+    <li class="active"><a href="index.jsp">Trading Home</a></li>
+    <li><a href="TransactionsPage.jsp">Transactions</a></li>
 
   </ul>
 </nav>
@@ -22,6 +22,8 @@
 <div class="container">
   <h2>Transactions</h2>          
   <table class="table table-striped">
+  
+
 
     <thead>
       <tr>
