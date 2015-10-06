@@ -1,7 +1,7 @@
-<%  page language="java" contentType="text/html; charset=ISO-8859-1"
-	import="project.entity.Stock, project.entity.Transaction, java.util.list, project.business.MasterBeanLocal, project.business.LiveFeedBean, javax.naming.InitialContext, javax.ejb.EJB, javax.naming.Context"
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	import="project.entity.Stock, project.entity.Transaction, java.util.List, 
+	project.business.MasterBeanLocal, project.business.LiveFeedBean, javax.naming.InitialContext, javax.ejb.EJB, javax.naming.Context"
 	pageEncoding="ISO-8859-1"%>
-<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -187,23 +187,6 @@
 					<div class='wrapper text-center'>
 						<div class="btn-group">
 						
-						<%
-						for (Stock s: av){
-							Transaction t = new Transaction();
-							t.setStockSymbol(s.getStockSymbol());
-							t.setStock(s);
-							t.setPrice(s.getBidPrice());
-							t.setTranstype("BUY");
-							t.setStrategy("Manual");
-							t.setVolume(10);
-							bean.saveTransaction(t);}
-											
-						%>
-
-
-							<%
-								
-							%>
 
 							<button type="submit" class="btn btn-primary" data-toggle="modal"
 								data-target="#BuyModalDiv1">Buy</button>
@@ -923,8 +906,7 @@
 					</div>
 				</div>
 			</div>
-<<<<<<< HEAD
-=======
+
 
 			<div id="BuyModalDiv1" class="modal fade" role="dialog">
 				<div class="modal-dialog">
