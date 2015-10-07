@@ -13,6 +13,7 @@ public interface MasterBeanLocal {
 	void deleteStock(Stock s);
 	Stock findStock(Stock s);
 	List<Stock> retrieveAllStock();
+	List<Integer> retrieveMaxId(Stock s);
 	List<Stock> retrieveMostRecent(String stock);
 	List<Stock> retrieveMovingAvgStock(int avgTime, String stock);
 	void clearStock();
