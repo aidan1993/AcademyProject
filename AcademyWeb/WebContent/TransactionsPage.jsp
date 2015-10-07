@@ -12,23 +12,26 @@
 window.onload = function() {
 
 	var loop = 9;
+	var complete = true;
 	var URL = "rest/livefeed?loop=" + loop;
 	function runFeed() {
-		
-		$.ajax({
-            type: "GET",
-            url: URL,
-            cache: false,
-            success: function (data) {
-                console.log("Live Feed Running");
-            },
-            error: function (data) {
-                console.log("Problem occurred");
-            }
-    	});
-
-		setTimeout(runFeed, 10000);
-   	}
+		if(complete == true) {
+			complete = false;
+			$.ajax({
+		        type: "GET",
+		        url: URL,
+		        cache: false,
+		        success: function (data) {
+		            complete = data;
+		        },
+		        error: function (data) {
+		            console.log("Problem occurred");
+		        }
+			});
+		} else {
+			runFeed()	
+		}
+	}
 
 	runFeed();
 }
@@ -53,8 +56,8 @@ List<Transaction> tr = bean.retrieveAllTransaction() ;
 
 <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197" style="z-index: 9999; width: 100%;">
   <ul class="nav navbar-nav">
-    <li class="active"><a href="index.jsp">Trading Home</a></li>
-    <li><a href="TransactionsPage.jsp">Transactions</a></li>
+    <li><a href="index.jsp">Trading Home</a></li>
+    <li class="active"><a href="TransactionsPage.jsp">Transactions</a></li>
 
   </ul>
 </nav>

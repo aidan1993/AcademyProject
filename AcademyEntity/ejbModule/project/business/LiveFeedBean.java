@@ -61,17 +61,19 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 			String st9 = bean.getDiv9();
 			
 			String[] stocks = {st1, st2, st3, st4, st5, st6, st7, st8, st9};
-	        
-	        for(int i=0;i<loop;i++) {
+	        int i = 0;
+	        while(i < loop) {
 	        	if((System.currentTimeMillis() - lastCall) > 1000) {
 		        	lastCall = System.currentTimeMillis();
-		        	
 		        	
 		        	StringBuilder url = 
 				            new StringBuilder("http://finance.yahoo.com/d/quotes.csv?s=");
 		        	url.append(stocks[i]);
 		        	System.out.println(i + ": " + stocks[i]);
 			        url.append("&f=sbahgop&e=.csv");
+			        
+			        //Increment loop variable
+			        i++;
 			        
 			        String theUrl = url.toString();
 			        URL obj = new URL(theUrl);
