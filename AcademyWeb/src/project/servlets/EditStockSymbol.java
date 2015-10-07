@@ -3,8 +3,10 @@ package project.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.ejb.EJB;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,9 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.jboss.logging.Logger;
 
 import project.business.LiveFeedBean;
+import project.business.LiveFeedBeanLocal;
 import project.business.MasterBeanLocal;
 
 @WebServlet("/EditStockSymbol")
+@EJB(name="ejb/Master", beanInterface=MasterBeanLocal.class)
 public class EditStockSymbol extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -37,27 +41,30 @@ public class EditStockSymbol extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		Logger log = Logger.getLogger(this.getClass());
 
-		InitialContext context;
 		try {
-			context = new InitialContext();
 
 			if (request.getParameter("setStockPrefs") != null) {
+				
+				InitialContext context = new InitialContext();
+				MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
 
-				 LiveFeedBean.setDiv1(request.getParameter("txtDiv1"));
-				 LiveFeedBean.setDiv2(request.getParameter("txtDiv2"));
-				 LiveFeedBean.setDiv3(request.getParameter("txtDiv3"));
-				 LiveFeedBean.setDiv4(request.getParameter("txtDiv4"));
-				 LiveFeedBean.setDiv5(request.getParameter("txtDiv5"));
-				 LiveFeedBean.setDiv6(request.getParameter("txtDiv6"));
-				 LiveFeedBean.setDiv7(request.getParameter("txtDiv7"));
-				 LiveFeedBean.setDiv8(request.getParameter("txtDiv8"));
-				 LiveFeedBean.setDiv9(request.getParameter("txtDiv9"));
-				 
+				bean.setDiv1(request.getParameter("txtDiv1"));
+				bean.setDiv2(request.getParameter("txtDiv2"));
+				bean.setDiv3(request.getParameter("txtDiv3"));
+				bean.setDiv4(request.getParameter("txtDiv4"));
+				bean.setDiv5(request.getParameter("txtDiv5"));
+				bean.setDiv6(request.getParameter("txtDiv6"));
+				bean.setDiv7(request.getParameter("txtDiv7"));
+				bean.setDiv8(request.getParameter("txtDiv8"));
+				bean.setDiv9(request.getParameter("txtDiv9")); 
 			}
 
-			response.sendRedirect(request.getContextPath() + "/index.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+			rd.forward(request, response);
 
 		} catch (NamingException e) {
+			
+			//Add logger
 			e.printStackTrace();
 
 		}

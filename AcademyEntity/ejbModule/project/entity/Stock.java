@@ -17,11 +17,10 @@ public class Stock {
 		
 	}
 	
-	public Stock(String symbol, double bid, double ask, double close) {
+	public Stock(String symbol, double bid, double ask) {
 		this.stockSymbol = symbol;
 		this.bidPrice = bid;
 		this.askPrice = ask;
-		this.previousClose = close;
 	}
 	
 	public Stock(String symbol, double bid, double ask, double high, double low, double open, double close) {

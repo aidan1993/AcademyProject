@@ -64,6 +64,10 @@ window.onload = function() {
 	                console.log("Problem occurred");
 	            }
         	});
+			
+			setInterval(runFeed, 9000);
 		}
-		setInterval(runFeed, 3000);
+		
+		//Start Cycle
+		runFeed();
 };
