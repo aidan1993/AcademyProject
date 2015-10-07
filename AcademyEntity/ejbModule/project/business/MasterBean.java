@@ -1,27 +1,26 @@
 package project.business;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.ejb.Asynchronous;
 import javax.ejb.Local;
 import javax.ejb.Remote;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.jboss.logging.Logger;
-
 import project.entity.Stock;
 import project.entity.Transaction;
-import project.strategies.Strategy;
-import project.strategies.TwoMovingAverage;
 
 @Stateless
 @Remote(MasterBeanRemote.class)
@@ -29,6 +28,16 @@ import project.strategies.TwoMovingAverage;
 public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 	@PersistenceContext(unitName = "JPADB")
 	private EntityManager entityManager;
+	
+	static String div1 = "TSCO";
+	static String div2 = "VOD";
+	static String div3 = "RIO";
+	static String div4 = "GSK";
+	static String div5 = "BP";
+	static String div6 = "CHTR";
+	static String div7 = "CHTR";
+	static String div8 = "CHTR";
+	static String div9 = "CHTR";
 	
 	public MasterBean() {
 		
@@ -39,9 +48,9 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 	 */
 
 	@Override
-	@Asynchronous
 	public void saveStock(Stock s) {
-		entityManager.persist(s);
+		entityManager.merge(s);
+		entityManager.flush();
 	}
 
 	@Override
@@ -65,6 +74,19 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 	}
 	
 	@Override
+	public List<Integer> retrieveMaxId(Stock s) {
+		String q = "SELECT s FROM " + Stock.class.getName() + " s " + 
+				"WHERE s.stockSymbol = :symbol AND s.stockid = (" +
+				"SELECT MAX(ss.stockid) FROM " + Stock.class.getName() + " ss)";
+
+		Query query = entityManager.createQuery(q);
+		query.setParameter("symbol", s.getStockSymbol());
+		query.setMaxResults(1);
+		List<Integer> stockid = query.getResultList();
+		return stockid;
+	}
+	
+	@Override
 	public List<Stock> retrieveMostRecent(String stock) {
 		String q = "SELECT s FROM " + Stock.class.getName() + " s " + 
 					"WHERE s.stockSymbol = :symbol " +
@@ -77,7 +99,6 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 	}
 	
 	@Override
-	@Asynchronous
 	public void clearStock() {
 		String q = "DELETE FROM " + Stock.class.getName();
 		int rows = entityManager.createQuery(q).executeUpdate();
@@ -118,8 +139,8 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 	
 	@Override
 	public void saveTransaction(Transaction t) {
-		entityManager.persist(t);
-
+		entityManager.merge(t);
+		entityManager.flush();
 	}
 
 	@Override
@@ -165,9 +186,81 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 			System.out.println("Database Cleared");
 
 		}
-		
-		
-		
-		
+	}
+	
+	/*
+	 * Set and Get Stock Symbols
+	 */
+	@Override
+	public String getDiv1() {
+		return div1;
+	}
+	@Override
+	public void setDiv1(String div1) {
+		MasterBean.div1 = div1;
+	}
+	@Override
+	public String getDiv2() {
+		return div2;
+	}
+	@Override
+	public void setDiv2(String div2) {
+		MasterBean.div2 = div2;
+	}
+	@Override
+	public String getDiv3() {
+		return div3;
+	}
+	@Override
+	public void setDiv3(String div3) {
+		MasterBean.div3 = div3;
+	}
+	@Override
+	public String getDiv4() {
+		return div4;
+	}
+	@Override
+	public void setDiv4(String div4) {
+		MasterBean.div4 = div4;
+	}
+	@Override
+	public String getDiv5() {
+		return div5;
+	}
+	@Override
+	public void setDiv5(String div5) {
+		MasterBean.div5 = div5;
+	}
+	@Override
+	public String getDiv6() {
+		return div6;
+	}
+	@Override
+	public void setDiv6(String div6) {
+		MasterBean.div6 = div6;
+	}
+	@Override
+	public String getDiv7() {
+		return div7;
+	}
+	@Override
+	public void setDiv7(String div7) {
+		MasterBean.div7 = div7;
+	}
+	@Override
+	public String getDiv8() {
+		return div8;
+	}
+	@Override
+	public void setDiv8(String div8) {
+		MasterBean.div8 = div8;
+	}
+	@Override
+	public String getDiv9() {
+		return div9;
+	}
+	@Override
+	public void setDiv9(String div9) {
+		MasterBean.div9 = div9;
 	}
 }

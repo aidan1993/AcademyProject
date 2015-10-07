@@ -4,5 +4,5 @@ import javax.ejb.Remote;
 
 @Remote
 public interface LiveFeedBeanRemote {
-	void runLiveData();
+	void runLiveData(int loop);
 }

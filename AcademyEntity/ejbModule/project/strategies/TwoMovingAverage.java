@@ -108,7 +108,7 @@ public class TwoMovingAverage extends Strategy {
 			InitialContext context = new InitialContext();
 			MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
 			
-			if(movingAvg.getShortPrices().size() > 0 && movingAvg.getLongPrices().size() > 0) {
+			if((movingAvg.getShortPrices().size() > 0) && (movingAvg.getLongPrices().size() > 0)) {
 				List<Double> shortP = movingAvg.getShortPrices();
 				List<Double> longP = movingAvg.getLongPrices();
 				double recentShort = shortP.get(shortP.size()-1);
@@ -117,20 +117,26 @@ public class TwoMovingAverage extends Strategy {
 				String symbol = s.getStockSymbol();
 				int volume = 100;
 				double price = (s.getAskPrice()+s.getBidPrice())/2;
+				price = Math.round(price * 100.0)/100.0;
 				String transtype = "";
 				String strategyStr = "TwoMAvg";
+				
+				/*
+				 * Get recent transaction from the database and wait for profit/loss of > 1%
+				 * before exiting position (Buy/Sell)
+				 */
 				
 				Transaction t;
 				if(recentShort > recentLong) {
 					transtype = "Buy";
-					Stock st = bean.findStock(s);
-		        	t = new Transaction(st, symbol, volume, price, transtype, strategyStr);
+		        	t = new Transaction(s, symbol, volume, price, transtype, strategyStr);
 		        	bean.saveTransaction(t);
+		        	System.out.println(t.toString());
 		        } else if(recentShort < recentLong) {
 		        	transtype = "Sell";
-		        	Stock st = bean.findStock(s);
-		        	t = new Transaction(st, symbol, volume, price, transtype, strategyStr);
+		        	t = new Transaction(s, symbol, volume, price, transtype, strategyStr);
 		        	bean.saveTransaction(t);
+		        	System.out.println(t.toString());
 		        } else {
 		        	System.out.println("EQUAL: " + recentShort + " AND " + recentLong);
 		        }
@@ -138,5 +144,10 @@ public class TwoMovingAverage extends Strategy {
 		} catch (Exception ex) {
 			log.error("ERROR " + ex.getMessage());
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return "Two Moving Average for stock: " + this.getStock();
 	}
 }

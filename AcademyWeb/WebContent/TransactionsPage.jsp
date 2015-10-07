@@ -2,7 +2,7 @@
 	import="project.entity.Stock, project.entity.Transaction, java.util.List, 
 	project.business.MasterBeanLocal, project.business.LiveFeedBean, javax.naming.InitialContext, javax.ejb.EJB, javax.naming.Context"
 	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 
@@ -20,6 +20,7 @@
 
 <title>TransactionPage</title>
 
+<script type="text/javascript" src="bootstrap/js/project.js"></script>
 </head>
 <body>
 <% 
@@ -66,42 +67,7 @@ $(document).ready(function() {
         <td><%out.print(t.getStrategy());%></td>
       </tr>
       <%} %>
-    <!--   <tr>
-        <td>2</td>
-        <td>B</td>
-        <td>Buy</td>
-        <td>100</td>
-        <td>8.99</td>
-        <td>12:00am</td>
-        <td>Closed</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>C</td>
-        <td>Buy</td>
-        <td>100</td>
-        <td>8.99</td>
-        <td>12:00am</td>
-        <td>Closed</td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>D</td>
-        <td>Buy</td>
-        <td>100</td>
-        <td>8.99</td>
-        <td>12:00am</td>
-        <td>Closed</td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>E</td>
-        <td>Buy</td>
-        <td>100</td>
-        <td>8.99</td>
-        <td>12:00am</td>
-        <td>Closed</td>
-      </tr> -->
+  
     </tbody>
   </table>
 </div>
