@@ -17,13 +17,6 @@
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-<!-- <script type="text/javascript">
-	var auto_refresh = setInterval(
-	function ()
-	{
-	   $('#left-div').load('HomePage.jsp');
-	}, 10000); // refresh every 10000 milliseconds
-</script> -->
 
 <script type="text/javascript" src="bootstrap/js/project.js"></script>
 <script type="text/javascript" src="bootstrap/js/canvasjs.min.js"></script>
@@ -33,7 +26,7 @@
 	<nav class="navbar navbar-inverse" data-spy="affix"
 		data-offset-top="197" style="z-index: 9999; width: 100%;">
 		<ul class="nav navbar-nav">
-			<li class="active"><a href="#">Trading Home</a></li>
+			<li class="active"><a href="index.jsp">Trading Home</a></li>
 			<li><a href="TransactionsPage.jsp">Transactions</a></li>
 
 		</ul>
@@ -716,13 +709,13 @@
 			%>
 			<thead>
       <tr>
-        <th>Transaction ID<a><span class="glyphicon glyphicon-sort "></span></a></th>
-        <th>Stock Symbol<a><span class="glyphicon glyphicon-sort "></span></a></th>
-        <th>Action<a><span class="glyphicon glyphicon-sort "></span></a></th>
-        <th>Volume<a><span class="glyphicon glyphicon-sort "></span></a></th>
-        <th>Price<a><span class="glyphicon glyphicon-sort "></span></a></th>
-        <th>Time<a><span class="glyphicon glyphicon-sort "></span></a></th>
-        <th>Strategy Used<a><span class="glyphicon glyphicon-sort "></span></a></th>
+        <th>Transaction ID</th>
+        <th>Stock Symbol</th>
+        <th>Action</th>
+        <th>Volume</th>
+        <th>Price</th>
+        <th>Time</th>
+        <th>Strategy Used</th>
       </tr>
     </thead>
     <tbody>
@@ -1541,5 +1534,5 @@
 			</div>
 
 		</div>
->>>>>>> master
-	</div>
+
+	

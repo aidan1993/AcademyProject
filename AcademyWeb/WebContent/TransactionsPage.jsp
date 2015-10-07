@@ -67,42 +67,7 @@ $(document).ready(function() {
         <td><%out.print(t.getStrategy());%></td>
       </tr>
       <%} %>
-    <!--   <tr>
-        <td>2</td>
-        <td>B</td>
-        <td>Buy</td>
-        <td>100</td>
-        <td>8.99</td>
-        <td>12:00am</td>
-        <td>Closed</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>C</td>
-        <td>Buy</td>
-        <td>100</td>
-        <td>8.99</td>
-        <td>12:00am</td>
-        <td>Closed</td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>D</td>
-        <td>Buy</td>
-        <td>100</td>
-        <td>8.99</td>
-        <td>12:00am</td>
-        <td>Closed</td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>E</td>
-        <td>Buy</td>
-        <td>100</td>
-        <td>8.99</td>
-        <td>12:00am</td>
-        <td>Closed</td>
-      </tr> -->
+  
     </tbody>
   </table>
 </div>
