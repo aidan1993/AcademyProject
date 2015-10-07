@@ -25,6 +25,7 @@ import project.strategies.TwoMovingAverage;
 public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 	
 	private static int clear = 1;
+	private static long startTime;
 	
 	@Asynchronous
 	public void runLiveData(int loop) {
@@ -36,16 +37,17 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 			if(clear == 1) {
 				bean.clearStock();
 				clear++;
+				startTime = System.currentTimeMillis();
 			}
 						
 			Strategy strategy = new Strategy();
 			
 			//Set start time of the application
-			long startTime = System.currentTimeMillis();
 			int shortTime = 1;
 			int longTime = 2;
-			TwoMovingAverage bpMAvg = new TwoMovingAverage("TSCO", shortTime, longTime);
+			TwoMovingAverage bpMAvg = new TwoMovingAverage("BP", shortTime, longTime);
 			strategy.addTwoMAvg(bpMAvg);
+			
 			for(int i=0;i<loop;i++) {
 				String[] stocks = {bean.getDiv1(), bean.getDiv2(), bean.getDiv3(), bean.getDiv4(), 
 						bean.getDiv5(), bean.getDiv6(), bean.getDiv7(), bean.getDiv8(), bean.getDiv9()};
@@ -73,7 +75,6 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 					for(int l=0;l<fields.length;l++) {
 						if(fields[i].equals("N/A")) {
 							missing = true;
-							break;
 						}
 					}
 		        	
@@ -115,5 +116,13 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 		} catch(Exception ex) {
 			log.error("ERROR " + ex.getMessage());
 		}
+	}
+
+	public static long getStartTime() {
+		return startTime;
+	}
+
+	public static void setStartTime(long startTime) {
+		LiveFeedBean.startTime = startTime;
 	}
 }

@@ -23,7 +23,7 @@ Create table Transactions (
     TransTime Timestamp NOT NULL,
 	TransType ENUM('Buy', 'Sell') DEFAULT 'Buy' NOT NULL,
     Strategy ENUM('Manual', 'TwoMAvg') DEFAULT 'Manual' NOT NULL,
-    FOREIGN KEY(Stockid) REFERENCES Stocks(Stockid)
+    FOREIGN KEY(Stockid) REFERENCES Stocks(Stockid) ON DELETE CASCADE
 );
 
 select * from Stocks;

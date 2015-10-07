@@ -65,9 +65,13 @@ window.onload = function() {
 	            }
         	});
 			
-			setInterval(runFeed, 9000);
+			setTimeout(runFeed, 9000);
 		}
 		
 		//Start Cycle
 		runFeed();
+		
+		setTimeout(function(){
+			   window.location.reload(1);
+			}, 10000);
 };
