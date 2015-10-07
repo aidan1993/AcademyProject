@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	import="project.entity.Stock, project.entity.Transaction, java.util.List, 
-	project.business.MasterBeanLocal, project.business.LiveFeedBean, javax.naming.InitialContext, javax.ejb.EJB, javax.naming.Context"
+	project.business.MasterBeanLocal, javax.naming.InitialContext, javax.ejb.EJB, javax.naming.Context"
 	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -58,14 +60,9 @@
 					<span class="label label-info" style="border-radius: 20px;">
 						<%
 							InitialContext context = new InitialContext();
-
-							MasterBeanLocal bean = (MasterBeanLocal) context
-									.lookup("java:comp/env/ejb/Master");
-							List<Stock> div1 = bean.retrieveMostRecent(LiveFeedBean.getDiv1());
-							for (Stock s : div1) {
-
-								out.print(s.getStockSymbol());
-							}
+							MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
+							out.print(bean.getDiv1());
+							List<Stock> div1 = bean.retrieveMostRecent(bean.getDiv1());
 						%>
 					</span>
 				</h3>
@@ -154,10 +151,8 @@
 				<h3 align="center">
 					<span class="label label-info" style="border-radius: 20px;">
 						<%
-							List<Stock> div2 = bean.retrieveMostRecent(LiveFeedBean.getDiv2());
-							for (Stock s : div2) {
-								out.print(s.getStockSymbol());
-							}
+							out.print(bean.getDiv2());
+							List<Stock> div2 = bean.retrieveMostRecent(bean.getDiv2());
 						%>
 					</span>
 				</h3>
@@ -228,12 +223,8 @@
 				<h3 align="center">
 					<span class="label label-info" style="border-radius: 20px;">
 						<%
-
-							List<Stock> div3 = bean.retrieveMostRecent(LiveFeedBean.getDiv3());
-							for (Stock s : div3) {
-
-								out.print(s.getStockSymbol());
-							}
+							out.print(bean.getDiv3());
+							List<Stock> div3 = bean.retrieveMostRecent(bean.getDiv3());
 						%>
 					</span>
 				</h3>
@@ -302,11 +293,8 @@
 				<h3 align="center">
 					<span class="label label-info" style="border-radius: 20px;">
 						<%
-
-							List<Stock> div4 = bean.retrieveMostRecent(LiveFeedBean.getDiv4());
-							for (Stock s : div4) {
-								out.print(s.getStockSymbol());
-							}
+							out.print(bean.getDiv4());
+							List<Stock> div4 = bean.retrieveMostRecent(bean.getDiv4());
 						%>
 					</span>
 				</h3>
@@ -370,10 +358,8 @@
 				<h3 align="center">
 					<span class="label label-info" style="border-radius: 20px;">
 						<%
-							List<Stock> div5 = bean.retrieveMostRecent(LiveFeedBean.getDiv5());
-							for (Stock s : div5) {
-								out.print(s.getStockSymbol());
-							}
+							out.print(bean.getDiv5());	
+							List<Stock> div5 = bean.retrieveMostRecent(bean.getDiv5());
 						%>
 					</span>
 				</h3>
@@ -438,10 +424,8 @@
 				<h3 align="center">
 					<span class="label label-info" style="border-radius: 20px;">
 						<%
-							List<Stock> div6 = bean.retrieveMostRecent(LiveFeedBean.getDiv6());
-							for (Stock s : div6) {
-								out.print(s.getStockSymbol());
-							}
+							out.print(bean.getDiv6());	
+							List<Stock> div6 = bean.retrieveMostRecent(bean.getDiv6());
 						%>
 					</span>
 				</h3>
@@ -510,10 +494,8 @@
 				<h3 align="center">
 					<span class="label label-info" style="border-radius: 20px;">
 						<%
-							List<Stock> div7 = bean.retrieveMostRecent(LiveFeedBean.getDiv7());
-							for (Stock s : div7) {
-								out.print(s.getStockSymbol());
-							}
+							out.print(bean.getDiv7());	
+							List<Stock> div7 = bean.retrieveMostRecent(bean.getDiv7());
 						%>
 					</span>
 				</h3>
@@ -577,10 +559,9 @@
 				<h3 align="center">
 					<span class="label label-info" style="border-radius: 20px;">
 						<%
-							List<Stock> div8 = bean.retrieveMostRecent(LiveFeedBean.getDiv8());
-							for (Stock s : div8) {
-								out.print(s.getStockSymbol());
-							}
+						out.print(bean.getDiv8());	
+						List<Stock> div8 = bean.retrieveMostRecent(bean.getDiv8());
+							
 						%>
 					</span>
 				</h3>
@@ -644,10 +625,9 @@
 				<h3 align="center">
 					<span class="label label-info" style="border-radius: 20px;">
 						<%
-							List<Stock> div9 = bean.retrieveMostRecent(LiveFeedBean.getDiv9());
-							for (Stock s : div9) {
-								out.print(s.getStockSymbol());
-							}
+						out.print(bean.getDiv9());	
+						List<Stock> div9 = bean.retrieveMostRecent(bean.getDiv9());
+							
 						%>
 					</span>
 				</h3>
@@ -771,57 +751,39 @@
 					</button>
 					<ul class="dropdown-menu">
 						<li><a href="#"> <%
- 	for (Stock s : div1) {
- 		out.print(s.getStockSymbol());
- 	}
+								out.print(bean.getDiv1());
  %>
 						</a></li>
 						<li><a href="#"> <%
- 	for (Stock s : div2) {
- 		out.print(s.getStockSymbol());
- 	}
+								out.print(bean.getDiv2());
  %>
 						</a></li>
 						<li><a href="#"> <%
- 	for (Stock s : div3) {
- 		out.print(s.getStockSymbol());
- 	}
+								out.print(bean.getDiv3());
  %>
 						</a></li>
 						<li><a href="#"> <%
- 	for (Stock s : div4) {
- 		out.print(s.getStockSymbol());
- 	}
+								out.print(bean.getDiv4());
  %>
 						</a></li>
 						<li><a href="#"> <%
- 	for (Stock s : div5) {
- 		out.print(s.getStockSymbol());
- 	}
+								out.print(bean.getDiv5());
  %>
 						</a></li>
 						<li><a href="#"> <%
- 	for (Stock s : div6) {
- 		out.print(s.getStockSymbol());
- 	}
+								out.print(bean.getDiv6());
  %>
 						</a></li>
 						<li><a href="#"> <%
- 	for (Stock s : div7) {
- 		out.print(s.getStockSymbol());
- 	}
+								out.print(bean.getDiv7());
  %>
 						</a></li>
 						<li><a href="#"> <%
- 	for (Stock s : div8) {
- 		out.print(s.getStockSymbol());
- 	}
+								out.print(bean.getDiv8());
  %>
 						</a></li>
 						<li><a href="#"> <%
- 	for (Stock s : div9) {
- 		out.print(s.getStockSymbol());
- 	}
+								out.print(bean.getDiv9());
  %>
 						</a></li>
 					</ul>
@@ -870,8 +832,7 @@
 							<p>
 								Purchase
 								<%
-								for (Stock s : div1)
-									s.getStockSymbol();
+								out.print(bean.getDiv1());
 							%>
 								Stock
 							</p>
@@ -903,8 +864,7 @@
 							<p>
 								Purchase
 								<%
-								for (Stock s : div1)
-									s.getStockSymbol();
+								out.print(bean.getDiv1());
 							%>
 								Stock
 							</p>
@@ -936,8 +896,7 @@
 							<p>
 								Purchase
 								<%
-								for (Stock s : div1)
-									s.getStockSymbol();
+								out.print(bean.getDiv2());
 							%>
 								Stock
 							</p>
@@ -969,8 +928,7 @@
 							<p>
 								Purchase
 								<%
-								for (Stock s : div1)
-									s.getStockSymbol();
+								out.print(bean.getDiv2());
 							%>
 								Stock
 							</p>
@@ -1002,8 +960,7 @@
 							<p>
 								Purchase
 								<%
-								for (Stock s : div1)
-									s.getStockSymbol();
+								out.print(bean.getDiv3());
 							%>
 								Stock
 							</p>
@@ -1035,9 +992,8 @@
 							<p>
 								Purchase
 								<%
-								for (Stock s : div1)
-									s.getStockSymbol();
-							%>
+									out.print(bean.getDiv3());
+								%>
 								Stock
 							</p>
 						</div>
@@ -1068,9 +1024,8 @@
 							<p>
 								Purchase
 								<%
-								for (Stock s : div1)
-									s.getStockSymbol();
-							%>
+									out.print(bean.getDiv4());
+								%>
 								Stock
 							</p>
 						</div>
@@ -1101,9 +1056,8 @@
 							<p>
 								Purchase
 								<%
-								for (Stock s : div1)
-									s.getStockSymbol();
-							%>
+									out.print(bean.getDiv4());
+								%>
 								Stock
 							</p>
 						</div>
@@ -1134,8 +1088,7 @@
 							<p>
 								Purchase
 								<%
-								for (Stock s : div1)
-									s.getStockSymbol();
+								out.print(bean.getDiv5());
 							%>
 								Stock
 							</p>
@@ -1167,8 +1120,7 @@
 							<p>
 								Purchase
 								<%
-								for (Stock s : div1)
-									s.getStockSymbol();
+								out.print(bean.getDiv5());
 							%>
 								Stock
 							</p>
@@ -1200,8 +1152,7 @@
 							<p>
 								Purchase
 								<%
-								for (Stock s : div1)
-									s.getStockSymbol();
+								out.print(bean.getDiv6());
 							%>
 								Stock
 							</p>
@@ -1233,8 +1184,7 @@
 							<p>
 								Purchase
 								<%
-								for (Stock s : div1)
-									s.getStockSymbol();
+								out.print(bean.getDiv6());
 							%>
 								Stock
 							</p>
@@ -1266,8 +1216,7 @@
 							<p>
 								Purchase
 								<%
-								for (Stock s : div1)
-									s.getStockSymbol();
+								out.print(bean.getDiv7());
 							%>
 								Stock
 							</p>
@@ -1299,8 +1248,7 @@
 							<p>
 								Purchase
 								<%
-								for (Stock s : div1)
-									s.getStockSymbol();
+								out.print(bean.getDiv7());
 							%>
 								Stock
 							</p>
@@ -1332,8 +1280,7 @@
 							<p>
 								Purchase
 								<%
-								for (Stock s : div1)
-									s.getStockSymbol();
+								out.print(bean.getDiv8());
 							%>
 								Stock
 							</p>
@@ -1365,8 +1312,7 @@
 							<p>
 								Purchase
 								<%
-								for (Stock s : div1)
-									s.getStockSymbol();
+								out.print(bean.getDiv8());
 							%>
 								Stock
 							</p>
@@ -1398,8 +1344,7 @@
 							<p>
 								Purchase
 								<%
-								for (Stock s : div1)
-									s.getStockSymbol();
+								out.print(bean.getDiv9());
 							%>
 								Stock
 							</p>
@@ -1431,8 +1376,7 @@
 							<p>
 								Purchase
 								<%
-								for (Stock s : div1)
-									s.getStockSymbol();
+								out.print(bean.getDiv9());
 							%>
 								Stock
 							</p>
@@ -1462,66 +1406,47 @@
 								<h4 class="modal-title">Stock Preference</h4>
 							</div>
 							<div class="modal-body">
-							<center>
 								<table style="position: center">
 									<tr>
 										<td><label for="usr">Stock 1</label> <input type="text"
 											class="form-control" name="txtDiv1"
-											value="<%for (Stock s : div1) {
-				out.print(s.getStockSymbol());
-			}%>"
+											value="<%out.print(bean.getDiv1());%>"
 											style="width: 50%;"></td>
 										<td><label for="usr">Stock 2</label> <input type="text"
 											class="form-control" id="usr" name="txtDiv2"
-											value="<%for (Stock s : div2) {
-				out.print(s.getStockSymbol());
-			}%>"
+											value="<%out.print(bean.getDiv2());%>"
 											style="width: 50%;"></td>
 										<td><label for="usr">Stock 3</label> <input type="text"
 											class="form-control" id="usr" name="txtDiv3"
-											value="<%for (Stock s : div3) {
-				out.print(s.getStockSymbol());
-			}%>"
+											value="<%out.print(bean.getDiv3());%>"
 											style="width: 50%;"></td>
 									</tr>
 									<tr>
 										<td><label for="usr">Stock 4</label> <input type="text"
 											class="form-control" id="usr" name="txtDiv4"
-											value="<%for (Stock s : div4) {
-				out.print(s.getStockSymbol());
-			}%>"
+											value="<%out.print(bean.getDiv4());%>"
 											style="width: 50%;"></td>
 										<td><label for="usr">Stock 5</label> <input type="text"
 											class="form-control" id="usr" name="txtDiv5"
-											value="<%for (Stock s : div5) {
-				out.print(s.getStockSymbol());
-			}%>"
+											value="<%out.print(bean.getDiv5());%>"
 											style="width: 50%;"></td>
 										<td><label for="usr">Stock 6</label> <input type="text"
 											class="form-control" id="usr" name="txtDiv6"
-											value="<%for (Stock s : div6) {
-				out.print(s.getStockSymbol());
-			}%>"
+											value="<%out.print(bean.getDiv6());%>"
 											style="width: 50%;"></td>
 									</tr>
 									<tr>
 										<td><label for="usr">Stock 7</label> <input type="text"
 											class="form-control" id="usr" name="txtDiv7"
-											value="<%for (Stock s : div7) {
-				out.print(s.getStockSymbol());
-			}%>"
+											value="<%out.print(bean.getDiv7());%>"
 											style="width: 50%;"></td>
 										<td><label for="usr">Stock 8</label> <input type="text"
 											class="form-control" id="usr" name="txtDiv8"
-											value="<%for (Stock s : div8) {
-				out.print(s.getStockSymbol());
-			}%>"
+											value="<%out.print(bean.getDiv8());%>"
 											style="width: 50%;"></td>
 										<td><label for="usr">Stock 9</label> <input type="text"
 											class="form-control" id="usr" name="txtDiv9"
-											value="<%for (Stock s : div9) {
-				out.print(s.getStockSymbol());
-			}%>"
+											value="<%out.print(bean.getDiv9());%>"
 											style="width: 50%;"></td>
 									</tr>
 								</table>
@@ -1541,5 +1466,5 @@
 			</div>
 
 		</div>
->>>>>>> master
-	</div>
+</body>
+</html>

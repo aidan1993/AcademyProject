@@ -29,6 +29,16 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 	@PersistenceContext(unitName = "JPADB")
 	private EntityManager entityManager;
 	
+	static String div1 = "TSCO";
+	static String div2 = "VOD";
+	static String div3 = "RIO";
+	static String div4 = "GSK";
+	static String div5 = "BP";
+	static String div6 = "CHTR";
+	static String div7 = "CHTR";
+	static String div8 = "CHTR";
+	static String div9 = "CHTR";
+	
 	public MasterBean() {
 		
 	}
@@ -85,6 +95,7 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 		query.setParameter("symbol", stock);
 		query.setMaxResults(1);
 		List<Stock> stocks = query.getResultList();
+		
 		return stocks;
 	}
 	
@@ -176,9 +187,81 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 			System.out.println("Database Cleared");
 
 		}
-		
-		
-		
-		
+	}
+	
+	/*
+	 * Set and Get Stock Symbols
+	 */
+	@Override
+	public String getDiv1() {
+		return div1;
+	}
+	@Override
+	public void setDiv1(String div1) {
+		MasterBean.div1 = div1;
+	}
+	@Override
+	public String getDiv2() {
+		return div2;
+	}
+	@Override
+	public void setDiv2(String div2) {
+		MasterBean.div2 = div2;
+	}
+	@Override
+	public String getDiv3() {
+		return div3;
+	}
+	@Override
+	public void setDiv3(String div3) {
+		MasterBean.div3 = div3;
+	}
+	@Override
+	public String getDiv4() {
+		return div4;
+	}
+	@Override
+	public void setDiv4(String div4) {
+		MasterBean.div4 = div4;
+	}
+	@Override
+	public String getDiv5() {
+		return div5;
+	}
+	@Override
+	public void setDiv5(String div5) {
+		MasterBean.div5 = div5;
+	}
+	@Override
+	public String getDiv6() {
+		return div6;
+	}
+	@Override
+	public void setDiv6(String div6) {
+		MasterBean.div6 = div6;
+	}
+	@Override
+	public String getDiv7() {
+		return div7;
+	}
+	@Override
+	public void setDiv7(String div7) {
+		MasterBean.div7 = div7;
+	}
+	@Override
+	public String getDiv8() {
+		return div8;
+	}
+	@Override
+	public void setDiv8(String div8) {
+		MasterBean.div8 = div8;
+	}
+	@Override
+	public String getDiv9() {
+		return div9;
+	}
+	@Override
+	public void setDiv9(String div9) {
+		MasterBean.div9 = div9;
 	}
 }
