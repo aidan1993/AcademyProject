@@ -1,10 +1,13 @@
 package project.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity(name="Stocks")
@@ -15,7 +18,6 @@ public class Stock {
 	}
 	
 	public Stock(String symbol, double bid, double ask, double close) {
-		super();
 		this.stockSymbol = symbol;
 		this.bidPrice = bid;
 		this.askPrice = ask;
@@ -23,7 +25,6 @@ public class Stock {
 	}
 	
 	public Stock(String symbol, double bid, double ask, double high, double low, double open, double close) {
-		super();
 		this.stockSymbol = symbol;
 		this.bidPrice = bid;
 		this.askPrice = ask;
@@ -34,10 +35,10 @@ public class Stock {
 	}
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int stockId;
-	@OneToOne(mappedBy="stock", fetch=FetchType.EAGER)
-	private Transaction transaction;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int stockid;
+	@OneToMany(mappedBy="stock")
+	private List<Transaction> transactions;
 	
 	private String stockSymbol;
 	private double bidPrice;
@@ -50,10 +51,10 @@ public class Stock {
 	
 	
 	public int getStockId() {
-		return stockId;
+		return stockid;
 	}
 	public void setStockId(int stockId) {
-		this.stockId = stockId;
+		this.stockid = stockId;
 	}
 	public String getStockSymbol() {
 		return stockSymbol;
@@ -106,7 +107,7 @@ public class Stock {
 	
 	@Override
 	public String toString() {
-		return "Stock: " + this.getStockSymbol() + ", \n Bid Price: " + this.getBidPrice() + ", Ask Price: " 
+		return "Stock ID: " + this.getStockId() + ", Stock: " + this.getStockSymbol() + ", Bid Price: " + this.getBidPrice() + ", Ask Price: " 
 				+ this.getAskPrice() + ", Today's Open Price: " + this.getTodaysOpen() + ", Previous Close: " 
 				+ this.getPreviousClose() + ", Time: " + this.getTimeOf();
 	}

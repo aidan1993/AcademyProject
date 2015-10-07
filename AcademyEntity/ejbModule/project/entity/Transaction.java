@@ -1,5 +1,6 @@
 package project.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,21 +26,13 @@ public class Transaction
 		this.transtype = transtype;
 		this.strategy = strategy;
 	}
-	
-	public Stock getStock() {
-		return stock;
-	}
-
-	public void setStock(Stock stock) {
-		this.stock = stock;
-	}
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int transactionid;
 	
-	@OneToOne(optional=false)
-	@JoinColumn(name="stockId", referencedColumnName="stockId")
+	@OneToOne(optional=false, cascade = CascadeType.ALL)
+	@JoinColumn(name="Stockid")
 	private Stock stock;
 	
 	private String stockSymbol;
@@ -55,7 +48,12 @@ public class Transaction
 	public void setTransactionid(int transactionid) {
 		this.transactionid = transactionid;
 	}
-	
+	public Stock getStock() {
+		return stock;
+	}
+	public void setStock(Stock stock) {
+		this.stock = stock;
+	}
 	public String getStockSymbol() {
 		return stockSymbol;
 	}

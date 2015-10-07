@@ -20,10 +20,10 @@ Create table Transactions (
 	StockSymbol nvarchar(20) NOT NULL, 
 	Volume int NOT NULL, 
 	Price DECIMAL(6,2) NOT NULL,
-    TransTime Timestamp NULL,
+    TransTime Timestamp NOT NULL,
 	TransType ENUM('Buy', 'Sell') DEFAULT 'Buy' NOT NULL,
     Strategy ENUM('Manual', 'TwoMAvg') DEFAULT 'Manual' NOT NULL,
-    FOREIGN KEY(Stockid) REFERENCES Stocks(Stockid) ON DELETE CASCADE
+    FOREIGN KEY(Stockid) REFERENCES Stocks(Stockid)
 );
 
 select * from Stocks;

@@ -106,30 +106,32 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 		LiveFeedBean.div9 = div9;
 	}
 
+	private static int clear = 1;
+	
 	@Asynchronous
-	public void runLiveData() {
+	public void runLiveData(int loop) {
 		Logger log =  Logger.getLogger(this.getClass());
 		
 		try {
 			InitialContext context = new InitialContext();
 			MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
 			
-			bean.clearStock();
-			
+			if(clear == 1) {
+				bean.clearStock();
+				clear++;
+			}
 						
-//			Strategy strategy = new Strategy();
+			Strategy strategy = new Strategy();
 			
 			//Set start time of the application
 			long startTime = System.currentTimeMillis();
 			int shortTime = 1;
 			int longTime = 2;
 			boolean missing = false;
-//			TwoMovingAverage bpMAvg = new TwoMovingAverage("IBM", shortTime, longTime);
-//			strategy.addTwoMAvg(bpMAvg);
-			while(true) {
-				
+			TwoMovingAverage bpMAvg = new TwoMovingAverage("TSCO", shortTime, longTime);
+			strategy.addTwoMAvg(bpMAvg);
+			for(int i=0;i<loop;i++) {
 				String[] stocks = {getDiv1(), getDiv2(), getDiv3(), getDiv4(), getDiv5(), getDiv6(), getDiv7(), getDiv8(), getDiv9()};
-				
 				StringBuilder url = 
 			            new StringBuilder("http://finance.yahoo.com/d/quotes.csv?s=");
 				for(String stock : stocks) {
@@ -150,30 +152,13 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 				while((inputLine = in.readLine()) != null) {
 					String[] fields = inputLine.split(",");
 					fields[0] = fields[0].replace("\"", "");
-		        	
-					for(int loop=0;loop<fields.length;loop++) {
-						if(fields[loop].equals("N/A")) {
-							missing = true;
-						}
-					}
 
 		        	String symbol = fields[0];
 		        	double bidPrice = Double.parseDouble(fields[1]);
 		        	double askPrice = Double.parseDouble(fields[2]);
-		        	
-		        	double high = 0;
-		        	if(!fields[3].equals("N/A")) {
-		        		high = Math.round(Double.parseDouble(fields[3]) * 100.0)/100.0;
-		        	}
-		        	double low = 0;
-		        	if(!fields[4].equals("N/A")) {
-		        		low = Math.round(Double.parseDouble(fields[4]) * 100.0)/100.0;
-		        	}
-		        	double open = 0;
-		        	if(!fields[5].equals("N/A")) {
-		        		open = Math.round(Double.parseDouble(fields[5]) * 100.0)/100.0;
-		        	}
-		        	
+		        	double high = Math.round(Double.parseDouble(fields[3]) * 100.0)/100.0;
+		        	double low = Math.round(Double.parseDouble(fields[4]) * 100.0)/100.0;
+		        	double open = Math.round(Double.parseDouble(fields[5]) * 100.0)/100.0;		        	
 		        	double close = Math.round(Double.parseDouble(fields[6]) * 100.0)/100.0;
 		        	
 		        	Stock s;
@@ -185,45 +170,26 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 		        	
 		        	bean.saveStock(s);
 		        	
+		        	System.out.println(s.toString());
+		        	
+		        	if(((System.currentTimeMillis()-startTime) >= shortTime*60*1000) &&
+			        		((System.currentTimeMillis()-startTime) >= longTime*60*1000)){
+		        		for(int t=0;t<strategy.getTwoMAvg().size();t++) {
+			        		TwoMovingAverage movingAvg = strategy.getTwoMAvg().get(t);
+			        		
+							if(s.getStockSymbol().equals(movingAvg.getStock())) {
+				        		movingAvg.calcMovingAverage(startTime);
+								movingAvg.carryOutTransaction(s, movingAvg);
+				        	}
+				        }
+		        	}
+		        	
 		        	try {
 						Thread.sleep(1000);
 					} catch (InterruptedException ex) {
 						log.error("ERROR " + ex.getMessage());
 					}
 				}
-				
-//	        	for(TwoMovingAverage movingAvg : strategy.getTwoMAvg()) {
-//		        	if(symbol.equals(movingAvg.getStock())) {
-//		        		movingAvg.calcMovingAverage(startTime);
-//		        	}
-//		        	
-//		        	if(movingAvg.getShortPrices().size() > 0 && movingAvg.getLongPrices().size() > 0) {
-//						List<Double> shortP = movingAvg.getShortPrices();
-//						List<Double> longP = movingAvg.getLongPrices();
-//						double recentShort = shortP.get(shortP.size()-1);
-//						double recentLong = longP.get(longP.size()-1);
-//						
-//						int volume = 100;
-//						double price = (s.getAskPrice()+s.getBidPrice())/2;
-//						String transtype = "";
-//						String strategyStr = "TwoMAvg";
-//						
-//						Transaction t;
-//						if(recentShort > recentLong) {
-//							transtype = "Buy";
-//							Stock st = bean.findStock(s);
-//				        	t = new Transaction(st, symbol, volume, price, transtype, strategyStr);
-//				        	bean.saveTransaction(t);
-//				        } else if(recentShort < recentLong) {
-//				        	transtype = "Sell";
-//				        	Stock st = bean.findStock(s);
-//				        	t = new Transaction(st, symbol, volume, price, transtype, strategyStr);
-//				        	bean.saveTransaction(t);
-//				        } else {
-//				        	System.out.println("EQUAL: " + recentShort + " AND " + recentLong);
-//				        }
-//					}
-//	        	}
 			}
 		} catch(Exception ex) {
 			log.error("ERROR " + ex.getMessage());

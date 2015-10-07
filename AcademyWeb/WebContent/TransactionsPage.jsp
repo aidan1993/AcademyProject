@@ -20,6 +20,7 @@
 
 <title>TransactionPage</title>
 
+<script type="text/javascript" src="bootstrap/js/project.js"></script>
 </head>
 <body>
 <% 
