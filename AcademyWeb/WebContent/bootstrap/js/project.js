@@ -70,4 +70,8 @@ window.onload = function() {
 		
 		//Start Cycle
 		runFeed();
+		
+		setTimeout(function(){
+			   window.location.reload(1);
+			}, 10000);
 };

@@ -49,7 +49,7 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 
 	@Override
 	public void saveStock(Stock s) {
-		entityManager.persist(s);
+		entityManager.merge(s);
 		entityManager.flush();
 	}
 
@@ -139,7 +139,7 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 	
 	@Override
 	public void saveTransaction(Transaction t) {
-		entityManager.persist(t);
+		entityManager.merge(t);
 		entityManager.flush();
 	}
 

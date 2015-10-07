@@ -2,13 +2,12 @@ package project.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity(name="Stocks")
 public class Stock {
@@ -36,7 +35,7 @@ public class Stock {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int stockid;
-	@OneToMany(mappedBy="stock")
+	@OneToMany(cascade = {CascadeType.ALL}, mappedBy="stock")
 	private List<Transaction> transactions;
 	
 	private String stockSymbol;
