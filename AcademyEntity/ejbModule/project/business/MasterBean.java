@@ -95,7 +95,6 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 		query.setParameter("symbol", stock);
 		query.setMaxResults(1);
 		List<Stock> stocks = query.getResultList();
-		
 		return stocks;
 	}
 	

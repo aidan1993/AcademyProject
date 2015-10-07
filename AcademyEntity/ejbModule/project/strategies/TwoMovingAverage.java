@@ -121,6 +121,11 @@ public class TwoMovingAverage extends Strategy {
 				String transtype = "";
 				String strategyStr = "TwoMAvg";
 				
+				/*
+				 * Get recent transaction from the database and wait for profit/loss of > 1%
+				 * before exiting position (Buy/Sell)
+				 */
+				
 				Transaction t;
 				if(recentShort > recentLong) {
 					transtype = "Buy";

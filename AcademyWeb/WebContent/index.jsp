@@ -497,7 +497,7 @@
 					<h5 style="float: left">
 						<span class="label label-success">Low: <%
 							for (Stock s : div7) {
-								out.print(s.getAskPrice());
+								out.print(s.getDayLow());
 							}
 						%></span>
 					</h5>

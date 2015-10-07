@@ -59,8 +59,7 @@ public class EditStockSymbol extends HttpServlet {
 				bean.setDiv9(request.getParameter("txtDiv9")); 
 			}
 
-			RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-			rd.forward(request, response);
+			 response.sendRedirect(request.getContextPath() + "/index.jsp");
 
 		} catch (NamingException e) {
 			

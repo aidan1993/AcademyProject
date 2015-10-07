@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.jboss.logging.Logger;
 
-import project.business.LiveFeedBeanLocal;
 import project.business.MasterBeanLocal;
 import project.entity.Stock;
 import project.entity.Transaction;
@@ -44,12 +43,11 @@ public class StockTransactionServlet extends HttpServlet {
 			
 			InitialContext context = new InitialContext();
 			MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
-			LiveFeedBeanLocal feedBean = (LiveFeedBeanLocal)context.lookup("java:comp/env/ejb/LiveFeed");
 			Transaction t = new Transaction();
 						
-			List<Stock> divList1 = bean.retrieveMostRecent(feedBean.getDiv1());	
-			
-			 if(request.getParameter("buyStockDiv1") != null) {
+			List<Stock> divList1 = bean.retrieveMostRecent(bean.getDiv1());	
+			System.out.println(divList1.get(0).toString());
+			if(request.getParameter("buyStockDiv1") != null) {
 				for (Stock s: divList1) {
 					t.setStockSymbol(s.getStockSymbol());
 					t.setStock(s);
@@ -60,8 +58,8 @@ public class StockTransactionServlet extends HttpServlet {
 					bean.saveTransaction(t);
 					//Integer.parseInt(request.getParameter("txtQuantity"))
 					
-			}
 				}
+			}
 			 if(request.getParameter("sellStockDiv1") != null) {
 					for (Stock s: divList1) {
 						
@@ -75,7 +73,7 @@ public class StockTransactionServlet extends HttpServlet {
 					}
 			 }
 			 
-			 List<Stock> divList2 = bean.retrieveMostRecent(feedBean.getDiv2());	
+			 List<Stock> divList2 = bean.retrieveMostRecent(bean.getDiv2());	
 				
 			 if(request.getParameter("buyStockDiv2") != null) {
 				for (Stock s: divList2) {
@@ -103,7 +101,7 @@ public class StockTransactionServlet extends HttpServlet {
 					}
 			 }
 			 
-			 List<Stock> divList3 = bean.retrieveMostRecent(feedBean.getDiv3());	
+			 List<Stock> divList3 = bean.retrieveMostRecent(bean.getDiv3());	
 				
 			 if(request.getParameter("buyStockDiv3") != null) {
 				for (Stock s: divList3) {
@@ -130,7 +128,7 @@ public class StockTransactionServlet extends HttpServlet {
 						bean.saveTransaction(t);
 					}
 			 }
-			 List<Stock> divList4 = bean.retrieveMostRecent(feedBean.getDiv4());	
+			 List<Stock> divList4 = bean.retrieveMostRecent(bean.getDiv4());	
 				
 			 if(request.getParameter("buyStockDiv4") != null) {
 				for (Stock s: divList4) {
@@ -157,7 +155,7 @@ public class StockTransactionServlet extends HttpServlet {
 						bean.saveTransaction(t);
 					}
 			 }
-			 List<Stock> divList5 = bean.retrieveMostRecent(feedBean.getDiv5());	
+			 List<Stock> divList5 = bean.retrieveMostRecent(bean.getDiv5());	
 				
 			 if(request.getParameter("buyStockDiv5") != null) {
 				for (Stock s: divList5) {
@@ -184,7 +182,7 @@ public class StockTransactionServlet extends HttpServlet {
 						bean.saveTransaction(t);
 					}
 			 }
-			 List<Stock> divList6 = bean.retrieveMostRecent(feedBean.getDiv6());	
+			 List<Stock> divList6 = bean.retrieveMostRecent(bean.getDiv6());	
 				
 			 if(request.getParameter("buyStockDiv6") != null) {
 				for (Stock s: divList6) {
@@ -211,7 +209,7 @@ public class StockTransactionServlet extends HttpServlet {
 						bean.saveTransaction(t);
 					}
 			 }
-			 List<Stock> divList7 = bean.retrieveMostRecent(feedBean.getDiv7());	
+			 List<Stock> divList7 = bean.retrieveMostRecent(bean.getDiv7());	
 				
 			 if(request.getParameter("buyStockDiv7") != null) {
 				for (Stock s: divList7) {
@@ -238,7 +236,7 @@ public class StockTransactionServlet extends HttpServlet {
 						bean.saveTransaction(t);
 					}
 			 }
-			 List<Stock> divList8 = bean.retrieveMostRecent(feedBean.getDiv8());	
+			 List<Stock> divList8 = bean.retrieveMostRecent(bean.getDiv8());	
 				
 			 if(request.getParameter("buyStockDiv8") != null) {
 				for (Stock s: divList8) {
@@ -265,7 +263,7 @@ public class StockTransactionServlet extends HttpServlet {
 						bean.saveTransaction(t);
 					}
 			 }
-			 List<Stock> divList9 = bean.retrieveMostRecent(feedBean.getDiv9());	
+			 List<Stock> divList9 = bean.retrieveMostRecent(bean.getDiv9());	
 				
 			 if(request.getParameter("buyStockDiv9") != null) {
 				for (Stock s: divList9) {
