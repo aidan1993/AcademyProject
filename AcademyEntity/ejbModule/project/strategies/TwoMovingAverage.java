@@ -124,14 +124,14 @@ public class TwoMovingAverage extends Strategy {
 				Transaction t;
 				if(recentShort > recentLong) {
 					transtype = "Buy";
-					System.out.println(s.toString());
 		        	t = new Transaction(s, symbol, volume, price, transtype, strategyStr);
 		        	bean.saveTransaction(t);
+		        	System.out.println(t.toString());
 		        } else if(recentShort < recentLong) {
 		        	transtype = "Sell";
-		        	System.out.println(s.toString());
 		        	t = new Transaction(s, symbol, volume, price, transtype, strategyStr);
 		        	bean.saveTransaction(t);
+		        	System.out.println(t.toString());
 		        } else {
 		        	System.out.println("EQUAL: " + recentShort + " AND " + recentLong);
 		        }

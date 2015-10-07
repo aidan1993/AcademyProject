@@ -29,9 +29,6 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 	@PersistenceContext(unitName = "JPADB")
 	private EntityManager entityManager;
 	
-	@Resource
-	private SessionContext context;
-	
 	public MasterBean() {
 		
 	}
@@ -41,7 +38,6 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 	 */
 
 	@Override
-	@Asynchronous
 	public void saveStock(Stock s) {
 		entityManager.persist(s);
 		entityManager.flush();
@@ -67,6 +63,7 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 		return stocks;
 	}
 	
+	@Override
 	public List<Integer> retrieveMaxId(Stock s) {
 		String q = "SELECT s FROM " + Stock.class.getName() + " s " + 
 				"WHERE s.stockSymbol = :symbol AND s.stockid = (" +
@@ -92,7 +89,6 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 	}
 	
 	@Override
-	@Asynchronous
 	public void clearStock() {
 		String q = "DELETE FROM " + Stock.class.getName();
 		int rows = entityManager.createQuery(q).executeUpdate();

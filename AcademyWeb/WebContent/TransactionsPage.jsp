@@ -16,6 +16,7 @@
 <meta charset="ISO-8859-1">
 <title>TransactionPage</title>
 
+<script type="text/javascript" src="bootstrap/js/project.js"></script>
 </head>
 <body>
 

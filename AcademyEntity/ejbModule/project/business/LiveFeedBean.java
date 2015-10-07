@@ -4,16 +4,16 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 
 import javax.ejb.Asynchronous;
+import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.naming.InitialContext;
 
 import org.jboss.logging.Logger;
 
-import project.dataaccess.DataAccess;
 import project.entity.Stock;
 import project.strategies.Strategy;
 import project.strategies.TwoMovingAverage;
@@ -21,18 +21,24 @@ import project.strategies.TwoMovingAverage;
 @Stateless
 @Remote(LiveFeedBeanRemote.class)
 @Local(LiveFeedBeanLocal.class)
+@EJB(name="ejb/Master", beanInterface=MasterBeanLocal.class)
 public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 	
+	private static int clear = 1;
+	
 	@Asynchronous
-	public void runLiveData() {
+	public void runLiveData(int loop) {
 		Logger log =  Logger.getLogger(this.getClass());
 		
 		try {
+			InitialContext context = new InitialContext();
+			MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
 			
+			if(clear == 1) {
+				bean.clearStock();
+				clear++;
+			}
 			
-			DataAccess.clearStock();
-			
-			Stock s;
 			String[] stocks = {"TSCO", "AAPL", "BP"};			
 			Strategy strategy = new Strategy();
 			
@@ -43,8 +49,7 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 			boolean missing = false;
 			TwoMovingAverage bpMAvg = new TwoMovingAverage("TSCO", shortTime, longTime);
 			strategy.addTwoMAvg(bpMAvg);
-			while(true) {
-				
+			for(int i=0;i<loop;i++) {
 				StringBuilder url = 
 			            new StringBuilder("http://finance.yahoo.com/d/quotes.csv?s=");
 				for(String stock : stocks) {
@@ -65,56 +70,37 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 				while((inputLine = in.readLine()) != null) {
 					String[] fields = inputLine.split(",");
 					fields[0] = fields[0].replace("\"", "");
-		        	
-					for(int loop=0;loop<fields.length;loop++) {
-						if(fields[loop].equals("N/A")) {
-							missing = true;
-						}
-					}
 
 		        	String symbol = fields[0];
 		        	double bidPrice = Double.parseDouble(fields[1]);
 		        	double askPrice = Double.parseDouble(fields[2]);
-		        	
-		        	double high = 0;
-		        	if(!fields[3].equals("N/A")) {
-		        		high = Math.round(Double.parseDouble(fields[3]) * 100.0)/100.0;
-		        	}
-		        	double low = 0;
-		        	if(!fields[4].equals("N/A")) {
-		        		low = Math.round(Double.parseDouble(fields[4]) * 100.0)/100.0;
-		        	}
-		        	double open = 0;
-		        	if(!fields[5].equals("N/A")) {
-		        		open = Math.round(Double.parseDouble(fields[5]) * 100.0)/100.0;
-		        	}
-		        	
+		        	double high = Math.round(Double.parseDouble(fields[3]) * 100.0)/100.0;
+		        	double low = Math.round(Double.parseDouble(fields[4]) * 100.0)/100.0;
+		        	double open = Math.round(Double.parseDouble(fields[5]) * 100.0)/100.0;		        	
 		        	double close = Math.round(Double.parseDouble(fields[6]) * 100.0)/100.0;
 		        	
+		        	Stock s;
 		        	if(missing == false) {
 		        		s = new Stock(symbol, bidPrice, askPrice, high, low, open, close);
-		        		DataAccess.saveStock(s);
 		        	} else {
 		        		s = new Stock(symbol, bidPrice, askPrice, close);
-		        		DataAccess.saveStock(s);
 		        	}
 		        	
-		        	List<Stock> sts = DataAccess.getAllStocks();
-		        	for(Stock st : sts) {
-		        		System.out.println(st.toString());
-		        	}
+		        	bean.saveStock(s);
 		        	
-//		        	if(((System.currentTimeMillis()-startTime) >= shortTime*60*1000) &&
-//			        		((System.currentTimeMillis()-startTime) >= longTime*60*1000)){
-//		        		for(int i=0;i<strategy.getTwoMAvg().size();i++) {
-//			        		TwoMovingAverage movingAvg = strategy.getTwoMAvg().get(i);
-//			        		
-//							if(s.getStockSymbol().equals(movingAvg.getStock())) {
-//				        		movingAvg.calcMovingAverage(startTime);
-//								movingAvg.carryOutTransaction(stock.get(0), movingAvg);
-//				        	}
-//				        }
-//		        	}
+		        	System.out.println(s.toString());
+		        	
+		        	if(((System.currentTimeMillis()-startTime) >= shortTime*60*1000) &&
+			        		((System.currentTimeMillis()-startTime) >= longTime*60*1000)){
+		        		for(int t=0;t<strategy.getTwoMAvg().size();t++) {
+			        		TwoMovingAverage movingAvg = strategy.getTwoMAvg().get(t);
+			        		
+							if(s.getStockSymbol().equals(movingAvg.getStock())) {
+				        		movingAvg.calcMovingAverage(startTime);
+								movingAvg.carryOutTransaction(s, movingAvg);
+				        	}
+				        }
+		        	}
 		        	
 		        	try {
 						Thread.sleep(1000);
