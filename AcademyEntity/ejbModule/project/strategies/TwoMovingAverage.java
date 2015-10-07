@@ -111,6 +111,7 @@ public class TwoMovingAverage extends Strategy {
 			if((movingAvg.getShortPrices().size() > 0) && (movingAvg.getLongPrices().size() > 0)) {
 				List<Double> shortP = movingAvg.getShortPrices();
 				List<Double> longP = movingAvg.getLongPrices();
+				List<Transaction> recent = new ArrayList<>();
 				double recentShort = shortP.get(shortP.size()-1);
 				double recentLong = longP.get(longP.size()-1);
 				
@@ -125,21 +126,46 @@ public class TwoMovingAverage extends Strategy {
 				 * Get recent transaction from the database and wait for profit/loss of > 1%
 				 * before exiting position (Buy/Sell)
 				 */
-				
+				for(Transaction trans : bean.retrieveMostRecent1()) {
+					recent.add(trans);
+				}
 				Transaction t;
-				if(recentShort > recentLong) {
-					transtype = "Buy";
-		        	t = new Transaction(s, symbol, volume, price, transtype, strategyStr);
-		        	bean.saveTransaction(t);
-		        	System.out.println(t.toString());
-		        } else if(recentShort < recentLong) {
-		        	transtype = "Sell";
-		        	t = new Transaction(s, symbol, volume, price, transtype, strategyStr);
-		        	bean.saveTransaction(t);
-		        	System.out.println(t.toString());
-		        } else {
-		        	System.out.println("EQUAL: " + recentShort + " AND " + recentLong);
-		        }
+				if(recent.size() > 0) {
+					//Get most recent Transaction data
+					String type = recent.get(0).getTranstype();
+					double transPrice = recent.get(0).getPrice();
+					if(type.equals("Sell") && recentShort > recentLong && price < (transPrice - (transPrice*0.01))) {
+						transtype = "Buy";
+			        	t = new Transaction(s, symbol, volume, price, transtype, strategyStr);
+			        	bean.saveTransaction(t);
+			        	System.out.println(price + " less than " + ((transPrice*0.01) - transPrice));
+			        	log.info("INFO " + t.toString());
+			        } else if(type.equals("Buy") && recentShort < recentLong && price < (transPrice + (transPrice*0.01))) {
+			        	transtype = "Sell";
+			        	t = new Transaction(s, symbol, volume, price, transtype, strategyStr);
+			        	bean.saveTransaction(t);
+			        	System.out.println(price + " greater than " + ((transPrice*0.01) - transPrice));
+			        	log.info("INFO " + t.toString());
+			        } else {
+			        	log.info("INFO Two Moving Average still running");
+			        }
+				} else {
+					if(recentShort > recentLong) {
+						transtype = "Buy";
+			        	t = new Transaction(s, symbol, volume, price, transtype, strategyStr);
+			        	bean.saveTransaction(t);
+			        	log.info("INFO " + t.toString());
+			        } else if(recentShort < recentLong) {
+			        	transtype = "Sell";
+			        	t = new Transaction(s, symbol, volume, price, transtype, strategyStr);
+			        	bean.saveTransaction(t);
+			        	log.info("INFO " + t.toString());
+			        } else {
+			        	log.info("INFO Two Moving Average still running");
+			        }
+				}
+				
+				
 			}
 		} catch (Exception ex) {
 			log.error("ERROR " + ex.getMessage());

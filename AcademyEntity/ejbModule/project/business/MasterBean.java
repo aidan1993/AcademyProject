@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.ejb.Asynchronous;
+import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.SessionContext;
@@ -35,9 +36,9 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 	static String div4 = "GSK";
 	static String div5 = "BP";
 	static String div6 = "CHTR";
-	static String div7 = "CHTR";
-	static String div8 = "CHTR";
-	static String div9 = "CHTR";
+	static String div7 = "DOM.L";
+	static String div8 = "BRBY.L";
+	static String div9 = "AIR.PA";
 	
 	public MasterBean() {
 		
@@ -169,7 +170,7 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 	@Override
 	public List<Transaction> retrieveMostRecent1() {
 	String qt = "SELECT t FROM " + Transaction.class.getName() + " t " + 
-						"ORDER BY TransTime DESC";
+						"ORDER BY Transactionid DESC";
 	Query query = entityManager.createQuery(qt);
 	query.setMaxResults(5);
 	List<Transaction> transactions = query.getResultList();
