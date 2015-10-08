@@ -51,10 +51,10 @@ public class StockTransactionServlet extends HttpServlet {
 				for (Stock s: divList1) {
 					t.setStockSymbol(s.getStockSymbol());
 					t.setStock(s);
-					t.setPrice(s.getBidPrice());
+					t.setPrice(s.getAskPrice());
 					t.setTranstype("BUY");
 					t.setStrategy("Manual");
-					t.setVolume(5);
+					t.setVolume(Integer.parseInt(request.getParameter("txtQuantity")));
 					bean.saveTransaction(t);
 					//Integer.parseInt(request.getParameter("txtQuantity"))
 					
@@ -65,10 +65,10 @@ public class StockTransactionServlet extends HttpServlet {
 						
 						t.setStockSymbol(s.getStockSymbol());
 						t.setStock(s);
-						t.setPrice(s.getAskPrice());
+						t.setPrice(s.getBidPrice());
 						t.setTranstype("SELL");
 						t.setStrategy("Manual");
-						t.setVolume(5);
+						t.setVolume(Integer.parseInt(request.getParameter("txtQuantity")));
 						bean.saveTransaction(t);
 					}
 			 }
@@ -79,10 +79,10 @@ public class StockTransactionServlet extends HttpServlet {
 				for (Stock s: divList2) {
 					t.setStockSymbol(s.getStockSymbol());
 					t.setStock(s);
-					t.setPrice(s.getBidPrice());
+					t.setPrice(s.getAskPrice());
 					t.setTranstype("BUY");
 					t.setStrategy("Manual");
-					t.setVolume(5);
+					t.setVolume(Integer.parseInt(request.getParameter("txtQuantity")));
 					bean.saveTransaction(t);
 					//Integer.parseInt(request.getParameter("txtQuantity"))
 					
@@ -93,10 +93,10 @@ public class StockTransactionServlet extends HttpServlet {
 						
 						t.setStockSymbol(s.getStockSymbol());
 						t.setStock(s);
-						t.setPrice(s.getAskPrice());
+						t.setPrice(s.getBidPrice());
 						t.setTranstype("SELL");
 						t.setStrategy("Manual");
-						t.setVolume(5);
+						t.setVolume(Integer.parseInt(request.getParameter("txtQuantity")));
 						bean.saveTransaction(t);
 					}
 			 }
@@ -107,10 +107,10 @@ public class StockTransactionServlet extends HttpServlet {
 				for (Stock s: divList3) {
 					t.setStockSymbol(s.getStockSymbol());
 					t.setStock(s);
-					t.setPrice(s.getBidPrice());
+					t.setPrice(s.getAskPrice());
 					t.setTranstype("BUY");
 					t.setStrategy("Manual");
-					t.setVolume(5);
+					t.setVolume(Integer.parseInt(request.getParameter("txtQuantity")));
 					bean.saveTransaction(t);
 					//Integer.parseInt(request.getParameter("txtQuantity"))
 					
@@ -121,10 +121,10 @@ public class StockTransactionServlet extends HttpServlet {
 						
 						t.setStockSymbol(s.getStockSymbol());
 						t.setStock(s);
-						t.setPrice(s.getAskPrice());
+						t.setPrice(s.getBidPrice());
 						t.setTranstype("SELL");
 						t.setStrategy("Manual");
-						t.setVolume(5);
+						t.setVolume(Integer.parseInt(request.getParameter("txtQuantity")));
 						bean.saveTransaction(t);
 					}
 			 }
@@ -134,10 +134,10 @@ public class StockTransactionServlet extends HttpServlet {
 				for (Stock s: divList4) {
 					t.setStockSymbol(s.getStockSymbol());
 					t.setStock(s);
-					t.setPrice(s.getBidPrice());
+					t.setPrice(s.getAskPrice());
 					t.setTranstype("BUY");
 					t.setStrategy("Manual");
-					t.setVolume(5);
+					t.setVolume(Integer.parseInt(request.getParameter("txtQuantity")));
 					bean.saveTransaction(t);
 					//Integer.parseInt(request.getParameter("txtQuantity"))
 					
@@ -148,10 +148,10 @@ public class StockTransactionServlet extends HttpServlet {
 						
 						t.setStockSymbol(s.getStockSymbol());
 						t.setStock(s);
-						t.setPrice(s.getAskPrice());
+						t.setPrice(s.getBidPrice());
 						t.setTranstype("SELL");
 						t.setStrategy("Manual");
-						t.setVolume(5);
+						t.setVolume(Integer.parseInt(request.getParameter("txtQuantity")));
 						bean.saveTransaction(t);
 					}
 			 }
@@ -161,10 +161,10 @@ public class StockTransactionServlet extends HttpServlet {
 				for (Stock s: divList5) {
 					t.setStockSymbol(s.getStockSymbol());
 					t.setStock(s);
-					t.setPrice(s.getBidPrice());
+					t.setPrice(s.getAskPrice());
 					t.setTranstype("BUY");
 					t.setStrategy("Manual");
-					t.setVolume(5);
+					t.setVolume(Integer.parseInt(request.getParameter("txtQuantity")));
 					bean.saveTransaction(t);
 					//Integer.parseInt(request.getParameter("txtQuantity"))
 					
@@ -175,10 +175,10 @@ public class StockTransactionServlet extends HttpServlet {
 						
 						t.setStockSymbol(s.getStockSymbol());
 						t.setStock(s);
-						t.setPrice(s.getAskPrice());
+						t.setPrice(s.getBidPrice());
 						t.setTranstype("SELL");
 						t.setStrategy("Manual");
-						t.setVolume(5);
+						t.setVolume(Integer.parseInt(request.getParameter("txtQuantity")));
 						bean.saveTransaction(t);
 					}
 			 }
@@ -188,10 +188,10 @@ public class StockTransactionServlet extends HttpServlet {
 				for (Stock s: divList6) {
 					t.setStockSymbol(s.getStockSymbol());
 					t.setStock(s);
-					t.setPrice(s.getBidPrice());
+					t.setPrice(s.getAskPrice());
 					t.setTranstype("BUY");
 					t.setStrategy("Manual");
-					t.setVolume(5);
+					t.setVolume(Integer.parseInt(request.getParameter("txtQuantity")));
 					bean.saveTransaction(t);
 					//Integer.parseInt(request.getParameter("txtQuantity"))
 					
@@ -202,10 +202,10 @@ public class StockTransactionServlet extends HttpServlet {
 						
 						t.setStockSymbol(s.getStockSymbol());
 						t.setStock(s);
-						t.setPrice(s.getAskPrice());
+						t.setPrice(s.getBidPrice());
 						t.setTranstype("SELL");
 						t.setStrategy("Manual");
-						t.setVolume(5);
+						t.setVolume(Integer.parseInt(request.getParameter("txtQuantity")));
 						bean.saveTransaction(t);
 					}
 			 }
@@ -215,10 +215,10 @@ public class StockTransactionServlet extends HttpServlet {
 				for (Stock s: divList7) {
 					t.setStockSymbol(s.getStockSymbol());
 					t.setStock(s);
-					t.setPrice(s.getBidPrice());
+					t.setPrice(s.getAskPrice());
 					t.setTranstype("BUY");
 					t.setStrategy("Manual");
-					t.setVolume(5);
+					t.setVolume(Integer.parseInt(request.getParameter("txtQuantity")));
 					bean.saveTransaction(t);
 					//Integer.parseInt(request.getParameter("txtQuantity"))
 					
@@ -229,10 +229,10 @@ public class StockTransactionServlet extends HttpServlet {
 						
 						t.setStockSymbol(s.getStockSymbol());
 						t.setStock(s);
-						t.setPrice(s.getAskPrice());
+						t.setPrice(s.getBidPrice());
 						t.setTranstype("SELL");
 						t.setStrategy("Manual");
-						t.setVolume(5);
+						t.setVolume(Integer.parseInt(request.getParameter("txtQuantity")));
 						bean.saveTransaction(t);
 					}
 			 }
@@ -242,10 +242,10 @@ public class StockTransactionServlet extends HttpServlet {
 				for (Stock s: divList8) {
 					t.setStockSymbol(s.getStockSymbol());
 					t.setStock(s);
-					t.setPrice(s.getBidPrice());
+					t.setPrice(s.getAskPrice());
 					t.setTranstype("BUY");
 					t.setStrategy("Manual");
-					t.setVolume(5);
+					t.setVolume(Integer.parseInt(request.getParameter("txtQuantity")));
 					bean.saveTransaction(t);
 					//Integer.parseInt(request.getParameter("txtQuantity"))
 					
@@ -256,10 +256,10 @@ public class StockTransactionServlet extends HttpServlet {
 						
 						t.setStockSymbol(s.getStockSymbol());
 						t.setStock(s);
-						t.setPrice(s.getAskPrice());
+						t.setPrice(s.getBidPrice());
 						t.setTranstype("SELL");
 						t.setStrategy("Manual");
-						t.setVolume(5);
+						t.setVolume(Integer.parseInt(request.getParameter("txtQuantity")));
 						bean.saveTransaction(t);
 					}
 			 }
@@ -269,10 +269,10 @@ public class StockTransactionServlet extends HttpServlet {
 				for (Stock s: divList9) {
 					t.setStockSymbol(s.getStockSymbol());
 					t.setStock(s);
-					t.setPrice(s.getBidPrice());
+					t.setPrice(s.getAskPrice());
 					t.setTranstype("BUY");
 					t.setStrategy("Manual");
-					t.setVolume(5);
+					t.setVolume(Integer.parseInt(request.getParameter("txtQuantity")));
 					bean.saveTransaction(t);
 					//Integer.parseInt(request.getParameter("txtQuantity"))
 					
@@ -283,10 +283,10 @@ public class StockTransactionServlet extends HttpServlet {
 						
 						t.setStockSymbol(s.getStockSymbol());
 						t.setStock(s);
-						t.setPrice(s.getAskPrice());
+						t.setPrice(s.getBidPrice());
 						t.setTranstype("SELL");
 						t.setStrategy("Manual");
-						t.setVolume(5);
+						t.setVolume(Integer.parseInt(request.getParameter("txtQuantity")));
 						bean.saveTransaction(t);
 					}
 			 }			 

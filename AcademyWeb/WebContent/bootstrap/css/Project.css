@@ -3,14 +3,25 @@
 .first-stock {
 	clear: left;
 	width: 32% !important;
+	float: left;
+	border: 1px solid #55adbd;
 }
 
-.other-stock {
+.middle-stock {
+	margin: 0;
 	width: 32% !important;
+	border: 1px solid #55adbd;
 }
 
-.other-stock {
-	width: 32.3% !important;
+.last-stock {
+	clear: right;
+	width: 32% !important;
+	float: right;
+	border: 1px solid #55adbd;
+}
+
+.center-container {
+	width: 100%
 }
 
 .row-format {
@@ -21,4 +32,22 @@
 .modal-div {	
 	background-color: black !important;
 	
+}
+
+.button {
+	padding-right: 0px;
+	padding-left: 0px;
+}
+
+.title {
+	width:100%;
+	padding-right: 0px;
+	padding-left: 0px;
+}
+
+.btn-settings {
+	color: #fff;
+	background-color: black;
+	border-color: #55adbd;
+	border: 1px solid #55adbd !important;
 }

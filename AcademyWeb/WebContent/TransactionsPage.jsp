@@ -6,21 +6,45 @@
 <html>
 <head>
 
-<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197" style="z-index: 9999; width: 100%;">
-  <ul class="nav navbar-nav">
-    <li class="active"><a href="index.jsp">Trading Home</a></li>
-    <li><a href="TransactionsPage.jsp">Transactions</a></li>
-
-  </ul>
-</nav>
-
 <script type="text/javascript" src="bootstrap/js/jquery-latest.js"></script>
 <script type="text/javascript" src="bootstrap/js/jquery.tablesorter.min.js"></script> 
+<script type="text/javascript">
+window.onload = function() {
+	var loop = 0;
+	var URL = "rest/livefeed?loop="+loop;
+	function runFeed() {
+		setTimeout(function() { 
+			$.ajax({
+		        type: "GET",
+		        url: URL,
+		        cache: false,
+		        success: function (data) {
+		         	console.log("Live Feed Running");
+		         	loop++;
+		        },
+		        error: function (data) {
+		            console.log("Problem occurred");
+		        }
+			})
+
+			runFeed()
+		}, 10000);
+	}
+
+	runFeed();
+}
+
+
+$(document).ready(function() { 
+    $("table").tablesorter({ 
+        sortList: [[0,0],[2,0]] }); 
+
+}); 
+</script>
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <title>TransactionPage</title>
 
-<script type="text/javascript" src="bootstrap/js/project.js"></script>
 </head>
 <body>
 <% 
@@ -28,12 +52,14 @@ InitialContext context = new InitialContext();
 MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
 List<Transaction> tr = bean.retrieveAllTransaction() ;
 %>
-<script type="text/javascript">
-$(document).ready(function() { 
-    $("table").tablesorter({ 
-        sortList: [[0,0],[2,0]] }); 
-    }); 
-</script>
+
+<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197" style="z-index: 9999; width: 100%;">
+  <ul class="nav navbar-nav">
+    <li><a href="index.jsp">Trading Home</a></li>
+    <li class="active"><a href="TransactionsPage.jsp">Transactions</a></li>
+
+  </ul>
+</nav>
 
 <div class="container">
   <h2>Transactions</h2>          
