@@ -34,10 +34,6 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 			InitialContext context = new InitialContext();
 			MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
 			
-			//Set start time of the application
-			int shortTime = 1;
-			int longTime = 2;
-			
 			if(clear) {
 				bean.clearStock();
 				clear = false;
@@ -99,18 +95,19 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 	        		
 	        		Thread.sleep(1000);
 	        		
-	        		if(((System.currentTimeMillis()-startTime) >= shortTime*60*1000) &&
-			        		((System.currentTimeMillis()-startTime) >= longTime*60*1000)){
-		        		
-	        			for(int t=0;t<Strategy.getTwoMAvg().size();t++) {
-			        		TwoMovingAverage movingAvg = Strategy.getTwoMAvg().get(t);
+	        		for(int t=0;t<Strategy.getTwoMAvg().size();t++) {
+		        		TwoMovingAverage movingAvg = Strategy.getTwoMAvg().get(t);
+		        		if(((System.currentTimeMillis()-startTime) >= movingAvg.getShortLength()*60*1000) &&
+				        		((System.currentTimeMillis()-startTime) >= movingAvg.getLongLength()*60*1000)){
 			        		
-							if(s.getStockSymbol().equals(movingAvg.getStock()) && movingAvg.isActive()) {
+		        			if(s.getStockSymbol().equals(movingAvg.getStock()) && movingAvg.isActive()) {
 				        		movingAvg.calcMovingAverage(startTime);
 								movingAvg.carryOutTransaction(s);
 				        	}
-				        }
-		        	}
+			        	}
+			        }
+	        		
+	        		
 				}
         	}
 		} catch(Exception ex) {

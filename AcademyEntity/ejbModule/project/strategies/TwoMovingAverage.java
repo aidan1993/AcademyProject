@@ -159,13 +159,11 @@ public class TwoMovingAverage extends Strategy {
 							transtype = "Buy";
 				        	t = new Transaction(s, symbol, volume, price, transtype, strategyStr);
 				        	bean.saveTransaction(t);
-				        	System.out.println(price + " less than " + (transPrice - (transPrice*0.01)));
 				        	log.info("INFO " + t.toString());
 				        } else if(type.equals("Buy")) {
 				        	transtype = "Sell";
 				        	t = new Transaction(s, symbol, volume, price, transtype, strategyStr);
 				        	bean.saveTransaction(t);
-				        	System.out.println(price + " greater than " + (transPrice - (transPrice*0.01)));
 				        	log.info("INFO " + t.toString());
 				        }
 					} else {
