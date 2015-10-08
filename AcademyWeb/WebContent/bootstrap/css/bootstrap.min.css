@@ -2631,7 +2631,9 @@ th {
 .table-condensed>tbody>tr>td, .table-condensed>tbody>tr>th,
 	.table-condensed>tfoot>tr>td, .table-condensed>tfoot>tr>th,
 	.table-condensed>thead>tr>td, .table-condensed>thead>tr>th {
-	padding: 5px
+	padding: 5px;
+	 
+	
 }
 
 .table-bordered {
@@ -6477,8 +6479,8 @@ button.close {
 }
 
 .modal {
-	position: fixed !important;
-	top: 45%;
+	position: fixed;
+	top: 30% !important;
 	right: 0;
 	bottom: 0;
 	left: 0;
