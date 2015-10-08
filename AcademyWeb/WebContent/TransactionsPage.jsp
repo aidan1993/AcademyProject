@@ -61,12 +61,11 @@ List<Transaction> tr = bean.retrieveAllTransaction() ;
   </ul>
 </nav>
 
-<div class="container">
-  <h2>Transactions</h2>          
+<h2>Transactions</h2>
 
-  <table id="myTable" class="table table-striped" class="tablesorter">
-
-  
+<div class="container" style= "height:400px; overflow:auto";>
+            
+  <table id="myTable" class="table table-condensed" class="tablesorter">
 
     <thead>
       <tr>
