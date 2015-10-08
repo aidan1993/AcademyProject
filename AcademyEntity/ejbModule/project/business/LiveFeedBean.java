@@ -43,7 +43,7 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 				clear = false;
 				startTime = System.currentTimeMillis();
 			}
-			
+		
 			String st1 = bean.getDiv1();
 			String st2 = bean.getDiv2();
 			String st3 = bean.getDiv3();
@@ -53,6 +53,7 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 			String st7 = bean.getDiv7();
 			String st8 = bean.getDiv8();
 			String st9 = bean.getDiv9();
+
 			
 			String[] stocks = {st1, st2, st3, st4, st5, st6, st7, st8, st9};
 	        
