@@ -14,6 +14,5 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/AcademyEntity"/>
-	<classpathentry kind="lib" path="C:/Users/Citi-2013-30/Desktop/OrderManager/quickfixj/quickfixj-all-1.5.3.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -7,22 +7,22 @@ import project.entity.Stock;
 
 public class Strategy {
 	
-	private List<TwoMovingAverage> twoMAvg = new ArrayList<>();
+	private static List<TwoMovingAverage> twoMAvg = new ArrayList<>();
 	
 	public Strategy() {
 
 	}
 	
-	public List<TwoMovingAverage> getTwoMAvg() {
+	public static List<TwoMovingAverage> getTwoMAvg() {
 		return twoMAvg;
 	}
 
-	public void setTwoMAvg(List<TwoMovingAverage> twoMAvg) {
-		this.twoMAvg = twoMAvg;
+	public static void setTwoMAvg(List<TwoMovingAverage> twoMAvg) {
+		Strategy.twoMAvg = twoMAvg;
 	}
 	
-	public void addTwoMAvg(TwoMovingAverage twoMAvg) {
-		this.twoMAvg.add(twoMAvg);
+	public static void addTwoMAvg(TwoMovingAverage twoMAvg) {
+		Strategy.twoMAvg.add(twoMAvg);
 	}
 
 	//Calculates moving average for the specified array of data

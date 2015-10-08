@@ -145,14 +145,4 @@ window.onload = function() {
 		baRefresh();
 	});
 
-	function baRefresh() {
-		$("#left-div").load('index.jsp #left-div > *', function() {
-			setTimeout(baRefresh, 10000);
-			
-		});
-	}
- 
-	
-	console.log
-
 };

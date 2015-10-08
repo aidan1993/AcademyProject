@@ -63,8 +63,7 @@ public class EditStockSymbol extends HttpServlet {
 
 		} catch (NamingException e) {
 			
-			//Add logger
-			e.printStackTrace();
+			log.error("ERROR " + e.getMessage());
 
 		}
 	}

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	import="project.entity.Stock, project.entity.Transaction, java.util.List, 
-	project.business.MasterBeanLocal, javax.naming.InitialContext, javax.ejb.EJB, javax.naming.Context"
+	project.business.MasterBeanLocal, javax.naming.InitialContext, javax.ejb.EJB, javax.naming.Context,
+	java.util.List, project.strategies.TwoMovingAverage"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
@@ -19,8 +20,91 @@
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-<script type="text/javascript" src="bootstrap/js/project.js"></script>
 <script type="text/javascript" src="bootstrap/js/canvasjs.min.js"></script>
+<script type="text/javascript">
+	window.onload = function() {
+
+		var dps = []; // dataPoints
+
+		var chart = new CanvasJS.Chart("chartContainer", {
+			title : {
+				text : "Stock Performance"
+			},
+			data : [ {
+				type : "line",
+				dataPoints : dps
+			} ]
+		});
+
+		var xVal = 0;
+		var yVal = 100;
+		var updateInterval = 100;
+		var dataLength = 500; // number of dataPoints visible at any point
+
+		var updateChart = function(count) {
+			count = count || 1;
+			// count is number of times loop runs to generate random dataPoints.
+
+			for (var j = 0; j < count; j++) {
+				yVal = yVal + Math.round(5 + Math.random() * (-5 - 5));
+				dps.push({
+					x : xVal,
+					y : yVal
+				});
+				xVal++;
+			}
+			;
+			if (dps.length > dataLength) {
+				dps.shift();
+			}
+
+			chart.render();
+
+		};
+
+		// generates first set of dataPoints
+		updateChart(dataLength);
+
+		// update chart after specified time. 
+		setInterval(function() {
+			updateChart()
+		}, updateInterval);
+
+		var loop = 0;
+		var URL = "rest/livefeed?loop=" + loop;
+		function runFeed() {
+			setTimeout(function() {
+				$.ajax({
+					type : "GET",
+					url : URL,
+					cache : false,
+					success : function(data) {
+						console.log("Live Feed Running");
+						loop++;
+					},
+					error : function(data) {
+						console.log("Problem occurred");
+					}
+				})
+
+				runFeed()
+			}, 10000);
+		}
+
+		runFeed();
+
+		function baRefresh() {
+			$("#left-div").load('index.jsp #left-div > *', function() {
+				setTimeout(baRefresh, 10000);
+
+			});
+
+		}
+
+		baRefresh();
+
+	}
+</script>
 
 </head>
 <body>
@@ -84,8 +168,6 @@
 
 								out.print(s.getBidPrice());
 							}
-						
-					
 						%>
 
 					</h4>
@@ -768,60 +850,32 @@
 			strategy you would like to implement</p>
 		<!-- 		<form role="form"> -->
 		<div class="checkbox">
-			<label style="text-align: center;"><input type="checkbox"
-				value="" style="color: white;">Two Moving Averages</label>
+			<label style="text-align: center;">Two Moving Averages</label>
 			<!-- Trigger the modal with a button -->
-			<button type="button" class="btn btn-settings btn-sm"
-				data-toggle="modal" data-target="#myModal">
+			<button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+				data-target="#myModal">
 				<span class="glyphicon glyphicon-cog"></span> settings
 			</button>
-
-			<div class="dropdown">
-				<button class="btn btn-primary dropdown-toggle" type="button"
-					data-toggle="dropdown">
-					Select Company <span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-					<li><a href="#"> <%
- 	out.print(bean.getDiv1());
- %>
-					</a></li>
-					<li><a href="#"> <%
- 	out.print(bean.getDiv2());
- %>
-					</a></li>
-					<li><a href="#"> <%
- 	out.print(bean.getDiv3());
- %>
-					</a></li>
-					<li><a href="#"> <%
- 	out.print(bean.getDiv4());
- %>
-					</a></li>
-					<li><a href="#"> <%
- 	out.print(bean.getDiv5());
- %>
-					</a></li>
-					<li><a href="#"> <%
- 	out.print(bean.getDiv6());
- %>
-					</a></li>
-					<li><a href="#"> <%
- 	out.print(bean.getDiv7());
- %>
-					</a></li>
-					<li><a href="#"> <%
- 	out.print(bean.getDiv8());
- %>
-					</a></li>
-					<li><a href="#"> <%
- 	out.print(bean.getDiv9());
- %>
-					</a></li>
-				</ul>
-			</div>
-
 		</div>
+		<div>
+			<%
+				List<TwoMovingAverage> list = null;
+				// retrieve your list from the request, with casting 
+				if (request.getAttribute("movingAvgList") != null) {
+					list = ((List<TwoMovingAverage>) request
+							.getAttribute("movingAvgList"));
+					// print the information about every category of the list
+					for (TwoMovingAverage mAvg : list) {
+						if (mAvg.isActive()) {
+							out.println("Two Moving Average running for "
+									+ mAvg.getStock());
+						}
+					}
+				}
+			%>
+		</div>
+
+	</div>
 	</div>
 
 	<!-- Modal -->
@@ -835,13 +889,74 @@
 					<h4 class="modal-title">Change Settings</h4>
 				</div>
 				<div class="modal-body">
-					<p>To be added...</p>
+					<form action="TwoMovingAverageServlet" method="post">
+						<label>Active?</label> <input type="checkbox" name="activate"><br>
+						<label for="selSymbol">Choose Symbol</label> <select
+							class="form-control" style="display: inline-block; width: auto;"
+							name="selSymbol">
+							<option value="<%=bean.getDiv1()%>">
+								<%
+									out.print(bean.getDiv1());
+								%>
+							</option>
+							<option value="<%=bean.getDiv2()%>">
+								<%
+									out.print(bean.getDiv2());
+								%>
+							</option>
+							<option value="<%=bean.getDiv3()%>">
+								<%
+									out.print(bean.getDiv3());
+								%>
+							</option>
+							<option value="<%=bean.getDiv4()%>">
+								<%
+									out.print(bean.getDiv4());
+								%>
+							</option>
+							<option value="<%=bean.getDiv5()%>">
+								<%
+									out.print(bean.getDiv5());
+								%>
+							</option>
+							<option value="<%=bean.getDiv6()%>">
+								<%
+									out.print(bean.getDiv6());
+								%>
+							</option>
+							<option value="<%=bean.getDiv7()%>">
+								<%
+									out.print(bean.getDiv7());
+								%>
+							</option>
+							<option value="<%=bean.getDiv8()%>">
+								<%
+									out.print(bean.getDiv8());
+								%>
+							</option>
+							<option value="<%=bean.getDiv9()%>">
+								<%
+									out.print(bean.getDiv9());
+								%>
+							</option>
+						</select><br> <label for="shortAvg">Short Average Length</label> <input
+							type="text" class="form-control"
+							style="display: inline-block; width: auto; margin-top: 10px;"
+							name="shortAvg" /><br> <label for="longAvg">Long
+							Average Length</label> <input type="text" class="form-control"
+							style="display: inline-block; width: auto; margin: 10px 0px;"
+							name="longAvg" /><br> <input type="submit"
+							class="form-control" style="width: auto;"
+							value="Confirm Settings" />
+					</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
+	</div>
+	</div>
 	</div>
 
 
