@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.ejb.Asynchronous;
+import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.SessionContext;
@@ -29,15 +30,15 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 	@PersistenceContext(unitName = "JPADB")
 	private EntityManager entityManager;
 	
-	static String div1 = "TSCO";
-	static String div2 = "VOD";
-	static String div3 = "RIO";
-	static String div4 = "GSK";
-	static String div5 = "BP";
-	static String div6 = "CHTR";
-	static String div7 = "CHTR";
-	static String div8 = "CHTR";
-	static String div9 = "CHTR";
+	static String div1 = "DOM.L";
+	static String div2 = "BOK.L";
+	static String div3 = "BRBY.L";
+	static String div4 = "ITV.L";
+	static String div5 = "CTY.L";
+	static String div6 = "DLN.L";
+	static String div7 = "ULVR.L";
+	static String div8 = "GSK.L";
+	static String div9 = "DOM.L";
 	
 	public MasterBean() {
 		
@@ -169,7 +170,7 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 	@Override
 	public List<Transaction> retrieveMostRecent1() {
 	String qt = "SELECT t FROM " + Transaction.class.getName() + " t " + 
-						"ORDER BY TransTime DESC";
+						"ORDER BY Transactionid DESC";
 	Query query = entityManager.createQuery(qt);
 	query.setMaxResults(5);
 	List<Transaction> transactions = query.getResultList();
