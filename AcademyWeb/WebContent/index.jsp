@@ -69,29 +69,29 @@ window.onload = function() {
 		updateChart()
 	}, updateInterval);
 
-	var loop = 9;
-	var complete = true;
-	var URL = "rest/livefeed?loop=" + loop;
+	var loop = 0;
+	var URL = "rest/livefeed?loop="+loop;
 	function runFeed() {
-		if(complete == true) {
-			complete = false;
+		setTimeout(function() { 
 			$.ajax({
 		        type: "GET",
 		        url: URL,
 		        cache: false,
 		        success: function (data) {
-		            complete = data;
+		         	console.log("Live Feed Running");
+		         	loop++;
 		        },
 		        error: function (data) {
 		            console.log("Problem occurred");
 		        }
-			});
-		} else {
-			runFeed()	
-		}
+			})
+
+			runFeed()
+		}, 10000);
 	}
 
 	runFeed();
+
 }
 </script>
 </head>

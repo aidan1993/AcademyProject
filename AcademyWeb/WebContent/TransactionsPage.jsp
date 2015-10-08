@@ -9,34 +9,6 @@
 <script type="text/javascript" src="bootstrap/js/jquery-latest.js"></script>
 <script type="text/javascript" src="bootstrap/js/jquery.tablesorter.min.js"></script> 
 <script type="text/javascript">
-window.onload = function() {
-
-	var loop = 9;
-	var complete = true;
-	var URL = "rest/livefeed?loop=" + loop;
-	function runFeed() {
-		if(complete == true) {
-			complete = false;
-			$.ajax({
-		        type: "GET",
-		        url: URL,
-		        cache: false,
-		        success: function (data) {
-		            complete = data;
-		        },
-		        error: function (data) {
-		            console.log("Problem occurred");
-		        }
-			});
-		} else {
-			runFeed()	
-		}
-	}
-
-	runFeed();
-}
-</script>
-<script type="text/javascript">
 $(document).ready(function() { 
     $("table").tablesorter({ 
         sortList: [[0,0],[2,0]] }); 

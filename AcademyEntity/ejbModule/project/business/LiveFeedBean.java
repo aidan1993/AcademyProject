@@ -26,9 +26,9 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 	
 	private static boolean clear = true;
 	private static long startTime;
-	
+
 	@Asynchronous
-	public void runLiveData(int loop) {
+	public void runLiveData() {
 		Logger log =  Logger.getLogger(this.getClass());
 		try {
 			InitialContext context = new InitialContext();
@@ -43,7 +43,6 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 			//Set start time of the application
 			int shortTime = 1;
 			int longTime = 2;
-			long lastCall = 0;
 	        boolean missing = false;
 			
 			Strategy strategy = new Strategy();
@@ -61,73 +60,67 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 			String st9 = bean.getDiv9();
 			
 			String[] stocks = {st1, st2, st3, st4, st5, st6, st7, st8, st9};
-	        int i = 0;
-	        while(i < loop) {
-	        	if((System.currentTimeMillis() - lastCall) > 1000) {
-		        	lastCall = System.currentTimeMillis();
-		        	
-		        	StringBuilder url = 
-				            new StringBuilder("http://finance.yahoo.com/d/quotes.csv?s=");
-		        	url.append(stocks[i]);
-		        	System.out.println(i + ": " + stocks[i]);
-			        url.append("&f=sbahgop&e=.csv");
-			        
-			        //Increment loop variable
-			        i++;
-			        
-			        String theUrl = url.toString();
-			        URL obj = new URL(theUrl);
-			        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-			        // This is a GET request
-			        con.setRequestMethod("GET");
-			        con.setRequestProperty("User-Agent", "Mozilla/5.0");
-			        int responseCode = con.getResponseCode();
-			        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			        String inputLine;
-		        	
-		        	if((inputLine = in.readLine()) != null) {
-	        			
-	        			String[] fields = inputLine.split(",");
-	    				
-	    				for(int l=0;l<fields.length;l++) {
-	    					if(fields[l].equals("N/A")) {
-	    						missing = true;
-	    					} else {
-	    						missing = false;
-	    					}
-	    				}
-	    	        	
-	    	        	if(!missing) {
-	    	        		fields[0] = fields[0].replace("\"", "");
-	    	        		String symbol = fields[0];
-	    		        	double bidPrice = Math.round(Double.parseDouble(fields[1]) * 100.0)/100.0;
-	    		        	double askPrice = Math.round(Double.parseDouble(fields[2]) * 100.0)/100.0;
-	    		        	double high = Math.round(Double.parseDouble(fields[3]) * 100.0)/100.0;
-	    		        	double low = Math.round(Double.parseDouble(fields[4]) * 100.0)/100.0;
-	    		        	double open = Math.round(Double.parseDouble(fields[5]) * 100.0)/100.0;		        	
-	    		        	double close = Math.round(Double.parseDouble(fields[6]) * 100.0)/100.0;
-	    		        	Stock s = new Stock(symbol, bidPrice, askPrice, high, low, open, close);
-	    	        		
-	    	        		bean.saveStock(s);
-	    	        		
-	    	        		if(((System.currentTimeMillis()-startTime) >= shortTime*60*1000) &&
-	    			        		((System.currentTimeMillis()-startTime) >= longTime*60*1000)){
-	    		        		
-	    	        			for(int t=0;t<strategy.getTwoMAvg().size();t++) {
-	    			        		TwoMovingAverage movingAvg = strategy.getTwoMAvg().get(t);
-	    			        		
-	    							if(s.getStockSymbol().equals(movingAvg.getStock())) {
-	    				        		movingAvg.calcMovingAverage(startTime);
-	    								movingAvg.carryOutTransaction(s, movingAvg);
-	    				        	}
-	    				        }
-	    		        	}
-	    	        	} else {
-	    	        		log.error("ERROR Missing Data In Feed");
-	    	        	}
-		        	}
+	        
+        	StringBuilder url = 
+		            new StringBuilder("http://finance.yahoo.com/d/quotes.csv?s=");
+        	for(String stock : stocks) {
+        		url.append(stock + ",");
+        	}
+	        url.append("&f=sbahgop&e=.csv");
+	        
+	        String theUrl = url.toString();
+	        URL obj = new URL(theUrl);
+	        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+	        // This is a GET request
+	        con.setRequestMethod("GET");
+	        con.setRequestProperty("User-Agent", "Mozilla/5.0");
+	        int responseCode = con.getResponseCode();
+	        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+	        String inputLine;
+        	
+        	while((inputLine = in.readLine()) != null) {
+    			System.out.println(inputLine);
+    			String[] fields = inputLine.split(",");
+				
+				for(int l=0;l<fields.length;l++) {
+					if(fields[l].equals("N/A")) {
+						missing = true;
+					} else {
+						missing = false;
+					}
 				}
-	        }
+	        	
+	        	if(!missing) {
+	        		fields[0] = fields[0].replace("\"", "");
+	        		String symbol = fields[0];
+		        	double bidPrice = Math.round(Double.parseDouble(fields[1]) * 100.0)/100.0;
+		        	double askPrice = Math.round(Double.parseDouble(fields[2]) * 100.0)/100.0;
+		        	double high = Math.round(Double.parseDouble(fields[3]) * 100.0)/100.0;
+		        	double low = Math.round(Double.parseDouble(fields[4]) * 100.0)/100.0;
+		        	double open = Math.round(Double.parseDouble(fields[5]) * 100.0)/100.0;		        	
+		        	double close = Math.round(Double.parseDouble(fields[6]) * 100.0)/100.0;
+		        	Stock s = new Stock(symbol, bidPrice, askPrice, high, low, open, close);
+	        		
+	        		bean.saveStock(s);
+	        		
+	        		if(((System.currentTimeMillis()-startTime) >= shortTime*60*1000) &&
+			        		((System.currentTimeMillis()-startTime) >= longTime*60*1000)){
+		        		
+	        			for(int t=0;t<strategy.getTwoMAvg().size();t++) {
+			        		TwoMovingAverage movingAvg = strategy.getTwoMAvg().get(t);
+			        		
+							if(s.getStockSymbol().equals(movingAvg.getStock())) {
+				        		movingAvg.calcMovingAverage(startTime);
+								movingAvg.carryOutTransaction(s, movingAvg);
+				        	}
+				        }
+		        	}
+	        		
+	        		Thread.sleep(1000);
+	        	} else {
+	        		log.error("ERROR Missing Data In Feed");
+	        	}
+        	}
 		} catch(Exception ex) {
 			log.error("ERROR " + ex.getMessage());
 		}
