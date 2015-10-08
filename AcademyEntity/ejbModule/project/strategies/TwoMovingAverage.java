@@ -12,6 +12,7 @@ import org.jboss.logging.Logger;
 import project.business.MasterBeanLocal;
 import project.entity.Stock;
 import project.entity.Transaction;
+import project.strategies.OrderManager.OrderResult;
 
 @EJB(name="ejb/Master", beanInterface=MasterBeanLocal.class)
 public class TwoMovingAverage extends Strategy {
@@ -23,14 +24,26 @@ public class TwoMovingAverage extends Strategy {
 	private List<Double> longPrices = new ArrayList<>();
 	private boolean active = false;
 	
-	public TwoMovingAverage(String stock, int shortTime, int longTime) {
+	public TwoMovingAverage() {
+		
+	}
+	
+	public TwoMovingAverage(String stock, int shortTime, int longTime, boolean active) {
 		this.stock = stock;
 		this.shortDuration = shortTime;
 		this.longDuration = longTime;
-		this.active = true;
+		this.active = active;
 	}
 	
 	
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	public String getStock() {
 		return stock;
 	}
@@ -73,7 +86,9 @@ public class TwoMovingAverage extends Strategy {
 	
 	//Duration is set to minutes
 	public void calcMovingAverage(long startTime) {
-
+		
+		System.out.println("TwoMovingAverage on for " + this.getStock());
+		//OrderResult or = OrderManager.getInstance().buyOrder("AAPL", 12, 50);
 		Logger log =  Logger.getLogger(this.getClass());
 		try {
 			InitialContext context = new InitialContext();
@@ -101,16 +116,16 @@ public class TwoMovingAverage extends Strategy {
 		}
 	}
 	
-	public void carryOutTransaction(Stock s, TwoMovingAverage movingAvg) {
+	public void carryOutTransaction(Stock s) {
 		Logger log =  Logger.getLogger(this.getClass());
 		
 		try {
 			InitialContext context = new InitialContext();
 			MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
 			
-			if((movingAvg.getShortPrices().size() > 0) && (movingAvg.getLongPrices().size() > 0)) {
-				List<Double> shortP = movingAvg.getShortPrices();
-				List<Double> longP = movingAvg.getLongPrices();
+			if((this.getShortPrices().size() > 0) && (this.getLongPrices().size() > 0)) {
+				List<Double> shortP = this.getShortPrices();
+				List<Double> longP = this.getLongPrices();
 				List<Transaction> recent = new ArrayList<>();
 				double recentShort = shortP.get(shortP.size()-1);
 				double recentLong = longP.get(longP.size()-1);
@@ -129,35 +144,46 @@ public class TwoMovingAverage extends Strategy {
 				for(Transaction trans : bean.retrieveMostRecent1()) {
 					recent.add(trans);
 				}
+				
 				Transaction t;
-				if(recent.size() > 0) {
+				if(recent.size() != 0) {
 					//Get most recent Transaction data
 					String type = recent.get(0).getTranstype();
 					double transPrice = recent.get(0).getPrice();
-					if(type.equals("Sell") && recentShort > recentLong && price < (transPrice - (transPrice*0.01))) {
-						transtype = "Buy";
-			        	t = new Transaction(s, symbol, volume, price, transtype, strategyStr);
-			        	bean.saveTransaction(t);
-			        	System.out.println(price + " less than " + ((transPrice*0.01) - transPrice));
-			        	log.info("INFO " + t.toString());
-			        } else if(type.equals("Buy") && recentShort < recentLong && price < (transPrice + (transPrice*0.01))) {
-			        	transtype = "Sell";
-			        	t = new Transaction(s, symbol, volume, price, transtype, strategyStr);
-			        	bean.saveTransaction(t);
-			        	System.out.println(price + " greater than " + ((transPrice*0.01) - transPrice));
-			        	log.info("INFO " + t.toString());
-			        } else {
+					
+					/*
+					 * Exit strategy if P/L is greater than 1%
+					 */
+					if(price <= (transPrice - (transPrice*0.01)) || price >= (transPrice + (transPrice*0.01))) {
+						if(type.equals("Sell")) {
+							transtype = "Buy";
+				        	t = new Transaction(s, symbol, volume, price, transtype, strategyStr);
+				        	bean.saveTransaction(t);
+				        	System.out.println(price + " less than " + (transPrice - (transPrice*0.01)));
+				        	log.info("INFO " + t.toString());
+				        } else if(type.equals("Buy")) {
+				        	transtype = "Sell";
+				        	t = new Transaction(s, symbol, volume, price, transtype, strategyStr);
+				        	bean.saveTransaction(t);
+				        	System.out.println(price + " greater than " + (transPrice - (transPrice*0.01)));
+				        	log.info("INFO " + t.toString());
+				        }
+					} else {
 			        	log.info("INFO Two Moving Average still running");
 			        }
 				} else {
 					if(recentShort > recentLong) {
 						transtype = "Buy";
 			        	t = new Transaction(s, symbol, volume, price, transtype, strategyStr);
+//			        	OrderResult or = OrderManager.getInstance().buyOrder(symbol, price, volume);
+//			        	System.out.println(or.toString());
 			        	bean.saveTransaction(t);
 			        	log.info("INFO " + t.toString());
 			        } else if(recentShort < recentLong) {
 			        	transtype = "Sell";
 			        	t = new Transaction(s, symbol, volume, price, transtype, strategyStr);
+//			        	OrderResult or = OrderManager.getInstance().sellOrder(symbol, price, volume);
+//			        	System.out.println(or.toString());
 			        	bean.saveTransaction(t);
 			        	log.info("INFO " + t.toString());
 			        } else {

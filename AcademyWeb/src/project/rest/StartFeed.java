@@ -18,18 +18,21 @@ public class StartFeed {
 	
 	private InitialContext context;
 	private LiveFeedBeanLocal bean = null;
+	private long lastCall = 0;
 	
 	@GET
 	public void runLiveData(@QueryParam("loop")int loop) {
 		try {
 			
-			if(loop == 0) {
-				context = new InitialContext();
-				bean = (LiveFeedBeanLocal)context.lookup("java:comp/env/ejb/LiveFeed");
+			if((System.currentTimeMillis() - lastCall) > 9000) {
+				lastCall = System.currentTimeMillis();
+				if(loop == 0) {
+					context = new InitialContext();
+					bean = (LiveFeedBeanLocal)context.lookup("java:comp/env/ejb/LiveFeed");
+				}
+				
+				bean.runLiveData();
 			}
-			
-			bean.runLiveData();
-			
 		} catch(Exception ex) {
 			Logger log =  Logger.getLogger(this.getClass());
 			log.error("ERROR " + ex.getMessage());

@@ -9,10 +9,37 @@
 <script type="text/javascript" src="bootstrap/js/jquery-latest.js"></script>
 <script type="text/javascript" src="bootstrap/js/jquery.tablesorter.min.js"></script> 
 <script type="text/javascript">
+window.onload = function() {
+	var loop = 0;
+	var URL = "rest/livefeed?loop="+loop;
+	function runFeed() {
+		setTimeout(function() { 
+			$.ajax({
+		        type: "GET",
+		        url: URL,
+		        cache: false,
+		        success: function (data) {
+		         	console.log("Live Feed Running");
+		         	loop++;
+		        },
+		        error: function (data) {
+		            console.log("Problem occurred");
+		        }
+			})
+
+			runFeed()
+		}, 10000);
+	}
+
+	runFeed();
+}
+
+
 $(document).ready(function() { 
     $("table").tablesorter({ 
         sortList: [[0,0],[2,0]] }); 
-    }); 
+
+}); 
 </script>
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 

@@ -12,5 +12,19 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="C:/Users/Citi Tech 2014/Documents/AcademyProject/OrderManager/quickfixj/lib/optional/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Citi Tech 2014/Documents/AcademyProject/OrderManager/quickfixj/lib/mina-core-1.1.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Citi Tech 2014/Documents/AcademyProject/OrderManager/quickfixj/lib/slf4j-api-1.6.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Citi Tech 2014/Documents/AcademyProject/OrderManager/quickfixj/lib/slf4j-jdk14-1.6.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Citi Tech 2014/Documents/AcademyProject/OrderManager/quickfixj/quickfixj-all-1.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Citi Tech 2014/Documents/AcademyProject/OrderManager/quickfixj/quickfixj-core-1.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Citi Tech 2014/Documents/AcademyProject/OrderManager/quickfixj/quickfixj-examples-1.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Citi Tech 2014/Documents/AcademyProject/OrderManager/quickfixj/quickfixj-msg-fix40-1.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Citi Tech 2014/Documents/AcademyProject/OrderManager/quickfixj/quickfixj-msg-fix41-1.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Citi Tech 2014/Documents/AcademyProject/OrderManager/quickfixj/quickfixj-msg-fix42-1.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Citi Tech 2014/Documents/AcademyProject/OrderManager/quickfixj/quickfixj-msg-fix43-1.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Citi Tech 2014/Documents/AcademyProject/OrderManager/quickfixj/quickfixj-msg-fix44-1.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Citi Tech 2014/Documents/AcademyProject/OrderManager/quickfixj/quickfixj-msg-fix50-1.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Citi Tech 2014/Documents/AcademyProject/OrderManager/quickfixj/quickfixj-msg-fixt11-1.5.3.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

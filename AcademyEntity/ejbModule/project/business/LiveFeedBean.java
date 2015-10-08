@@ -34,20 +34,15 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 			InitialContext context = new InitialContext();
 			MasterBeanLocal bean = (MasterBeanLocal)context.lookup("java:comp/env/ejb/Master");
 			
+			//Set start time of the application
+			int shortTime = 1;
+			int longTime = 2;
+			
 			if(clear) {
 				bean.clearStock();
 				clear = false;
 				startTime = System.currentTimeMillis();
 			}
-			
-			//Set start time of the application
-			int shortTime = 1;
-			int longTime = 2;
-	        boolean missing = false;
-			
-			Strategy strategy = new Strategy();
-			TwoMovingAverage bpMAvg = new TwoMovingAverage("BP", shortTime, longTime);
-			strategy.addTwoMAvg(bpMAvg);
 			
 			String st1 = bean.getDiv1();
 			String st2 = bean.getDiv2();
@@ -79,19 +74,18 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 	        String inputLine;
         	
         	while((inputLine = in.readLine()) != null) {
-    			System.out.println(inputLine);
     			String[] fields = inputLine.split(",");
-				
+    			boolean missing = false;
 				for(int l=0;l<fields.length;l++) {
 					if(fields[l].equals("N/A")) {
 						missing = true;
-					} else {
-						missing = false;
 					}
 				}
-	        	
-	        	if(!missing) {
-	        		fields[0] = fields[0].replace("\"", "");
+				
+				if(missing) {
+					log.info("INFO Missing Data In Feed");
+				} else {
+					fields[0] = fields[0].replace("\"", "");
 	        		String symbol = fields[0];
 		        	double bidPrice = Math.round(Double.parseDouble(fields[1]) * 100.0)/100.0;
 		        	double askPrice = Math.round(Double.parseDouble(fields[2]) * 100.0)/100.0;
@@ -103,26 +97,25 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 	        		
 	        		bean.saveStock(s);
 	        		
+	        		Thread.sleep(1000);
+	        		
 	        		if(((System.currentTimeMillis()-startTime) >= shortTime*60*1000) &&
 			        		((System.currentTimeMillis()-startTime) >= longTime*60*1000)){
 		        		
-	        			for(int t=0;t<strategy.getTwoMAvg().size();t++) {
-			        		TwoMovingAverage movingAvg = strategy.getTwoMAvg().get(t);
+	        			for(int t=0;t<Strategy.getTwoMAvg().size();t++) {
+			        		TwoMovingAverage movingAvg = Strategy.getTwoMAvg().get(t);
 			        		
-							if(s.getStockSymbol().equals(movingAvg.getStock())) {
+							if(s.getStockSymbol().equals(movingAvg.getStock()) && movingAvg.isActive()) {
 				        		movingAvg.calcMovingAverage(startTime);
-								movingAvg.carryOutTransaction(s, movingAvg);
+								movingAvg.carryOutTransaction(s);
 				        	}
 				        }
 		        	}
-	        		
-	        		Thread.sleep(1000);
-	        	} else {
-	        		log.error("ERROR Missing Data In Feed");
-	        	}
+				}
         	}
 		} catch(Exception ex) {
 			log.error("ERROR " + ex.getMessage());
+			ex.printStackTrace();
 		}
 	}
 }
