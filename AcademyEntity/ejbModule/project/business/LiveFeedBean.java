@@ -45,7 +45,7 @@ public class LiveFeedBean implements LiveFeedBeanLocal, LiveFeedBeanRemote {
 			//Set start time of the application
 			int shortTime = 1;
 			int longTime = 2;
-			TwoMovingAverage bpMAvg = new TwoMovingAverage("BP", shortTime, longTime);
+			TwoMovingAverage bpMAvg = new TwoMovingAverage("DOM.L", shortTime, longTime);
 			strategy.addTwoMAvg(bpMAvg);
 			
 			for(int i=0;i<loop;i++) {

@@ -29,15 +29,15 @@ public class MasterBean implements MasterBeanLocal, MasterBeanRemote {
 	@PersistenceContext(unitName = "JPADB")
 	private EntityManager entityManager;
 	
-	static String div1 = "TSCO";
-	static String div2 = "VOD";
-	static String div3 = "RIO";
-	static String div4 = "GSK";
-	static String div5 = "BP";
-	static String div6 = "CHTR";
-	static String div7 = "CHTR";
-	static String div8 = "CHTR";
-	static String div9 = "CHTR";
+	static String div1 = "DOM.L";
+	static String div2 = "BOK.L";
+	static String div3 = "BRBY.L";
+	static String div4 = "ITV.L";
+	static String div5 = "CTY.L";
+	static String div6 = "DLN.L";
+	static String div7 = "ULVR.L";
+	static String div8 = "GSK.L";
+	static String div9 = "DOM.L";
 	
 	public MasterBean() {
 		
