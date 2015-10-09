@@ -12,9 +12,9 @@
 
 <!-- Bootstrap -->
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="bootstrap/css/Project.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link href="bootstrap/css/Project.css" rel="stylesheet">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script
@@ -24,51 +24,120 @@
 <script type="text/javascript">
 	window.onload = function() {
 
-		var dps = []; // dataPoints
+		// dataPoints
+		var dataPoints1 = [];
+		var dataPoints2 = [];
 
-		var chart = new CanvasJS.Chart("chartContainer", {
-			title : {
-				text : "Stock Performance"
+		var symbol = "MSFT";
+
+		var chart = new CanvasJS.Chart("chartContainer",{
+			zoomEnabled: true,
+			title: {
+				text: "Share Value of Two Companies"		
 			},
-			data : [ {
-				type : "line",
-				dataPoints : dps
-			} ]
+			toolTip: {
+				shared: true
+				
+			},
+			legend: {
+				verticalAlign: "top",
+				horizontalAlign: "center",
+                                fontSize: 14,
+				fontWeight: "bold",
+				fontFamily: "calibri",
+				fontColor: "dimGrey"
+			},
+			axisX: {
+				title: "Two Moving Average for " + symbol
+			},
+			axisY:{
+				prefix: '£',
+				includeZero: false
+			}, 
+			data: [{ 
+				// dataSeries1
+				type: "line",
+				xValueType: "number",
+				showInLegend: true,
+				name: "Short Average",
+				dataPoints: dataPoints1
+			},
+			{				
+				// dataSeries2
+				type: "line",
+				xValueType: "number",
+				showInLegend: true,
+				name: "Long Average" ,
+				dataPoints: dataPoints2
+			}],
+          legend:{
+            cursor:"pointer",
+            itemclick : function(e) {
+              if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+              }
+              else {
+                e.dataSeries.visible = true;
+              }
+              chart.render();
+            }
+          }
 		});
 
-		var xVal = 0;
-		var yVal = 100;
-		var updateInterval = 100;
-		var dataLength = 500; // number of dataPoints visible at any point
 
-		var updateChart = function(count) {
+
+		var updateInterval = 9000;
+		// initial value
+		var xValue = 0;
+		var shortPrice = [];
+		var longPrice = [];
+		
+		var updateChart = function (count) {
 			count = count || 1;
-			// count is number of times loop runs to generate random dataPoints.
 
-			for (var j = 0; j < count; j++) {
-				yVal = yVal + Math.round(5 + Math.random() * (-5 - 5));
-				dps.push({
-					x : xVal,
-					y : yVal
-				});
-				xVal++;
-			}
-			;
-			if (dps.length > dataLength) {
-				dps.shift();
-			}
+			$.ajax({
+				type : "GET",
+				url : URL,
+				cache : false,
+				success : function(data) {
+					shortPrice = data;
+				},
+				error : function(data) {
+					console.log("Problem occurred");
+				}
+			});
 
-			chart.render();
+			// count is number of times loop runs to generate random dataPoints. 
 
-		};
-
-		// generates first set of dataPoints
-		updateChart(dataLength);
-
-		// update chart after specified time. 
-		setInterval(function() {
-			updateChart()
-		}, updateInterval);
+			for (var i = 0; i < shortPrice.length; i++) {
+ 				
+ 				// generating random values
+ 				xValue++;
+ 				
+ 				// pushing the new values
+ 				dataPoints1.push({
+ 					x: xValue,
+ 					y: shortPrice[i]
+ 				});
+ 				dataPoints2.push({
+ 					x: xValue,
+ 					y: longPrice
+ 				});
+ 			};
+ 
+ 			// updating legend text with  updated with y Value 
+ 			chart.options.data[0].legendText = " Short Price  £" + shortPrice;
+ 			chart.options.data[1].legendText = " Long Price B  £" + longPrice; 
+ 
+ 			chart.render();
+ 
+ 		};
+ 
+ 		// generates first set of dataPoints 
+ 		updateChart(1);	
+ 		 
+ 		// update chart after specified interval 
+ 		setInterval(function(){updateChart()}, updateInterval);
 
 		var loop = 0;
 		var URL = "rest/livefeed?loop=" + loop;
@@ -103,6 +172,13 @@
 
 		baRefresh();
 
+		$("#strategy").submit(function() {
+			if($.trim($('.formEl').val()) === "") {
+				alert('Please enter a short and long length');
+		        return false;
+			}
+		});
+
 	}
 </script>
 
@@ -112,8 +188,8 @@
 	<nav class="navbar navbar-inverse" data-spy="affix"
 		data-offset-top="197" style="z-index: 9999; width: 100%;">
 		<ul class="nav navbar-nav">
-			<li class="active"><a href="index.jsp">Trading Home</a></li>
-			<li><a href="TransactionsPage.jsp">Transactions</a></li>
+			<li class="active"><a href="#">Trading Home</a></li>
+			<li class="inactive"><a href="TransactionsPage.jsp">Transactions</a></li>
 
 		</ul>
 	</nav>
@@ -862,13 +938,13 @@
 				List<TwoMovingAverage> list = null;
 				// retrieve your list from the request, with casting 
 				if (request.getAttribute("movingAvgList") != null) {
-					list = ((List<TwoMovingAverage>) request
-							.getAttribute("movingAvgList"));
+					list = ((List<TwoMovingAverage>) request.getAttribute("movingAvgList"));
 					// print the information about every category of the list
 					for (TwoMovingAverage mAvg : list) {
 						if (mAvg.isActive()) {
-							out.println("Two Moving Average running for "
-									+ mAvg.getStock());
+							out.println("<p>Two Moving Average running for "
+									+ mAvg.getStock() + " with Short of " + mAvg.getShortLength() + 
+									" minutes and Long of " + mAvg.getLongLength() + " minutes</p>");
 						}
 					}
 				}
@@ -889,7 +965,7 @@
 					<h4 class="modal-title">Change Settings</h4>
 				</div>
 				<div class="modal-body">
-					<form action="TwoMovingAverageServlet" method="post">
+					<form id="strategy" action="TwoMovingAverageServlet" method="post">
 						<label>Active?</label> <input type="checkbox" name="activate"><br>
 						<label for="selSymbol">Choose Symbol</label> <select
 							class="form-control" style="display: inline-block; width: auto;"
@@ -939,13 +1015,16 @@
 									out.print(bean.getDiv9());
 								%>
 							</option>
-						</select><br> <label for="shortAvg">Short Average Length</label> <input
-							type="text" class="form-control"
+						</select><br> <label for="shortAvg">Short Average Length (Minutes)</label> <input
+							type="text" class="formEl form-control"
 							style="display: inline-block; width: auto; margin-top: 10px;"
 							name="shortAvg" /><br> <label for="longAvg">Long
-							Average Length</label> <input type="text" class="form-control"
+							Average Length (Minutes)</label> <input type="text" class="formEl form-control"
 							style="display: inline-block; width: auto; margin: 10px 0px;"
-							name="longAvg" /><br> <input type="submit"
+							name="longAvg" /><br> <label for="volume">Volume of Stock</label> 
+							<input type="text" class="formEl form-control"
+							style="display: inline-block; width: auto; margin: 10px 0px;"
+							name="volume" /><br><input type="submit"
 							class="form-control" style="width: auto;"
 							value="Confirm Settings" />
 					</form>

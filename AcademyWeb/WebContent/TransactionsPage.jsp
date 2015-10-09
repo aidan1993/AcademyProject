@@ -42,6 +42,7 @@ $(document).ready(function() {
 }); 
 </script>
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="bootstrap/css/Project.css" rel="stylesheet">
 
 <title>TransactionPage</title>
 
@@ -55,8 +56,8 @@ List<Transaction> tr = bean.retrieveAllTransaction() ;
 
 <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197" style="z-index: 9999; width: 100%;">
   <ul class="nav navbar-nav">
-    <li><a href="index.jsp">Trading Home</a></li>
-    <li class="active"><a href="TransactionsPage.jsp">Transactions</a></li>
+    <li class="inactive"><a href="index.jsp">Trading Home</a></li>
+    <li class="active"><a href="#">Transactions</a></li>
 
   </ul>
 </nav>

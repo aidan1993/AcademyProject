@@ -51,3 +51,7 @@
 	border-color: #55adbd;
 	border: 1px solid #55adbd !important;
 }
+
+.inactive a {
+	background: none;
+}

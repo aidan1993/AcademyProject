@@ -47,7 +47,8 @@ public class TwoMovingAverageServlet extends HttpServlet {
 		String checked = request.getParameter("activate");
 		String symbol = request.getParameter("selSymbol");
 		int shortAvg = Integer.parseInt(request.getParameter("shortAvg"));
-		int longAvg = Integer.parseInt(request.getParameter("shortAvg"));
+		int longAvg = Integer.parseInt(request.getParameter("longAvg"));
+		int volume = Integer.parseInt(request.getParameter("volume"));
 		
 		List<TwoMovingAverage> twoMAvg = Strategy.getTwoMAvg();
 		
@@ -57,6 +58,7 @@ public class TwoMovingAverageServlet extends HttpServlet {
 				exists = true;
 				mAvg.setShortLength(shortAvg);
 				mAvg.setLongLength(longAvg);
+				mAvg.setVolume(volume);
 				
 				if(checked != null) {
 					mAvg.setActive(true);
@@ -64,16 +66,12 @@ public class TwoMovingAverageServlet extends HttpServlet {
 					mAvg.setActive(false);
 				}
 			}
-			
-			System.out.println(mAvg.getStock());
 		}
 		
 		if(!exists && checked != null) {
-			TwoMovingAverage newMAvg = new TwoMovingAverage(symbol, shortAvg, longAvg, true);
+			TwoMovingAverage newMAvg = new TwoMovingAverage(symbol, shortAvg, longAvg, volume, true);
 			Strategy.addTwoMAvg(newMAvg);
 		}
-		
-//		response.sendRedirect(request.getContextPath() + "/index.jsp");
 		
 		ServletContext sc = getServletContext();
 		RequestDispatcher rd = sc.getRequestDispatcher("/index.jsp");
