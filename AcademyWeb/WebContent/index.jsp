@@ -851,7 +851,7 @@
 
 		<!-- 		</div> -->
 		<!--  <h7>Last 5 Transactions</h7>           -->
-		<table id="myTable" class="table table-striped">
+		<table id="myTable" class="table table-condensed">
 			<%
 				List<Transaction> tr = bean.retrieveMostRecent1();
 			%>
