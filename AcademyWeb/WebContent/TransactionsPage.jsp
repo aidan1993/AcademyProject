@@ -65,10 +65,14 @@ List<Transaction> tr = bean.retrieveAllTransaction() ;
 
 <div class="container" style= "height:400px; overflow:auto";>
             
+<<<<<<< HEAD
 
   <table id="myTable" class="table-condensed" class="tablesorter">
 
   
+=======
+  <table id="myTable" class="table table-condensed" class="tablesorter">
+>>>>>>> master
 
     <thead>
       <tr>
